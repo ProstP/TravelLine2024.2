@@ -1,0 +1,42 @@
+﻿using Domain.Entity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace Infrastructure.Foundation.EntityConfiguration
+{
+    public class UserConfiguration : IEntityTypeConfiguration<User>
+    {
+        public void Configure( EntityTypeBuilder<User> builder )
+        {
+            builder.ToTable( nameof( User ) )
+                .HasKey( u => u.Id );
+
+            builder.Property( u => u.Login )
+                .HasMaxLength( 50 )
+                .IsRequired();
+
+            builder.Property( u => u.Password )
+                .HasMaxLength( 50 )
+                .IsRequired();
+
+            builder.Property( u => u.Name )
+                .HasMaxLength( 50 )
+                .IsRequired();
+
+            builder.Property( u => u.About )
+                .HasMaxLength( 250 );
+
+            builder.HasMany( u => u.Recipes )
+                .WithOne()
+                .HasForeignKey( r => r.UserId );
+
+            builder.HasMany( u => u.Favourite )
+                .WithOne()
+                .HasForeignKey( f => f.UserId );
+
+            builder.HasMany( u => u.Like )
+                .WithOne()
+                .HasForeignKey( l => l.UserId );
+        }
+    }
+}
