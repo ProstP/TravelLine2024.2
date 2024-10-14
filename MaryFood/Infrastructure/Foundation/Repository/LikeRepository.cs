@@ -9,11 +9,6 @@ namespace Infrastructure.Foundation.Repository
             : base( dbContext )
         { }
 
-        public Like? Get( int id )
-        {
-            return _dbContext.Set<Like>().FirstOrDefault( f => f.Id == id );
-        }
-
         public List<Like> GetByRecipeID( int recipeId )
         {
             return _dbContext.Set<Like>().Where( f => f.RecipeId == recipeId ).ToList();

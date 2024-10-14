@@ -9,7 +9,7 @@ namespace Infrastructure.Foundation.EntityConfiguration
         public void Configure( EntityTypeBuilder<Like> builder )
         {
             builder.ToTable( nameof( Like ) )
-                .HasKey( l => l.Id );
+                .HasKey( l => new { l.UserId, l.RecipeId } );
         }
     }
 }

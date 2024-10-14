@@ -9,7 +9,7 @@ namespace Infrastructure.Foundation.EntityConfiguration
         public void Configure( EntityTypeBuilder<Favourite> builder )
         {
             builder.ToTable( nameof( Favourite ) )
-                .HasKey( f => f.Id );
+                .HasKey( f => new { f.UserId, f.RecipeId } );
         }
     }
 }
