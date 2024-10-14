@@ -7,8 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Command\" />
-    <Folder Include="Query\" />
+    <Compile Remove="Command\**" />
+    <Compile Remove="Query\**" />
+    <EmbeddedResource Remove="Command\**" />
+    <EmbeddedResource Remove="Query\**" />
+    <None Remove="Command\**" />
+    <None Remove="Query\**" />
   </ItemGroup>
 
 </Project>
