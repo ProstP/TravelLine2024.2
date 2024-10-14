@@ -15,18 +15,11 @@ namespace Infrastructure.Foundation.Repository
         public void Create( T item )
         {
             _dbContext.Set<T>().Add( item );
-            _dbContext.SaveChanges();
-        }
-
-        public List<T> GetAll()
-        {
-            return _dbContext.Set<T>().ToList();
         }
 
         public void Remove( T item )
         {
             _dbContext.Set<T>().Remove( item );
-            _dbContext.SaveChanges();
         }
     }
 }

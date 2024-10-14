@@ -15,7 +15,7 @@ namespace Infrastructure.Foundation.EntityConfiguration
                 .HasMaxLength( 50 )
                 .IsRequired();
 
-            builder.Property( i => i.IngredientList )
+            builder.Property( i => i.SubIngredients )
                 .HasMaxLength( 250 )
                 .IsRequired();
         }

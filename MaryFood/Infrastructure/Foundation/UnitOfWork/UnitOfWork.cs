@@ -1,4 +1,4 @@
-﻿using App.UnitOfWork;
+﻿using Application.UnitOfWork;
 
 namespace Infrastructure.Foundation.UnitOfWork
 {
@@ -11,9 +11,9 @@ namespace Infrastructure.Foundation.UnitOfWork
             _dbContext = dbContext;
         }
 
-        public async void SaveChanges()
+        public async Task<int> SaveChangesAsync()
         {
-            await _dbContext.SaveChangesAsync();
+            return await _dbContext.SaveChangesAsync();
         }
     }
 }
