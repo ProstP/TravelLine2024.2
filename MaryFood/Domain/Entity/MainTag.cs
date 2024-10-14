@@ -6,7 +6,7 @@
 
         public int TagId { get; private init; }
 
-        public Tag? Tag { get; private init; } = null;
+        public Tag Tag { get; private init; } = null;
 
         public MainTag( int id, int tagId )
         {

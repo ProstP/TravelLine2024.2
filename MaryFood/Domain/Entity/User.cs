@@ -3,10 +3,10 @@
     public class User
     {
         public int Id { get; private init; }
-        public string Login { get; private init; }
-        public string Password { get; private init; }
-        public string Name { get; private init; }
-        public string About { get; private init; }
+        public string Login { get; private set; }
+        public string Password { get; private set; }
+        public string Name { get; private set; }
+        public string About { get; private set; }
 
         [System.Text.Json.Serialization.JsonIgnore]
         public List<Recipe> Recipes { get; private init; } = new();
@@ -20,8 +20,33 @@
         public User( int id, string login, string password, string name, string about )
         {
             Id = id;
+            if ( String.IsNullOrWhiteSpace( login ) )
+            {
+                throw new ArgumentNullException( "Login is empty or white space" );
+            }
             Login = login;
             Password = password;
+            if ( String.IsNullOrWhiteSpace( name ) )
+            {
+                throw new ArgumentNullException( "Name is empty or white space" );
+            }
+            Name = name;
+            About = about;
+        }
+
+
+        public void Update( string login, string password, string name, string about )
+        {
+            if ( String.IsNullOrWhiteSpace( login ) )
+            {
+                throw new ArgumentNullException( "Login is empty or white space" );
+            }
+            Login = login;
+            Password = password;
+            if ( String.IsNullOrWhiteSpace( name ) )
+            {
+                throw new ArgumentNullException( "Name is empty or white space" );
+            }
             Name = name;
             About = about;
         }

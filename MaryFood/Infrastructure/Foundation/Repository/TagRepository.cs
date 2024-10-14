@@ -9,12 +9,17 @@ namespace Infrastructure.Foundation.Repository
             : base( dbContext )
         { }
 
-        public Tag? Get( int id )
+        public Tag Get( int id )
         {
             return _dbContext.Set<Tag>().FirstOrDefault( t => t.Id == id );
         }
 
-        public Tag? GetByName( string name )
+        public List<Tag> GetAll()
+        {
+            return _dbContext.Set<Tag>().ToList();
+        }
+
+        public Tag GetByName( string name )
         {
             return _dbContext.Set<Tag>().FirstOrDefault( t => t.Name == name );
         }

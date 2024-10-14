@@ -6,7 +6,7 @@
         public string Name { get; private init; }
         public string Description { get; private init; }
 
-        public MainTag? MainTag { get; private init; } = null;
+        public MainTag MainTag { get; private init; } = null;
 
         [System.Text.Json.Serialization.JsonIgnore]
         public List<Recipe> Recipes { get; private init; } = new();

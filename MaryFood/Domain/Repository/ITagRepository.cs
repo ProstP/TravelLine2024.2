@@ -4,8 +4,10 @@ namespace Domain.Repository
 {
     public interface ITagRepository : IRepository<Tag>
     {
-        public Tag? Get( int id );
+        Tag Get( int id );
 
-        public Tag? GetByName( string name );
+        List<Tag> GetAll();
+
+        Tag GetByName( string name );
     }
 }

@@ -9,9 +9,21 @@ namespace Infrastructure.Foundation.Repository
             : base( dbContext )
         { }
 
-        public User? Get( int id )
+        public User Get( int id )
         {
             return _dbContext.Set<User>().FirstOrDefault( u => u.Id == id );
+        }
+
+        public User Update( int id, User user )
+        {
+            var old = _dbContext.Set<User>().FirstOrDefault( u => u.Id == id );
+            if ( old == null )
+            {
+                return null;
+            }
+
+            _dbContext.Update( user );
+            return user;
         }
     }
 }

@@ -11,14 +11,30 @@
         public Ingredient( int id, string header, string subIngredients, int recipeId )
         {
             Id = id;
+            if ( String.IsNullOrWhiteSpace( header ) )
+            {
+                throw new ArgumentNullException( "Header is null or white spaces" );
+            }
             Header = header;
+            if ( String.IsNullOrWhiteSpace( subIngredients ) )
+            {
+                throw new ArgumentNullException( "Ingredients is null or white spaces" );
+            }
             SubIngredients = subIngredients;
             RecipeId = recipeId;
         }
 
         public void Update( string header, string subIngredients )
         {
+            if ( String.IsNullOrWhiteSpace( header ) )
+            {
+                throw new ArgumentNullException( "Header is null or white spaces" );
+            }
             Header = header;
+            if ( String.IsNullOrWhiteSpace( subIngredients ) )
+            {
+                throw new ArgumentNullException( "Ingredients is null or white spaces" );
+            }
             SubIngredients = subIngredients;
         }
     }
