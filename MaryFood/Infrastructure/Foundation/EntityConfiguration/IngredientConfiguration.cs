@@ -9,15 +9,15 @@ namespace Infrastructure.Foundation.EntityConfiguration
         public void Configure( EntityTypeBuilder<Ingredient> builder )
         {
             builder.ToTable( nameof( Ingredient ) )
-                .HasKey( i => i.Id );
+                   .HasKey( i => i.Id );
 
             builder.Property( i => i.Header )
-                .HasMaxLength( 50 )
-                .IsRequired();
+                   .HasMaxLength( 50 )
+                   .IsRequired();
 
             builder.Property( i => i.SubIngredients )
-                .HasMaxLength( 250 )
-                .IsRequired();
+                   .HasMaxLength( 250 )
+                   .IsRequired();
         }
     }
 }

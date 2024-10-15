@@ -9,22 +9,19 @@ namespace Infrastructure.Foundation.EntityConfiguration
         public void Configure( EntityTypeBuilder<Tag> builder )
         {
             builder.ToTable( nameof( Tag ) )
-                .HasKey( t => t.Id );
+                   .HasKey( t => t.Id );
 
             builder.Property( t => t.Name )
-                .HasMaxLength( 20 )
-                .IsRequired();
+                   .HasMaxLength( 20 )
+                   .IsRequired();
 
             builder.Property( t => t.Description )
-                .HasMaxLength( 150 );
+                   .HasMaxLength( 150 );
 
-            builder.HasMany( t => t.Recipes )
-                .WithMany( r => r.Tags )
-                .UsingEntity( j => j.ToTable( "Recipe-Tag" ) );
-
-            builder.HasOne( t => t.MainTag )
-                .WithOne( mt => mt.Tag )
-                .HasForeignKey<MainTag>( mn => mn.TagId );
+            builder.HasOne<Tag>()
+                   .WithOne()
+                   .HasForeignKey<DefaultTag>( mn => mn.TagId )
+                   .IsRequired();
         }
     }
 }

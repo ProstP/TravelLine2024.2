@@ -12,7 +12,7 @@ namespace Infrastructure.Foundation.Repository
             _dbContext = dbContext;
         }
 
-        public void Create( T item )
+        public void Add( T item )
         {
             _dbContext.Set<T>().Add( item );
         }

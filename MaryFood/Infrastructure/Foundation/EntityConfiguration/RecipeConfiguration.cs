@@ -9,40 +9,44 @@ namespace Infrastructure.Foundation.EntityConfiguration
         public void Configure( EntityTypeBuilder<Recipe> builder )
         {
             builder.ToTable( nameof( Recipe ) )
-                .HasKey( r => r.Id );
+                   .HasKey( r => r.Id );
 
             builder.Property( r => r.Name )
-                .HasMaxLength( 50 )
-                .IsRequired();
+                   .HasMaxLength( 50 )
+                   .IsRequired();
 
             builder.Property( r => r.Description )
-                .HasMaxLength( 150 );
+                   .HasMaxLength( 150 );
 
             builder.Property( r => r.CookingTime )
-                .IsRequired();
+                   .IsRequired();
 
             builder.Property( r => r.PersonNum )
-                .IsRequired();
+                   .IsRequired();
 
             builder.Property( r => r.Image )
-                .HasMaxLength( 100 )
-                .IsRequired();
+                   .HasMaxLength( 100 )
+                   .IsRequired();
 
             builder.HasMany( r => r.Steps )
-                .WithOne()
-                .HasForeignKey( s => s.RecipeId );
+                   .WithOne()
+                   .HasForeignKey( s => s.RecipeId );
 
             builder.HasMany( r => r.Ingredients )
-                .WithOne()
-                .HasForeignKey( i => i.RecipeId );
+                   .WithOne()
+                   .HasForeignKey( i => i.RecipeId );
+
+            builder.HasMany( r => r.Tags )
+                   .WithMany( t => t.Recipes )
+                   .UsingEntity( j => j.ToTable( "RecipeToTag" ) );
 
             builder.HasMany( r => r.Favourite )
-                .WithOne()
-                .HasForeignKey( f => f.RecipeId );
+                   .WithOne()
+                   .HasForeignKey( f => f.RecipeId );
 
             builder.HasMany( r => r.Like )
-                .WithOne()
-                .HasForeignKey( l => l.RecipeId );
+                   .WithOne()
+                   .HasForeignKey( l => l.RecipeId );
         }
     }
 }

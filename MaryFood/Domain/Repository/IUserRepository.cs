@@ -4,7 +4,9 @@ namespace Domain.Repository
 {
     public interface IUserRepository : IRepository<User>
     {
-        User Get( int id );
+        Task<User> Get( int id );
+
+        Task<User> GetByLodin( string login );
 
         User Update( int id, User user );
     }

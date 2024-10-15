@@ -10,19 +10,10 @@ public class Recipe
 
     public int UserId { get; private init; }
 
-    [System.Text.Json.Serialization.JsonIgnore]
     public List<RecipeStep> Steps { get; private init; } = new();
-
-    [System.Text.Json.Serialization.JsonIgnore]
     public List<Ingredient> Ingredients { get; private init; } = new();
-
-    [System.Text.Json.Serialization.JsonIgnore]
     public List<Favourite> Favourite { get; private init; } = new();
-
-    [System.Text.Json.Serialization.JsonIgnore]
     public List<Like> Like { get; private init; } = new();
-
-    [System.Text.Json.Serialization.JsonIgnore]
     public List<Tag> Tags { get; private init; } = new();
 
     public Recipe( int id, string name, string description, int cookingTime, int personNum, string image, int userId )

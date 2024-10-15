@@ -9,14 +9,14 @@ namespace Infrastructure.Foundation.EntityConfiguration
         public void Configure( EntityTypeBuilder<RecipeStep> builder )
         {
             builder.ToTable( nameof( RecipeStep ) )
-                .HasKey( rs => rs.Id );
+                   .HasKey( rs => rs.Id );
 
             builder.Property( rs => rs.StepNum )
-                .IsRequired();
+                   .IsRequired();
 
             builder.Property( rs => rs.Description )
-                .HasMaxLength( 250 )
-                .IsRequired();
+                   .HasMaxLength( 250 )
+                   .IsRequired();
         }
     }
 }

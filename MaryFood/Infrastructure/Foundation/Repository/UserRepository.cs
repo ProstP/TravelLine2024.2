@@ -1,5 +1,6 @@
 ﻿using Domain.Entity;
 using Domain.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Foundation.Repository
 {
@@ -9,9 +10,17 @@ namespace Infrastructure.Foundation.Repository
             : base( dbContext )
         { }
 
-        public User Get( int id )
+        public async Task<User> Get( int id )
         {
-            return _dbContext.Set<User>().FirstOrDefault( u => u.Id == id );
+            return await _dbContext.Set<User>()
+                                   .Include( u => u.Favourite )
+                                   .Include( u => u.Like )
+                                   .FirstAsync( u => u.Id == id );
+        }
+
+        public async Task<User> GetByLodin( string login )
+        {
+            return await _dbContext.Set<User>().FirstAsync( u => u.Login == login );
         }
 
         public User Update( int id, User user )

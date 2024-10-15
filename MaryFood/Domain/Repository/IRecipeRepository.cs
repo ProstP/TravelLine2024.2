@@ -4,13 +4,13 @@ namespace Domain.Repository
 {
     public interface IRecipeRepository : IRepository<Recipe>
     {
-        Recipe Get( int id );
+        Task<Recipe> Get( int id );
 
-        List<Recipe> GetAll();
+        Task<List<Recipe>> GetAll();
 
-        List<Recipe> GetByUserId( int userId );
+        Task<List<Recipe>> GetByUserId( int userId );
 
-        List<Recipe> GetByName( string name );
+        Task<List<Recipe>> GetByName( string name );
 
         Recipe Update( int id, Recipe recipe );
     }

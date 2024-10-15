@@ -1,5 +1,6 @@
 ﻿using Domain.Entity;
 using Domain.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Foundation.Repository
 {
@@ -9,24 +10,45 @@ namespace Infrastructure.Foundation.Repository
             : base( dbContext )
         { }
 
-        public Recipe Get( int id )
+        public async Task<Recipe> Get( int id )
         {
-            return _dbContext.Set<Recipe>().FirstOrDefault( r => r.Id == id );
+            return await _dbContext.Set<Recipe>()
+                                   .Include( r => r.Ingredients )
+                                   .Include( r => r.Steps )
+                                   .Include( r => r.Favourite )
+                                   .Include( r => r.Like )
+                                   .FirstAsync( r => r.Id == id );
         }
 
-        public List<Recipe> GetAll()
+        public async Task<List<Recipe>> GetAll()
         {
-            return _dbContext.Set<Recipe>().ToList();
+            return await _dbContext.Set<Recipe>()
+                                   .Include( r => r.Ingredients )
+                                   .Include( r => r.Steps )
+                                   .Include( r => r.Favourite )
+                                   .Include( r => r.Like )
+                                   .ToListAsync();
         }
 
-        public List<Recipe> GetByName( string name )
+        public async Task<List<Recipe>> GetByName( string name )
         {
-            return _dbContext.Set<Recipe>().Where( r => r.Name == name ).ToList();
+            return await _dbContext.Set<Recipe>()
+                             .Where( r => r.Name == name )
+                             .Include( r => r.Ingredients )
+                             .Include( r => r.Steps )
+                             .Include( r => r.Favourite )
+                             .Include( r => r.Like )
+                             .ToListAsync();
         }
 
-        public List<Recipe> GetByUserId( int userId )
+        public async Task<List<Recipe>> GetByUserId( int userId )
         {
-            return _dbContext.Set<Recipe>().Where( r => r.UserId == userId ).ToList();
+            return await _dbContext.Set<Recipe>()
+                             .Where( r => r.UserId == userId )
+                             .Include( r => r.Ingredients )
+                             .Include( r => r.Steps )
+                             .Include( r => r.Favourite )
+                             .ToListAsync();
         }
 
         public Recipe Update( int id, Recipe recipe )

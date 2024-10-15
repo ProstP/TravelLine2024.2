@@ -12,13 +12,13 @@ public class MaryFoodDbContext : DbContext
     {
         base.OnModelCreating( modelBuilder );
 
-        modelBuilder.ApplyConfigurationsFromAssembly( typeof( UserConfiguration ).Assembly );
-        modelBuilder.ApplyConfigurationsFromAssembly( typeof( RecipeConfiguration ).Assembly );
-        modelBuilder.ApplyConfigurationsFromAssembly( typeof( TagConfiguration ).Assembly );
-        modelBuilder.ApplyConfigurationsFromAssembly( typeof( MainTagConfiguration ).Assembly );
-        modelBuilder.ApplyConfigurationsFromAssembly( typeof( IngredientConfiguration ).Assembly );
-        modelBuilder.ApplyConfigurationsFromAssembly( typeof( RecipeStepConfiduration ).Assembly );
-        modelBuilder.ApplyConfigurationsFromAssembly( typeof( FavouriteConfiguration ).Assembly );
-        modelBuilder.ApplyConfigurationsFromAssembly( typeof( LikeConfiguration ).Assembly );
+        modelBuilder.ApplyConfiguration( new UserConfiguration() );
+        modelBuilder.ApplyConfiguration( new RecipeConfiguration() );
+        modelBuilder.ApplyConfiguration( new TagConfiguration() );
+        modelBuilder.ApplyConfiguration( new DefaultTagConfiguration() );
+        modelBuilder.ApplyConfiguration( new IngredientConfiguration() );
+        modelBuilder.ApplyConfiguration( new RecipeStepConfiduration() );
+        modelBuilder.ApplyConfiguration( new FavouriteConfiguration() );
+        modelBuilder.ApplyConfiguration( new LikeConfiguration() );
     }
 }

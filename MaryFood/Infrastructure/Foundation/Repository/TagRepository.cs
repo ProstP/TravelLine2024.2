@@ -1,5 +1,6 @@
 ﻿using Domain.Entity;
 using Domain.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Foundation.Repository
 {
@@ -9,14 +10,14 @@ namespace Infrastructure.Foundation.Repository
             : base( dbContext )
         { }
 
-        public Tag Get( int id )
+        public async Task<Tag> Get( int id )
         {
-            return _dbContext.Set<Tag>().FirstOrDefault( t => t.Id == id );
+            return await _dbContext.Set<Tag>().FirstAsync( t => t.Id == id );
         }
 
-        public List<Tag> GetAll()
+        public async Task<List<Tag>> GetAll()
         {
-            return _dbContext.Set<Tag>().ToList();
+            return await _dbContext.Set<Tag>().ToListAsync();
         }
 
         public Tag GetByName( string name )
