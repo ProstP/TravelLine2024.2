@@ -18,10 +18,9 @@ namespace Infrastructure.Foundation.EntityConfiguration
             builder.Property( t => t.Description )
                    .HasMaxLength( 150 );
 
-            builder.HasOne<Tag>()
+            builder.HasOne<DefaultTag>()
                    .WithOne()
-                   .HasForeignKey<DefaultTag>( mn => mn.TagId )
-                   .IsRequired();
+                   .HasForeignKey<DefaultTag>( df => df.TagId );
         }
     }
 }

@@ -11,21 +11,18 @@
         public List<Favourite> Favourite { get; private init; } = new();
         public List<Like> Like { get; private init; } = new();
 
-        public User( int id, string login, string password, string name, string about )
+        public User( string login, string passwordHash )
         {
-            Id = id;
             if ( String.IsNullOrWhiteSpace( login ) )
             {
                 throw new ArgumentNullException( "Login is empty or white space" );
             }
             Login = login;
-            PasswordHash = password;
-            if ( String.IsNullOrWhiteSpace( name ) )
+            if ( String.IsNullOrWhiteSpace( passwordHash ) )
             {
                 throw new ArgumentNullException( "Name is empty or white space" );
             }
-            Name = name;
-            About = about;
+            PasswordHash = passwordHash;
         }
 
 
