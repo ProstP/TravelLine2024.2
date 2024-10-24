@@ -1,9 +1,8 @@
 ﻿using Domain.Entity;
 
-namespace Domain.Repository
+namespace Domain.Repository;
+
+public interface IDefaultTagRepository
 {
-    public interface IDefaultTagRepository
-    {
-        Task<List<DefaultTag>> Get();
-    }
+    Task<List<DefaultTag>> Get();
 }

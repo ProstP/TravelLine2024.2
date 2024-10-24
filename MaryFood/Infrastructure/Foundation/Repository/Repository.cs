@@ -1,25 +1,25 @@
 ﻿using Domain.Repository;
+using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Foundation.Repository
+namespace Infrastructure.Foundation.Repository;
+
+public class Repository<T> : IRepository<T>
+    where T : class
 {
-    public class Repository<T> : IRepository<T>
-        where T : class
+    protected readonly DbSet<T> DbSet;
+
+    public Repository( MaryFoodDbContext dbContext )
     {
-        protected readonly MaryFoodDbContext _dbContext;
+        DbSet = dbContext.Set<T>();
+    }
 
-        public Repository( MaryFoodDbContext dbContext )
-        {
-            _dbContext = dbContext;
-        }
+    public void Add( T item )
+    {
+        DbSet.Add( item );
+    }
 
-        public void Add( T item )
-        {
-            _dbContext.Set<T>().Add( item );
-        }
-
-        public void Remove( T item )
-        {
-            _dbContext.Set<T>().Remove( item );
-        }
+    public void Remove( T item )
+    {
+        DbSet.Remove( item );
     }
 }

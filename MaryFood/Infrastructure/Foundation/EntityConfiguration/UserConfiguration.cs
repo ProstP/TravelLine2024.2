@@ -32,11 +32,13 @@ namespace Infrastructure.Foundation.EntityConfiguration
 
             builder.HasMany( u => u.Favourite )
                    .WithOne()
-                   .HasForeignKey( f => f.UserId );
+                   .HasForeignKey( f => f.UserId )
+                   .OnDelete( DeleteBehavior.NoAction );
 
             builder.HasMany( u => u.Like )
                    .WithOne()
-                   .HasForeignKey( l => l.UserId );
+                   .HasForeignKey( l => l.UserId )
+                   .OnDelete( DeleteBehavior.NoAction );
         }
     }
 }
