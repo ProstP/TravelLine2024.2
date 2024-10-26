@@ -44,7 +44,7 @@ namespace WebApi.Controller
             var command = new CreateUserCommand()
             {
                 Login = request.Login,
-                PasswordHash = request.PasswordHash,
+                Password = request.PasswordHash,
             };
             bool isSeccess = _createUserCommandHandler.Handle( command );
 
@@ -63,7 +63,7 @@ namespace WebApi.Controller
             var command = new AuthenticateUserCommand()
             {
                 Login = request.Login,
-                PasswordHash = request.PasswordHash
+                Password = request.PasswordHash
             };
 
             var tokens = await _authenticateUserCommandHandler.Handle( command );
