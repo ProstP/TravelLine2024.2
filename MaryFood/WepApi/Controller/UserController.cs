@@ -1,102 +1,106 @@
-﻿using Application.Token.DecodeToken;
+﻿using Application.Result;
+using Application.Token.Dtos;
 using Application.Token.RefreshTokens;
 using Application.User.Command.AuthenticateUserCommand;
 using Application.User.Command.CreateUserCommand;
-using Domain.Entity;
+using Application.User.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using WebApi.Contract.Request;
 using WebApi.Contract.Response;
 
-namespace WebApi.Controller
+namespace WebApi.Controller;
+
+[ApiController]
+[Route( "api/user" )]
+public class UserController : ControllerBase
 {
-    [ApiController]
-    [Route( "api/user" )]
-    public class UserController : ControllerBase
+    private readonly CreateUserCommandHandler _createUserCommandHandler;
+    private readonly AuthenticateUserCommandHandler _authenticateUserCommandHandler;
+    private readonly RefreshTokenHandler _refreshTokenCommandHandler;
+
+    public UserController(
+        CreateUserCommandHandler createUserCommandHandler,
+        AuthenticateUserCommandHandler authenticateUserCommandHandler,
+        RefreshTokenHandler refreshTokenHandler
+    )
     {
-        private readonly CreateUserCommandHandler _createUserCommandHandler;
-        private readonly AuthenticateUserCommandHandler _authenticateUserCommandHandler;
-        private readonly RefreshTokenHandler _refreshTokenCommandHandler;
+        _createUserCommandHandler = createUserCommandHandler;
+        _authenticateUserCommandHandler = authenticateUserCommandHandler;
+        _refreshTokenCommandHandler = refreshTokenHandler;
+    }
 
-        public UserController(
-            CreateUserCommandHandler createUserCommandHandler,
-            AuthenticateUserCommandHandler authenticateUserCommandHandler,
-            RefreshTokenHandler refreshTokenHandler
-        )
+    [Authorize]
+    [HttpGet, Route( "{id:int}" )]
+    public IActionResult Get( [FromRoute] int id )
+    {
+        return Ok( id );
+    }
+
+    [AllowAnonymous]
+    [HttpPost, Route( "register" )]
+    public async Task<IActionResult> Register( [FromBody] RegisterUserRequest request )
+    {
+        var command = new CreateUserCommand()
         {
-            _createUserCommandHandler = createUserCommandHandler;
-            _authenticateUserCommandHandler = authenticateUserCommandHandler;
-            _refreshTokenCommandHandler = refreshTokenHandler;
+            Login = request.Login,
+            Password = request.Password,
+        };
+        Result result = await _createUserCommandHandler.HandleAsync( command );
+
+        if ( !result.IsSuccess )
+        {
+            return BadRequest();
         }
 
-        [Authorize]
-        [HttpGet, Route( "{id:int}" )]
-        public IActionResult Get( [FromRoute] int id )
+        return Ok();
+    }
+
+    [AllowAnonymous]
+    [HttpPost, Route( "login" )]
+    public async Task<IActionResult> Login( [FromBody] LoginUserRequest request )
+    {
+        var command = new AuthenticateUserCommand()
         {
-            return Ok( id );
-        }
+            Login = request.Login,
+            Password = request.Password
+        };
 
-        [AllowAnonymous]
-        [HttpPost, Route( "register" )]
-        public IActionResult Register( [FromBody] RegisterUserRequest request )
+        Result<AuthenticateUserCommandDto> result = await _authenticateUserCommandHandler.HandleAsync( command );
+
+        if ( !result.IsSuccess )
         {
-            var command = new CreateUserCommand()
-            {
-                Login = request.Login,
-                Password = request.PasswordHash,
-            };
-            bool isSeccess = _createUserCommandHandler.Handle( command );
-
-            if ( !isSeccess )
-            {
-                return BadRequest();
-            }
-
-            return Ok();
+            return BadRequest();
         }
-
-        [AllowAnonymous]
-        [HttpPost, Route( "login" )]
-        public async Task<IActionResult> Login( [FromBody] LoginUserRequest request )
+        TokenResponse tokenResponse = new()
         {
-            var command = new AuthenticateUserCommand()
-            {
-                Login = request.Login,
-                Password = request.PasswordHash
-            };
+            AccessToken = result.Value.AccessToken,
+            RefreshToken = result.Value.RefreshToken
+        };
 
-            var tokens = await _authenticateUserCommandHandler.Handle( command );
+        return Ok( tokenResponse );
+    }
 
-            if ( tokens == null )
-            {
-                return BadRequest();
-            }
-            var result = new LoginUserResponse()
-            {
-                AccessToken = tokens.AccessToken,
-                RefreshToken = tokens.RefreshToken
-            };
-
-            return Ok( result );
-        }
-
-        [AllowAnonymous]
-        [HttpPost, Route( "refresh" )]
-        public async Task<IActionResult> RefreshToken( [FromBody] RefreshTokenRequest request )
+    [AllowAnonymous]
+    [HttpPost, Route( "refresh" )]
+    public async Task<IActionResult> RefreshToken( [FromBody] RefreshTokenRequest request )
+    {
+        var command = new RefreshTokenCommand()
         {
-            var command = new RefreshTokenCommand()
-            {
-                Token = request.RefreshToken,
-            };
-            var tokens = await _refreshTokenCommandHandler.Refresh( command );
+            Token = request.RefreshToken,
+        };
+        Result<RefreshTokenDto> result = await _refreshTokenCommandHandler.HandleAsync( command );
 
-            if ( tokens == null )
-            {
-                return BadRequest();
-            }
-
-            return Ok( tokens );
+        if ( !result.IsSuccess )
+        {
+            return BadRequest();
         }
+        TokenResponse tokenResponse = new()
+        {
+            AccessToken = result.Value.AccessToken,
+            RefreshToken = result.Value.RefreshToken
+        };
+
+        return Ok( tokenResponse );
     }
 }
