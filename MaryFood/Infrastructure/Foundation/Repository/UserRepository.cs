@@ -14,12 +14,12 @@ public class UserRepository : Repository<User>, IUserRepository
     {
         return await DbSet.Include( u => u.Favourite )
                           .Include( u => u.Like )
-                          .FirstAsync( u => u.Id == id );
+                          .FirstOrDefaultAsync( u => u.Id == id );
     }
 
     public async Task<User> GetByLogin( string login )
     {
-        return await DbSet.FirstAsync( u => u.Login == login );
+        return await DbSet.FirstOrDefaultAsync( u => u.Login == login );
     }
 
     public User Update( int id, User user )

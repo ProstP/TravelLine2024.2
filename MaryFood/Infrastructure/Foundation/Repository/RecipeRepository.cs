@@ -16,7 +16,7 @@ public class RecipeRepository : Repository<Recipe>, IRecipeRepository
                           .Include( r => r.Steps )
                           .Include( r => r.Favourite )
                           .Include( r => r.Like )
-                          .FirstAsync( r => r.Id == id );
+                          .FirstOrDefaultAsync( r => r.Id == id );
     }
 
     public async Task<List<Recipe>> GetAll()

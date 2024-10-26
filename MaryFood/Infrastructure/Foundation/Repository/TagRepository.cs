@@ -12,7 +12,7 @@ public class TagRepository : Repository<Tag>, ITagRepository
 
     public async Task<Tag> Get( int id )
     {
-        return await DbSet.FirstAsync( t => t.Id == id );
+        return await DbSet.FirstOrDefaultAsync( t => t.Id == id );
     }
 
     public async Task<List<Tag>> GetAll()
