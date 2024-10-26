@@ -1,4 +1,4 @@
-﻿using Application.Tokens.CreateToken;
+﻿using Application.Token.CreateToken;
 using Application.Users.Dtos;
 using Domain.Repository;
 

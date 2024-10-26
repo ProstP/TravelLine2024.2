@@ -1,4 +1,4 @@
-﻿namespace Application.Tokens.Dtos;
+﻿namespace Application.Token.Dtos;
 
 public class RefreshTokenDto
 {

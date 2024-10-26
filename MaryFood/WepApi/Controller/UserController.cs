@@ -1,5 +1,5 @@
-﻿using Application.Tokens.DecodeToken;
-using Application.Tokens.RefreshTokens;
+﻿using Application.Token.DecodeToken;
+using Application.Token.RefreshTokens;
 using Application.Users.Command.AuthenticateUserCommand;
 using Application.Users.Command.CreateUserCommand;
 using Domain.Entity;
