@@ -1,8 +1,7 @@
-﻿namespace Application.Tokens.Dtos
+﻿namespace Application.Tokens.Dtos;
+
+public class DecodeTokenDto
 {
-    public class DecodeTokenDto
-    {
-        public string Login { get; set; }
-        public string PasswordHash { get; set; }
-    }
+    public string Login { get; init; }
+    public string PasswordHash { get; init; }
 }

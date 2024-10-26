@@ -1,8 +1,7 @@
-﻿namespace Application.Tokens.Dtos
+﻿namespace Application.Tokens.Dtos;
+
+public class RefreshTokenDto
 {
-    public class RefreshTokenDto
-    {
-        public string AccessToken { get; set; }
-        public string RefreshToken { get; set; }
-    }
+    public string AccessToken { get; init; }
+    public string RefreshToken { get; init; }
 }

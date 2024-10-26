@@ -1,10 +1,7 @@
-﻿using Domain.Entity;
+﻿namespace WebApi.Contract.Response;
 
-namespace WebApi.Contract.Response
+public class LoginUserResponse
 {
-    public class LoginUserResponse
-    {
-        public string AccessToken { get; set; }
-        public string RefreshToken { get; set; }
-    }
+    public string AccessToken { get; init; }
+    public string RefreshToken { get; init; }
 }
