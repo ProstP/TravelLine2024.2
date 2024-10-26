@@ -1,11 +1,13 @@
-﻿using Application.Crypt.HashStr;
+﻿using Application.CQRSInterfaces;
+using Application.Crypt.HashStr;
+using Application.Result;
 using Application.UnitOfWork;
 using Domain.Entity;
 using Domain.Repository;
 
 namespace Application.Users.Command.CreateUserCommand;
 
-public class CreateUserCommandHandler
+public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand>
 {
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -18,7 +20,7 @@ public class CreateUserCommandHandler
         _passwordHasher = passwordHasher;
     }
 
-    public bool Handle( CreateUserCommand command )
+    public async Task<Result.Result> HandleAsync( CreateUserCommand command )
     {
         try
         {
@@ -26,12 +28,12 @@ public class CreateUserCommandHandler
             User user = new( command.Login, passwordHash );
 
             _userRepository.Add( user );
-            _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
         }
         catch
         {
-            return false;
+            return Result.Result.FromError( "User not created" );
         }
-        return true;
+        return Result.Result.FromSuccess();
     }
 }

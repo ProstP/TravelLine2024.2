@@ -1,4 +1,6 @@
-﻿using Application.Token.CreateToken;
+﻿using Application.CQRSInterfaces;
+using Application.Result;
+using Application.Token.CreateToken;
 using Application.Token.DecodeToken;
 using Application.Token.Dtos;
 using Domain.Entity;
@@ -6,7 +8,7 @@ using Domain.Repository;
 
 namespace Application.Token.RefreshTokens;
 
-public class RefreshTokenHandler
+public class RefreshTokenHandler : ICommandHandler<RefreshTokenDto, RefreshTokenCommand>
 {
     private readonly IUserRepository _userRepository;
     private readonly ITokenDecoder _tokenDecoder;
@@ -19,22 +21,22 @@ public class RefreshTokenHandler
         _tokenCreator = tokenCreator;
     }
 
-    public async Task<RefreshTokenDto> Refresh( RefreshTokenCommand token )
+    public async Task<Result<RefreshTokenDto>> HandleAsync( RefreshTokenCommand token )
     {
         DecodeTokenDto decodeTokenDto = _tokenDecoder.Decode( token.Token );
 
         User user = await _userRepository.GetByLogin( decodeTokenDto.Login );
         if ( user == null || user.PasswordHash != decodeTokenDto.PasswordHash )
         {
-            return null;
+            return Result<RefreshTokenDto>.FromError( "Password is not right" );
         }
 
-        var result = new RefreshTokenDto()
+        RefreshTokenDto refreshTokenDto = new()
         {
             AccessToken = _tokenCreator.GenerateAccessToken( user.Login ),
             RefreshToken = _tokenCreator.GenerateRefreshToken( user.Login, user.PasswordHash ),
         };
 
-        return result;
+        return Result<RefreshTokenDto>.FromSuccess( refreshTokenDto );
     }
 }

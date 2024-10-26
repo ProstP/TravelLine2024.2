@@ -1,4 +1,6 @@
-﻿using Application.Crypt.VerifyHash;
+﻿using Application.CQRSInterfaces;
+using Application.Crypt.VerifyHash;
+using Application.Result;
 using Application.Token.CreateToken;
 using Application.Users.Dtos;
 using Domain.Entity;
@@ -6,7 +8,7 @@ using Domain.Repository;
 
 namespace Application.Users.Command.AuthenticateUserCommand;
 
-public class AuthenticateUserCommandHandler
+public class AuthenticateUserCommandHandler : ICommandHandler<AuthenticateUserCommandDto, AuthenticateUserCommand>
 {
     private readonly IUserRepository _userRepository;
     private readonly ITokenCreator _tokenCreator;
@@ -19,12 +21,12 @@ public class AuthenticateUserCommandHandler
         _passwordVerifier = passwordVerifier;
     }
 
-    public async Task<AuthenticateUserCommandDto> Handle( AuthenticateUserCommand command )
+    public async Task<Result<AuthenticateUserCommandDto>> HandleAsync( AuthenticateUserCommand command )
     {
         User user = await _userRepository.GetByLogin( command.Login );
         if ( user == null || !_passwordVerifier.Verify( command.Password, user.PasswordHash ) )
         {
-            return null;
+            return Result<AuthenticateUserCommandDto>.FromError( "User not found" );
         }
 
         AuthenticateUserCommandDto result = new()
@@ -33,6 +35,6 @@ public class AuthenticateUserCommandHandler
             RefreshToken = _tokenCreator.GenerateRefreshToken( user.Login, user.PasswordHash )
         };
 
-        return result;
+        return Result<AuthenticateUserCommandDto>.FromSuccess( result );
     }
 }
