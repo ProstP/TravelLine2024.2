@@ -2,5 +2,5 @@
 
 public class RefreshTokenCommand
 {
-    public string Token { get; set; }
+    public string Token { get; init; }
 }

@@ -2,33 +2,32 @@
 using Domain.Entity;
 using Domain.Repository;
 
-namespace Application.Users.Command.CreateUserCommand
+namespace Application.Users.Command.CreateUserCommand;
+
+public class CreateUserCommandHandler
 {
-    public class CreateUserCommandHandler
+    private readonly IUserRepository _userRepository;
+    private readonly IUnitOfWork _unitOfWork;
+
+    public CreateUserCommandHandler( IUserRepository userRepository, IUnitOfWork unitOfWork )
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IUnitOfWork _unitOfWork;
+        _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
+    }
 
-        public CreateUserCommandHandler( IUserRepository userRepository, IUnitOfWork unitOfWork )
+    public bool Handle( CreateUserCommand command )
+    {
+        try
         {
-            _userRepository = userRepository;
-            _unitOfWork = unitOfWork;
-        }
+            User user = new( command.Login, command.PasswordHash );
 
-        public bool Handle( CreateUserCommand command )
+            _userRepository.Add( user );
+            _unitOfWork.SaveChangesAsync();
+        }
+        catch
         {
-            try
-            {
-                User user = new User( command.Login, command.PasswordHash );
-
-                _userRepository.Add( user );
-                _unitOfWork.SaveChangesAsync();
-            }
-            catch
-            {
-                return false;
-            }
-            return true;
+            return false;
         }
+        return true;
     }
 }

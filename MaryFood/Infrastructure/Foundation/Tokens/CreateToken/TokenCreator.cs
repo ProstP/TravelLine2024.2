@@ -17,9 +17,9 @@ public class TokenCreator : ITokenCreator
 
     public string GenerateAccessToken( string login )
     {
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes( _jwtSettings.SecretKey );
-        var tokenDescriptor = new SecurityTokenDescriptor
+        JwtSecurityTokenHandler tokenHandler = new();
+        byte[] key = Encoding.ASCII.GetBytes( _jwtSettings.SecretKey );
+        SecurityTokenDescriptor tokenDescriptor = new()
         {
             Subject = new ClaimsIdentity(
             [
@@ -29,16 +29,16 @@ public class TokenCreator : ITokenCreator
             SigningCredentials = new SigningCredentials( new SymmetricSecurityKey( key ), SecurityAlgorithms.HmacSha256Signature )
 
         };
-        var token = tokenHandler.CreateToken( tokenDescriptor );
+        SecurityToken token = tokenHandler.CreateToken( tokenDescriptor );
 
         return tokenHandler.WriteToken( token );
     }
 
     public string GenerateRefreshToken( string login, string passwordHash )
     {
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes( _jwtSettings.SecretKey );
-        var tokenDescriptor = new SecurityTokenDescriptor
+        JwtSecurityTokenHandler tokenHandler = new();
+        byte[] key = Encoding.ASCII.GetBytes( _jwtSettings.SecretKey );
+        SecurityTokenDescriptor tokenDescriptor = new()
         {
             Subject = new ClaimsIdentity(
             [
@@ -53,7 +53,7 @@ public class TokenCreator : ITokenCreator
             SigningCredentials = new SigningCredentials( new SymmetricSecurityKey( key ), SecurityAlgorithms.HmacSha256Signature )
 
         };
-        var token = tokenHandler.CreateToken( tokenDescriptor );
+        SecurityToken token = tokenHandler.CreateToken( tokenDescriptor );
 
         return tokenHandler.WriteToken( token );
     }

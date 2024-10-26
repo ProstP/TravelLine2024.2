@@ -21,10 +21,10 @@ public class TokenDecoder : ITokenDecoder
     {
         try
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes( _jwtSettings.SecretKey );
+            JwtSecurityTokenHandler tokenHandler = new();
+            byte[] key = Encoding.ASCII.GetBytes( _jwtSettings.SecretKey );
 
-            var tokenValidationParams = new TokenValidationParameters
+            TokenValidationParameters tokenValidationParams = new()
             {
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey( key ),
@@ -34,15 +34,15 @@ public class TokenDecoder : ITokenDecoder
             };
 
             SecurityToken securityToken;
-            var principle = tokenHandler.ValidateToken( token, tokenValidationParams, out securityToken );
+            ClaimsPrincipal principle = tokenHandler.ValidateToken( token, tokenValidationParams, out securityToken );
 
             JwtSecurityToken jwtSecurityToken = securityToken as JwtSecurityToken;
 
             if ( jwtSecurityToken != null && jwtSecurityToken.Header.Alg.Equals( SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase )
                 && jwtSecurityToken.ValidTo >= DateTime.UtcNow )
             {
-                var loginFromToken = principle.FindFirst( ClaimTypes.NameIdentifier ).Value;
-                var passFromToken = principle.FindFirst( "password" ).Value;
+                string loginFromToken = principle.FindFirst( ClaimTypes.NameIdentifier ).Value;
+                string passFromToken = principle.FindFirst( "password" ).Value;
 
                 if ( loginFromToken.IsNullOrEmpty() || passFromToken.IsNullOrEmpty() )
                 {

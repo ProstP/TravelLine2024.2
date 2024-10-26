@@ -1,8 +1,7 @@
-﻿namespace Application.Users.Command.CreateUserCommand
+﻿namespace Application.Users.Command.CreateUserCommand;
+
+public class CreateUserCommand
 {
-    public class CreateUserCommand
-    {
-        public string Login { get; set; }
-        public string PasswordHash { get; set; }
-    }
+    public string Login { get; init; }
+    public string PasswordHash { get; init; }
 }

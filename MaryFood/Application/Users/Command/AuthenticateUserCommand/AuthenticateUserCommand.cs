@@ -1,8 +1,7 @@
-﻿namespace Application.Users.Command.AuthenticateUserCommand
+﻿namespace Application.Users.Command.AuthenticateUserCommand;
+
+public class AuthenticateUserCommand
 {
-    public class AuthenticateUserCommand
-    {
-        public string Login { get; set; }
-        public string PasswordHash { get; set; }
-    }
+    public string Login { get; init; }
+    public string PasswordHash { get; init; }
 }
