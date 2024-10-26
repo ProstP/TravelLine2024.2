@@ -6,7 +6,7 @@ public interface IUserRepository : IRepository<User>
 {
     Task<User> Get( int id );
 
-    Task<User> GetByLodin( string login );
+    Task<User> GetByLogin( string login );
 
     User Update( int id, User user );
 }

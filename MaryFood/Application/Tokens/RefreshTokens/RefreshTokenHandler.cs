@@ -22,7 +22,7 @@ namespace Application.Tokens.RefreshTokens
         {
             var dto = _refreshTokenDecoder.Decode( token.Token );
 
-            var user = await _userRepository.GetByLodin( dto.Login );
+            var user = await _userRepository.GetByLogin( dto.Login );
             if ( user == null || user.PasswordHash != dto.PasswordHash )
             {
                 return null;

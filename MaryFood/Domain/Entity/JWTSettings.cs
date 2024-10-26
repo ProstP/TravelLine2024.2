@@ -1,7 +1,6 @@
-﻿namespace Domain.Entity
+﻿namespace Domain.Entity;
+
+public class JWTSettings
 {
-    public class JWTSettings
-    {
-        public string SecretKey { get; set; }
-    }
+    public string SecretKey { get; set; }
 }

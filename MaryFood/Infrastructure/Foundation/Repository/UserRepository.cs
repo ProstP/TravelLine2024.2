@@ -17,7 +17,7 @@ public class UserRepository : Repository<User>, IUserRepository
                           .FirstAsync( u => u.Id == id );
     }
 
-    public async Task<User> GetByLodin( string login )
+    public async Task<User> GetByLogin( string login )
     {
         return await DbSet.FirstAsync( u => u.Login == login );
     }

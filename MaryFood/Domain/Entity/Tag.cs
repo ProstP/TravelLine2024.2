@@ -1,18 +1,19 @@
-﻿namespace Domain.Entity
+﻿namespace Domain.Entity;
+
+public class Tag : Entity
 {
-    public class Tag
+    public string Name { get; private init; }
+    public string Description { get; private init; }
+
+    public List<Recipe> Recipes { get; private init; } = new();
+
+    public Tag( string name, string description )
     {
-        public int Id { get; private init; }
-        public string Name { get; private init; }
-        public string Description { get; private init; }
-
-        public List<Recipe> Recipes { get; private init; } = new();
-
-        public Tag( int id, string name, string description )
+        if ( String.IsNullOrWhiteSpace( name ) )
         {
-            Id = id;
-            Name = name;
-            Description = description;
+            throw new ArgumentNullException( "Invalid name", nameof( name ) );
         }
+        Name = name;
+        Description = description;
     }
 }

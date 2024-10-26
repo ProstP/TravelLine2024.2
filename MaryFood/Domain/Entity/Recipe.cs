@@ -1,7 +1,6 @@
 ﻿namespace Domain.Entity;
-public class Recipe
+public class Recipe : Entity
 {
-    public int Id { get; private init; }
     public string Name { get; private set; }
     public string Description { get; private set; }
     public int CookingTime { get; private set; }
@@ -16,12 +15,11 @@ public class Recipe
     public List<Like> Like { get; private init; } = new();
     public List<Tag> Tags { get; private init; } = new();
 
-    public Recipe( int id, string name, string description, int cookingTime, int personNum, string image, int userId )
+    public Recipe( string name, string description, int cookingTime, int personNum, string image, int userId )
     {
-        Id = id;
         if ( string.IsNullOrWhiteSpace( name ) )
         {
-            throw new ArgumentNullException( "Name is empty or white spaces" );
+            throw new ArgumentNullException( "Invalid name", nameof( name ) );
         }
         Name = name;
         Description = description;
@@ -35,7 +33,7 @@ public class Recipe
     {
         if ( string.IsNullOrWhiteSpace( name ) )
         {
-            throw new ArgumentNullException( "Name is empty or white spaces" );
+            throw new ArgumentNullException( "Invalid name", nameof( name ) );
         }
         Name = name;
         Description = description;

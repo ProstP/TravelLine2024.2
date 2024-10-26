@@ -1,41 +1,38 @@
-﻿namespace Domain.Entity
+﻿namespace Domain.Entity;
+
+public class Ingredient : Entity
 {
-    public class Ingredient
+    public string Header { get; private set; }
+    public string SubIngredients { get; private set; }
+
+    public int RecipeId { get; private init; }
+
+    public Ingredient( string header, string subIngredients, int recipeId )
     {
-        public int Id { get; private init; }
-        public string Header { get; private set; }
-        public string SubIngredients { get; private set; }
-
-        public int RecipeId { get; private init; }
-
-        public Ingredient( int id, string header, string subIngredients, int recipeId )
+        if ( String.IsNullOrWhiteSpace( header ) )
         {
-            Id = id;
-            if ( String.IsNullOrWhiteSpace( header ) )
-            {
-                throw new ArgumentNullException( "Header is null or white spaces" );
-            }
-            Header = header;
-            if ( String.IsNullOrWhiteSpace( subIngredients ) )
-            {
-                throw new ArgumentNullException( "Ingredients is null or white spaces" );
-            }
-            SubIngredients = subIngredients;
-            RecipeId = recipeId;
+            throw new ArgumentNullException( "Invalid header", nameof( header ) );
         }
-
-        public void Update( string header, string subIngredients )
+        Header = header;
+        if ( String.IsNullOrWhiteSpace( subIngredients ) )
         {
-            if ( String.IsNullOrWhiteSpace( header ) )
-            {
-                throw new ArgumentNullException( "Header is null or white spaces" );
-            }
-            Header = header;
-            if ( String.IsNullOrWhiteSpace( subIngredients ) )
-            {
-                throw new ArgumentNullException( "Ingredients is null or white spaces" );
-            }
-            SubIngredients = subIngredients;
+            throw new ArgumentNullException( "Invalid subIngredients", nameof( subIngredients ) );
         }
+        SubIngredients = subIngredients;
+        RecipeId = recipeId;
+    }
+
+    public void Update( string header, string subIngredients )
+    {
+        if ( String.IsNullOrWhiteSpace( header ) )
+        {
+            throw new ArgumentNullException( "Invalid header", nameof( header ) );
+        }
+        Header = header;
+        if ( String.IsNullOrWhiteSpace( subIngredients ) )
+        {
+            throw new ArgumentNullException( "Invalid subIngredients", nameof( subIngredients ) );
+        }
+        SubIngredients = subIngredients;
     }
 }

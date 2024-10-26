@@ -17,7 +17,7 @@ namespace Application.Users.Command.AuthenticateUserCommand
 
         public async Task<AuthenticateUserCommandDto> Handle( AuthenticateUserCommand command )
         {
-            var user = await _userRepository.GetByLodin( command.Login );
+            var user = await _userRepository.GetByLogin( command.Login );
             if ( user == null || user.PasswordHash != command.PasswordHash )
             {
                 return null;
