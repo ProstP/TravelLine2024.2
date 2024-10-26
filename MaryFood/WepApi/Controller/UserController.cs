@@ -1,7 +1,7 @@
 ﻿using Application.Token.DecodeToken;
 using Application.Token.RefreshTokens;
-using Application.Users.Command.AuthenticateUserCommand;
-using Application.Users.Command.CreateUserCommand;
+using Application.User.Command.AuthenticateUserCommand;
+using Application.User.Command.CreateUserCommand;
 using Domain.Entity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

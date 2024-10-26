@@ -1,10 +1,10 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Domain.Entity;
+using Application.Token.CreateToken;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Application.Token.CreateToken;
+namespace Infrastructure.Foundation.Token.CreateToken;
 
 public class TokenCreator : ITokenCreator
 {

@@ -2,11 +2,10 @@
 using Application.Crypt.VerifyHash;
 using Application.Result;
 using Application.Token.CreateToken;
-using Application.Users.Dtos;
-using Domain.Entity;
+using Application.User.Dtos;
 using Domain.Repository;
 
-namespace Application.Users.Command.AuthenticateUserCommand;
+namespace Application.User.Command.AuthenticateUserCommand;
 
 public class AuthenticateUserCommandHandler : ICommandHandler<AuthenticateUserCommandDto, AuthenticateUserCommand>
 {
@@ -23,7 +22,7 @@ public class AuthenticateUserCommandHandler : ICommandHandler<AuthenticateUserCo
 
     public async Task<Result<AuthenticateUserCommandDto>> HandleAsync( AuthenticateUserCommand command )
     {
-        User user = await _userRepository.GetByLogin( command.Login );
+        Domain.Entity.User user = await _userRepository.GetByLogin( command.Login );
         if ( user == null || !_passwordVerifier.Verify( command.Password, user.PasswordHash ) )
         {
             return Result<AuthenticateUserCommandDto>.FromError( "User not found" );

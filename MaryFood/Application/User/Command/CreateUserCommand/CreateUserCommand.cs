@@ -1,4 +1,4 @@
-﻿namespace Application.Users.Command.CreateUserCommand;
+﻿namespace Application.User.Command.CreateUserCommand;
 
 public class CreateUserCommand
 {

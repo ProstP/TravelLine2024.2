@@ -1,11 +1,9 @@
 ﻿using Application.CQRSInterfaces;
 using Application.Crypt.HashStr;
-using Application.Result;
 using Application.UnitOfWork;
-using Domain.Entity;
 using Domain.Repository;
 
-namespace Application.Users.Command.CreateUserCommand;
+namespace Application.User.Command.CreateUserCommand;
 
 public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand>
 {
@@ -25,7 +23,7 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand>
         try
         {
             string passwordHash = _passwordHasher.Hash( command.Password );
-            User user = new( command.Login, passwordHash );
+            Domain.Entity.User user = new( command.Login, passwordHash );
 
             _userRepository.Add( user );
             await _unitOfWork.SaveChangesAsync();

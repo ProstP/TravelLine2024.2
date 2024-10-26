@@ -3,7 +3,6 @@ using Application.Result;
 using Application.Token.CreateToken;
 using Application.Token.DecodeToken;
 using Application.Token.Dtos;
-using Domain.Entity;
 using Domain.Repository;
 
 namespace Application.Token.RefreshTokens;
@@ -25,7 +24,7 @@ public class RefreshTokenHandler : ICommandHandler<RefreshTokenDto, RefreshToken
     {
         DecodeTokenDto decodeTokenDto = _tokenDecoder.Decode( token.Token );
 
-        User user = await _userRepository.GetByLogin( decodeTokenDto.Login );
+        Domain.Entity.User user = await _userRepository.GetByLogin( decodeTokenDto.Login );
         if ( user == null || user.PasswordHash != decodeTokenDto.PasswordHash )
         {
             return Result<RefreshTokenDto>.FromError( "Password is not right" );

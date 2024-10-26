@@ -2,14 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Foundation.EntityConfiguration
+namespace Infrastructure.Foundation.EntityConfiguration;
+
+public class LikeConfiguration : IEntityTypeConfiguration<Like>
 {
-    public class LikeConfiguration : IEntityTypeConfiguration<Like>
+    public void Configure( EntityTypeBuilder<Like> builder )
     {
-        public void Configure( EntityTypeBuilder<Like> builder )
-        {
-            builder.ToTable( nameof( Like ) )
-                   .HasKey( l => new { l.UserId, l.RecipeId } );
-        }
+        builder.ToTable( nameof( Like ) )
+               .HasKey( l => new { l.UserId, l.RecipeId } );
     }
 }
