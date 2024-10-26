@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Application.Token.DecodeToken;
 using Application.Token.Dtos;
-using Domain.Repository;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Infrastructure.Foundation.Token.DecodeToken;
@@ -12,9 +12,9 @@ public class TokenDecoder : ITokenDecoder
 {
     private readonly JWTSettings _jwtSettings;
 
-    public TokenDecoder( JWTSettings jwtSettings, IUserRepository userRepository )
+    public TokenDecoder( IOptions<JWTSettings> jwtSettings )
     {
-        _jwtSettings = jwtSettings;
+        _jwtSettings = jwtSettings.Value;
     }
 
     public DecodeTokenDto Decode( string token )
@@ -28,8 +28,8 @@ public class TokenDecoder : ITokenDecoder
             {
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey( key ),
-                ValidateIssuer = true,
-                ValidateAudience = true,
+                ValidateIssuer = false,
+                ValidateAudience = false,
                 ValidateLifetime = true,
             };
 

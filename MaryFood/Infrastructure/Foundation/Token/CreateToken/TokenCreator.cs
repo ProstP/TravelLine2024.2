@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Text;
 using Application.Token.CreateToken;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Infrastructure.Foundation.Token.CreateToken;
@@ -10,9 +11,9 @@ public class TokenCreator : ITokenCreator
 {
     private readonly JWTSettings _jwtSettings;
 
-    public TokenCreator( JWTSettings jwtSettings )
+    public TokenCreator( IOptions<JWTSettings> jwtSettings )
     {
-        _jwtSettings = jwtSettings;
+        _jwtSettings = jwtSettings.Value;
     }
 
     public string GenerateAccessToken( string login )

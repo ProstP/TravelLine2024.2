@@ -41,7 +41,7 @@ public class UserController : ControllerBase
     [HttpPost, Route( "register" )]
     public async Task<IActionResult> Register( [FromBody] RegisterUserRequest request )
     {
-        var command = new CreateUserCommand()
+        CreateUserCommand command = new()
         {
             Login = request.Login,
             Password = request.Password,
@@ -50,7 +50,7 @@ public class UserController : ControllerBase
 
         if ( !result.IsSuccess )
         {
-            return BadRequest();
+            return BadRequest( result.Error );
         }
 
         return Ok();
@@ -60,7 +60,7 @@ public class UserController : ControllerBase
     [HttpPost, Route( "login" )]
     public async Task<IActionResult> Login( [FromBody] LoginUserRequest request )
     {
-        var command = new AuthenticateUserCommand()
+        AuthenticateUserCommand command = new()
         {
             Login = request.Login,
             Password = request.Password
@@ -70,7 +70,7 @@ public class UserController : ControllerBase
 
         if ( !result.IsSuccess )
         {
-            return BadRequest();
+            return BadRequest( result.Error );
         }
         TokenResponse tokenResponse = new()
         {
@@ -85,7 +85,7 @@ public class UserController : ControllerBase
     [HttpPost, Route( "refresh" )]
     public async Task<IActionResult> RefreshToken( [FromBody] RefreshTokenRequest request )
     {
-        var command = new RefreshTokenCommand()
+        RefreshTokenCommand command = new()
         {
             Token = request.RefreshToken,
         };
@@ -93,7 +93,7 @@ public class UserController : ControllerBase
 
         if ( !result.IsSuccess )
         {
-            return BadRequest();
+            return BadRequest( result.Error );
         }
         TokenResponse tokenResponse = new()
         {

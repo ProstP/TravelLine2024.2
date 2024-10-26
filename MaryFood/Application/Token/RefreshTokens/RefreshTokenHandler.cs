@@ -23,6 +23,10 @@ public class RefreshTokenHandler : ICommandHandler<RefreshTokenDto, RefreshToken
     public async Task<Result<RefreshTokenDto>> HandleAsync( RefreshTokenCommand token )
     {
         DecodeTokenDto decodeTokenDto = _tokenDecoder.Decode( token.Token );
+        if ( decodeTokenDto == null )
+        {
+            Result<RefreshTokenDto>.FromError( "Token not available" );
+        }
 
         Domain.Entity.User user = await _userRepository.GetByLogin( decodeTokenDto.Login );
         if ( user == null || user.PasswordHash != decodeTokenDto.PasswordHash )

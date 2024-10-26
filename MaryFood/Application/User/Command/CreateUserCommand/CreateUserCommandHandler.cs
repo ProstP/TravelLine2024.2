@@ -28,9 +28,9 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand>
             _userRepository.Add( user );
             await _unitOfWork.SaveChangesAsync();
         }
-        catch
+        catch (Exception e)
         {
-            return Result.Result.FromError( "User not created" );
+            return Result.Result.FromError( e.Message );
         }
         return Result.Result.FromSuccess();
     }

@@ -25,8 +25,7 @@ public class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
                .IsRequired();
 
         builder.Property( r => r.Image )
-               .HasMaxLength( 100 )
-               .IsRequired();
+               .HasMaxLength( 100 );
 
         builder.HasMany( r => r.Steps )
                .WithOne()

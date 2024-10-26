@@ -8,6 +8,16 @@ public class MaryFoodDbContext : DbContext
         : base( options )
     { }
 
+
+    /*
+    protected override void OnConfiguring( DbContextOptionsBuilder optionsBuilder )
+    {
+        base.OnConfiguring( optionsBuilder );
+
+        optionsBuilder.UseSqlServer( "Server=LAPTOP-U0R8E398\\SQLEXPRESS;Database=MaryFood;Trusted_Connection=True;TrustServerCertificate=True;" );
+    }
+    */
+
     protected override void OnModelCreating( ModelBuilder modelBuilder )
     {
         base.OnModelCreating( modelBuilder );
