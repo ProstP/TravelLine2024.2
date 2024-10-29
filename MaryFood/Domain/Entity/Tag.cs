@@ -9,9 +9,9 @@ public class Tag : Entity
 
     public Tag( string name, string description )
     {
-        if ( String.IsNullOrWhiteSpace( name ) )
+        if ( string.IsNullOrWhiteSpace( name ) )
         {
-            throw new ArgumentNullException( "Invalid name", nameof( name ) );
+            throw new ArgumentNullException( nameof( name ), "Invalid name" );
         }
         Name = name;
         Description = description;

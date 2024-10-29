@@ -12,14 +12,14 @@ public class User : Entity
 
     public User( string login, string passwordHash )
     {
-        if ( String.IsNullOrWhiteSpace( login ) )
+        if ( string.IsNullOrWhiteSpace( login ) )
         {
-            throw new ArgumentNullException( "Invalid login", nameof( login ) );
+            throw new ArgumentNullException( nameof( login ), "Invalid login" );
         }
         Login = login;
-        if ( String.IsNullOrWhiteSpace( passwordHash ) )
+        if ( string.IsNullOrWhiteSpace( passwordHash ) )
         {
-            throw new ArgumentNullException( "Invalid passwordHash", nameof( passwordHash ) );
+            throw new ArgumentNullException( nameof( passwordHash ), "Invalid passwordHash" );
         }
         PasswordHash = passwordHash;
     }
@@ -27,20 +27,16 @@ public class User : Entity
 
     public void Update( string login, string passwordHash, string name, string about )
     {
-        if ( String.IsNullOrWhiteSpace( login ) )
+        if ( string.IsNullOrWhiteSpace( login ) )
         {
-            throw new ArgumentNullException( "Invalid login", nameof( login ) );
+            throw new ArgumentNullException( nameof( login ), "Invalid login" );
         }
         Login = login;
-        if ( String.IsNullOrWhiteSpace( passwordHash ) )
+        if ( string.IsNullOrWhiteSpace( passwordHash ) )
         {
-            throw new ArgumentNullException( "Invalid passwordHash", nameof( passwordHash ) );
+            throw new ArgumentNullException( nameof( passwordHash ), "Invalid passwordHash" );
         }
         PasswordHash = passwordHash;
-        if ( String.IsNullOrWhiteSpace( name ) )
-        {
-            throw new ArgumentNullException( "Invalid name", nameof( name ) );
-        }
         Name = name;
         About = about;
     }

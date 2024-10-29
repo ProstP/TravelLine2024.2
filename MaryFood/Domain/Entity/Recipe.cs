@@ -19,7 +19,7 @@ public class Recipe : Entity
     {
         if ( string.IsNullOrWhiteSpace( name ) )
         {
-            throw new ArgumentNullException( "Invalid name", nameof( name ) );
+            throw new ArgumentNullException( nameof( name ), "Invalid name" );
         }
         Name = name;
         Description = description;
@@ -33,7 +33,7 @@ public class Recipe : Entity
     {
         if ( string.IsNullOrWhiteSpace( name ) )
         {
-            throw new ArgumentNullException( "Invalid name", nameof( name ) );
+            throw new ArgumentNullException( nameof( name ), "Invalid name" );
         }
         Name = name;
         Description = description;

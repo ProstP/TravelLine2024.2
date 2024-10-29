@@ -9,14 +9,14 @@ public class Ingredient : Entity
 
     public Ingredient( string header, string subIngredients, int recipeId )
     {
-        if ( String.IsNullOrWhiteSpace( header ) )
+        if ( string.IsNullOrWhiteSpace( header ) )
         {
-            throw new ArgumentNullException( "Invalid header", nameof( header ) );
+            throw new ArgumentNullException( nameof( header ), "Invalid header" );
         }
         Header = header;
-        if ( String.IsNullOrWhiteSpace( subIngredients ) )
+        if ( string.IsNullOrWhiteSpace( subIngredients ) )
         {
-            throw new ArgumentNullException( "Invalid subIngredients", nameof( subIngredients ) );
+            throw new ArgumentNullException( nameof( subIngredients ), "Invalid subIngredients" );
         }
         SubIngredients = subIngredients;
         RecipeId = recipeId;
@@ -24,14 +24,14 @@ public class Ingredient : Entity
 
     public void Update( string header, string subIngredients )
     {
-        if ( String.IsNullOrWhiteSpace( header ) )
+        if ( string.IsNullOrWhiteSpace( header ) )
         {
-            throw new ArgumentNullException( "Invalid header", nameof( header ) );
+            throw new ArgumentNullException( nameof( header ), "Invalid header" );
         }
         Header = header;
-        if ( String.IsNullOrWhiteSpace( subIngredients ) )
+        if ( string.IsNullOrWhiteSpace( subIngredients ) )
         {
-            throw new ArgumentNullException( "Invalid subIngredients", nameof( subIngredients ) );
+            throw new ArgumentNullException( nameof( subIngredients ), "Invalid subIngredients" );
         }
         SubIngredients = subIngredients;
     }

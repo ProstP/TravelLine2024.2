@@ -1,16 +1,15 @@
-using Application.CQRSInterfaces;
 using Infrastructure.Foundation.Bindings;
 
-var builder = WebApplication.CreateBuilder( args );
+WebApplicationBuilder builder = WebApplication.CreateBuilder( args );
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-BindingsWebApi.Bind( builder );
 BindingsInfrastructure.Bind( builder );
+BindingsWebApi.Bind( builder );
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 if ( app.Environment.IsDevelopment() )
 {

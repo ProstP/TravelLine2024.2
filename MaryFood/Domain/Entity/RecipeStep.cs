@@ -11,9 +11,9 @@ public class RecipeStep : Entity
     {
         Id = id;
         StepNum = stepNum;
-        if ( String.IsNullOrWhiteSpace( description ) )
+        if ( string.IsNullOrWhiteSpace( description ) )
         {
-            throw new ArgumentNullException( "Invalid description", nameof( description ) );
+            throw new ArgumentNullException( nameof( description ), "Invalid description" );
         }
         Description = description;
         RecipeId = recipeId;
@@ -22,9 +22,9 @@ public class RecipeStep : Entity
     public void Update( int stepNum, string description )
     {
         StepNum = stepNum;
-        if ( String.IsNullOrWhiteSpace( description ) )
+        if ( string.IsNullOrWhiteSpace( description ) )
         {
-            throw new ArgumentNullException( "Invalid description", nameof( description ) );
+            throw new ArgumentNullException( nameof( description ), "Invalid description" );
         }
         Description = description;
     }
