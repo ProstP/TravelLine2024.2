@@ -2,5 +2,5 @@
 public interface ITokenCreator
 {
     string GenerateAccessToken( string login );
-    string GenerateRefreshToken( string login, string password );
+    string GenerateRefreshToken( string login );
 }

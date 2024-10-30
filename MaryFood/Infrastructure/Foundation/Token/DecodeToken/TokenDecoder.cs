@@ -33,8 +33,7 @@ public class TokenDecoder : ITokenDecoder
                 ValidateLifetime = true,
             };
 
-            SecurityToken securityToken;
-            ClaimsPrincipal principle = tokenHandler.ValidateToken( token, tokenValidationParams, out securityToken );
+            ClaimsPrincipal principle = tokenHandler.ValidateToken( token, tokenValidationParams, out SecurityToken securityToken );
 
             JwtSecurityToken jwtSecurityToken = securityToken as JwtSecurityToken;
 
@@ -42,9 +41,8 @@ public class TokenDecoder : ITokenDecoder
                 && jwtSecurityToken.ValidTo >= DateTime.UtcNow )
             {
                 string loginFromToken = principle.FindFirst( ClaimTypes.NameIdentifier ).Value;
-                string passFromToken = principle.FindFirst( "password" ).Value;
 
-                if ( loginFromToken.IsNullOrEmpty() || passFromToken.IsNullOrEmpty() )
+                if ( loginFromToken.IsNullOrEmpty() )
                 {
                     return null;
                 }
@@ -52,7 +50,6 @@ public class TokenDecoder : ITokenDecoder
                 return new DecodeTokenDto()
                 {
                     Login = loginFromToken,
-                    PasswordHash = passFromToken,
                 };
             }
         }

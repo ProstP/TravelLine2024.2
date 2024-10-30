@@ -29,15 +29,15 @@ public class RefreshTokenHandler : ICommandHandler<RefreshTokenDto, RefreshToken
         }
 
         Domain.Entity.User user = await _userRepository.GetByLogin( decodeTokenDto.Login );
-        if ( user == null || user.PasswordHash != decodeTokenDto.PasswordHash )
+        if ( user == null )
         {
-            return Result<RefreshTokenDto>.FromError( "Password is not right" );
+            return Result<RefreshTokenDto>.FromError( "User not found" );
         }
 
         RefreshTokenDto refreshTokenDto = new()
         {
             AccessToken = _tokenCreator.GenerateAccessToken( user.Login ),
-            RefreshToken = _tokenCreator.GenerateRefreshToken( user.Login, user.PasswordHash ),
+            RefreshToken = _tokenCreator.GenerateRefreshToken( user.Login ),
         };
 
         return Result<RefreshTokenDto>.FromSuccess( refreshTokenDto );

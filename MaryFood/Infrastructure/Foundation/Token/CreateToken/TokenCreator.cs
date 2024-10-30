@@ -35,7 +35,7 @@ public class TokenCreator : ITokenCreator
         return tokenHandler.WriteToken( token );
     }
 
-    public string GenerateRefreshToken( string login, string passwordHash )
+    public string GenerateRefreshToken( string login )
     {
         JwtSecurityTokenHandler tokenHandler = new();
         byte[] key = Encoding.ASCII.GetBytes( _jwtSettings.SecretKey );
@@ -45,11 +45,6 @@ public class TokenCreator : ITokenCreator
             [
                 new Claim(ClaimTypes.NameIdentifier, login),
             ] ),
-
-            Claims = new Dictionary<string, object>()
-            {
-                { "password", passwordHash }
-            },
             Expires = DateTime.UtcNow.AddDays( 1 ),
             SigningCredentials = new SigningCredentials( new SymmetricSecurityKey( key ), SecurityAlgorithms.HmacSha256Signature )
 
