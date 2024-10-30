@@ -1,5 +1,5 @@
 ﻿using Application.CQRSInterfaces;
-using Application.Crypt.VerifyHash;
+using Application.Crypt.VerifyPassword;
 using Application.Result;
 using Application.UseCases.Token.CreateToken;
 using Application.UseCases.User.Dtos;

@@ -35,9 +35,8 @@ public class TokenDecoder : ITokenDecoder
 
             ClaimsPrincipal principle = tokenHandler.ValidateToken( token, tokenValidationParams, out SecurityToken securityToken );
 
-            JwtSecurityToken jwtSecurityToken = securityToken as JwtSecurityToken;
 
-            if ( jwtSecurityToken != null && jwtSecurityToken.Header.Alg.Equals( SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase )
+            if ( securityToken is JwtSecurityToken jwtSecurityToken && jwtSecurityToken.Header.Alg.Equals( SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase )
                 && jwtSecurityToken.ValidTo >= DateTime.UtcNow )
             {
                 string loginFromToken = principle.FindFirst( ClaimTypes.NameIdentifier ).Value;

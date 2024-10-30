@@ -1,4 +1,4 @@
-﻿using Application.Crypt.VerifyHash;
+﻿using Application.Crypt.VerifyPassword;
 
 namespace Infrastructure.Foundation.Crypt.VerifyPassword;
 public class PasswordVerifier : IPasswordVerifier

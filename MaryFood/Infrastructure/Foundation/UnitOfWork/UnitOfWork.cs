@@ -4,7 +4,7 @@ namespace Infrastructure.Foundation.UnitOfWork;
 
 public class UnitOfWork : IUnitOfWork
 {
-    MaryFoodDbContext _dbContext;
+    private readonly MaryFoodDbContext _dbContext;
 
     public UnitOfWork( MaryFoodDbContext dbContext )
     {

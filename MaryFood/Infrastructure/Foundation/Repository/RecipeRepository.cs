@@ -49,7 +49,7 @@ public class RecipeRepository : Repository<Recipe>, IRecipeRepository
 
     public Recipe Update( int id, Recipe recipe )
     {
-        var old = DbSet.FirstOrDefault( r => r.Id == id );
+        Recipe old = DbSet.FirstOrDefault( r => r.Id == id );
         if ( old == null )
         {
             return null;

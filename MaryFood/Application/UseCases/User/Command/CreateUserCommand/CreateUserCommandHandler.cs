@@ -1,5 +1,5 @@
 ﻿using Application.CQRSInterfaces;
-using Application.Crypt.HashStr;
+using Application.Crypt.HashPassword;
 using Application.UnitOfWork;
 using Domain.Repository;
 

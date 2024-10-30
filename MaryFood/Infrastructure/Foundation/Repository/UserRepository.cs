@@ -24,7 +24,7 @@ public class UserRepository : Repository<User>, IUserRepository
 
     public User Update( int id, User user )
     {
-        var old = DbSet.FirstOrDefault( u => u.Id == id );
+        User old = DbSet.FirstOrDefault( u => u.Id == id );
         if ( old == null )
         {
             return null;
