@@ -1,4 +1,4 @@
-﻿namespace Application.Token.Dtos;
+﻿namespace Application.UseCases.Token.Dtos;
 
 public class DecodeTokenDto
 {

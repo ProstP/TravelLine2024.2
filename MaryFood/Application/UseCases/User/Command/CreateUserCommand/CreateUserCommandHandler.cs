@@ -3,7 +3,7 @@ using Application.Crypt.HashStr;
 using Application.UnitOfWork;
 using Domain.Repository;
 
-namespace Application.User.Command.CreateUserCommand;
+namespace Application.UseCases.User.Command.CreateUserCommand;
 
 public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand>
 {
@@ -28,7 +28,7 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand>
             _userRepository.Add( user );
             await _unitOfWork.SaveChangesAsync();
         }
-        catch (Exception e)
+        catch ( Exception e )
         {
             return Result.Result.FromError( e.Message );
         }

@@ -1,4 +1,4 @@
-﻿namespace Application.Token.CreateToken;
+﻿namespace Application.UseCases.Token.CreateToken;
 public interface ITokenCreator
 {
     string GenerateAccessToken( string login );

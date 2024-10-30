@@ -1,6 +1,6 @@
-﻿using Application.Token.RefreshTokens;
-using Application.User.Command.AuthenticateUserCommand;
-using Application.User.Command.CreateUserCommand;
+﻿using Application.UseCases.Token.RefreshTokens;
+using Application.UseCases.User.Command.AuthenticateUserCommand;
+using Application.UseCases.User.Command.CreateUserCommand;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application

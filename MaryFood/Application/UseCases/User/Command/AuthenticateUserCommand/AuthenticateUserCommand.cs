@@ -1,4 +1,4 @@
-﻿namespace Application.User.Command.AuthenticateUserCommand;
+﻿namespace Application.UseCases.User.Command.AuthenticateUserCommand;
 
 public class AuthenticateUserCommand
 {

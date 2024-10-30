@@ -1,8 +1,8 @@
 ﻿using Application.Crypt.HashStr;
 using Application.Crypt.VerifyHash;
-using Application.Token.CreateToken;
-using Application.Token.DecodeToken;
 using Application.UnitOfWork;
+using Application.UseCases.Token.CreateToken;
+using Application.UseCases.Token.DecodeToken;
 using Domain.Repository;
 using Infrastructure.Foundation.Crypt.HashStr;
 using Infrastructure.Foundation.Crypt.VerifyPassword;

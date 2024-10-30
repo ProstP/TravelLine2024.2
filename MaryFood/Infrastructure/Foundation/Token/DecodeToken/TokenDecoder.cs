@@ -1,8 +1,8 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Application.Token.DecodeToken;
-using Application.Token.Dtos;
+using Application.UseCases.Token.DecodeToken;
+using Application.UseCases.Token.Dtos;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 

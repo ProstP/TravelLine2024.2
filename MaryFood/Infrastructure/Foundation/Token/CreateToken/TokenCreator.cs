@@ -1,7 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Application.Token.CreateToken;
+using Application.UseCases.Token.CreateToken;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 

@@ -1,4 +1,4 @@
-﻿namespace Application.Token.RefreshTokens;
+﻿namespace Application.UseCases.Token.RefreshTokens;
 
 public class RefreshTokenCommand
 {

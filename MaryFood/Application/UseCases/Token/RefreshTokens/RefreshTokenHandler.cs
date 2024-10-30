@@ -1,11 +1,11 @@
 ﻿using Application.CQRSInterfaces;
 using Application.Result;
-using Application.Token.CreateToken;
-using Application.Token.DecodeToken;
-using Application.Token.Dtos;
+using Application.UseCases.Token.CreateToken;
+using Application.UseCases.Token.DecodeToken;
+using Application.UseCases.Token.Dtos;
 using Domain.Repository;
 
-namespace Application.Token.RefreshTokens;
+namespace Application.UseCases.Token.RefreshTokens;
 
 public class RefreshTokenHandler : ICommandHandler<RefreshTokenDto, RefreshTokenCommand>
 {
@@ -25,7 +25,7 @@ public class RefreshTokenHandler : ICommandHandler<RefreshTokenDto, RefreshToken
         DecodeTokenDto decodeTokenDto = _tokenDecoder.Decode( token.Token );
         if ( decodeTokenDto == null )
         {
-            Result<RefreshTokenDto>.FromError( "Token not available" );
+            return Result<RefreshTokenDto>.FromError( "Token not available" );
         }
 
         Domain.Entity.User user = await _userRepository.GetByLogin( decodeTokenDto.Login );

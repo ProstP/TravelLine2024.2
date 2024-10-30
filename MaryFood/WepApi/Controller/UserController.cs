@@ -1,9 +1,9 @@
 ﻿using Application.Result;
-using Application.Token.Dtos;
-using Application.Token.RefreshTokens;
-using Application.User.Command.AuthenticateUserCommand;
-using Application.User.Command.CreateUserCommand;
-using Application.User.Dtos;
+using Application.UseCases.Token.Dtos;
+using Application.UseCases.Token.RefreshTokens;
+using Application.UseCases.User.Command.AuthenticateUserCommand;
+using Application.UseCases.User.Command.CreateUserCommand;
+using Application.UseCases.User.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Contract.Request;
@@ -82,7 +82,7 @@ public class UserController : ControllerBase
     }
 
     [AllowAnonymous]
-    [HttpPost, Route( "refresh" )]
+    [HttpPost, Route( "refresh-token" )]
     public async Task<IActionResult> RefreshToken( [FromBody] RefreshTokenRequest request )
     {
         RefreshTokenCommand command = new()

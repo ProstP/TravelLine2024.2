@@ -1,4 +1,4 @@
-﻿namespace Application.User.Dtos;
+﻿namespace Application.UseCases.User.Dtos;
 
 public class AuthenticateUserCommandDto
 {

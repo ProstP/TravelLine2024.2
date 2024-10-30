@@ -1,11 +1,11 @@
 ﻿using Application.CQRSInterfaces;
 using Application.Crypt.VerifyHash;
 using Application.Result;
-using Application.Token.CreateToken;
-using Application.User.Dtos;
+using Application.UseCases.Token.CreateToken;
+using Application.UseCases.User.Dtos;
 using Domain.Repository;
 
-namespace Application.User.Command.AuthenticateUserCommand;
+namespace Application.UseCases.User.Command.AuthenticateUserCommand;
 
 public class AuthenticateUserCommandHandler : ICommandHandler<AuthenticateUserCommandDto, AuthenticateUserCommand>
 {
