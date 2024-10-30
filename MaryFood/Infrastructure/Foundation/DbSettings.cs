@@ -1,7 +1,6 @@
-﻿namespace Infrastructure.Foundation
+﻿namespace Infrastructure.Foundation;
+
+public class DbSettings
 {
-    public class DbSettings
-    {
-        public string ConnectionString { get; set; }
-    }
+    public string ConnectionString { get; set; }
 }
