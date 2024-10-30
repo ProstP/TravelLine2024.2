@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Foundation.Token;
+﻿namespace Infrastructure.Foundation;
 
 public class JWTSettings
 {

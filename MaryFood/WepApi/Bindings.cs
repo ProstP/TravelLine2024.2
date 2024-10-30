@@ -1,20 +1,26 @@
 ﻿using System.Text;
-using Infrastructure.Foundation.Token;
+using Infrastructure.Foundation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Infrastructure.Foundation.Bindings;
-public static class BindingsWebApi
+public static class Bindings
 {
-    public static void Bind( WebApplicationBuilder builder )
+    public static void AddConfiguration( ConfigurationManager configurationManager )
     {
-        IConfigurationSection jwtSection = builder.Configuration.GetSection( "JWTSettings" );
-        builder.Services.Configure<JWTSettings>( jwtSection );
+        JWTSettings jwtSettings = new();
+        configurationManager.GetSection( "JWTSettings" ).Bind( jwtSettings );
 
-        JWTSettings jwtSettings = jwtSection.Get<JWTSettings>();
+        DbSettings dbOptions = new();
+        configurationManager.GetSection( "DbSettings" ).Bind( dbOptions );
+    }
+
+    public static void AdddWebApiServices( IServiceCollection serviceCollection )
+    {
+        JWTSettings jwtSettings = serviceCollection.BuildServiceProvider().GetRequiredService<IOptions<JWTSettings>>().Value;
         byte[] key = Encoding.ASCII.GetBytes( jwtSettings.SecretKey );
 
-        builder.Services.AddAuthentication( x =>
+        serviceCollection.AddAuthentication( x =>
         {
             x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
