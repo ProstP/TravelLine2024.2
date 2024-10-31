@@ -6,13 +6,10 @@ using Microsoft.IdentityModel.Tokens;
 
 public static class Bindings
 {
-    public static void AddConfiguration( ConfigurationManager configurationManager )
+    public static void AddConfiguration( IServiceCollection serviceCollection, IConfiguration configuration )
     {
-        JWTSettings jwtSettings = new();
-        configurationManager.GetSection( "JWTSettings" ).Bind( jwtSettings );
-
-        DbSettings dbOptions = new();
-        configurationManager.GetSection( "DbSettings" ).Bind( dbOptions );
+        serviceCollection.Configure<JWTSettings>( configuration.GetSection( "JWTSettings" ) );
+        serviceCollection.Configure<DbSettings>( configuration.GetSection( "DbSettings" ) );
     }
 
     public static void AdddWebApiServices( IServiceCollection serviceCollection )
