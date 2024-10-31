@@ -30,13 +30,6 @@ public class UserController : ControllerBase
         _refreshTokenCommandHandler = refreshTokenHandler;
     }
 
-    [Authorize]
-    [HttpGet, Route( "{id:int}" )]
-    public IActionResult Get( [FromRoute] int id )
-    {
-        return Ok( id );
-    }
-
     [AllowAnonymous]
     [HttpPost, Route( "register" )]
     public async Task<IActionResult> Register( [FromBody] RegisterUserRequest request )

@@ -25,7 +25,7 @@ public class AuthenticateUserCommandHandler : ICommandHandler<AuthenticateUserCo
         Domain.Entity.User user = await _userRepository.GetByLogin( command.Login );
         if ( user == null || !_passwordVerifier.Verify( command.Password, user.PasswordHash ) )
         {
-            return Result<AuthenticateUserCommandDto>.FromError( "User not found" );
+            return Result<AuthenticateUserCommandDto>.FromError( "Ivalid login or password" );
         }
 
         AuthenticateUserCommandDto result = new()
