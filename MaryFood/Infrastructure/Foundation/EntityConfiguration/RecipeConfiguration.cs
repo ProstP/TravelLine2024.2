@@ -29,11 +29,13 @@ public class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
 
         builder.HasMany( r => r.Steps )
                .WithOne()
-               .HasForeignKey( s => s.RecipeId );
+               .HasForeignKey( s => s.RecipeId )
+               .OnDelete( DeleteBehavior.Cascade );
 
         builder.HasMany( r => r.Ingredients )
                .WithOne()
-               .HasForeignKey( i => i.RecipeId );
+               .HasForeignKey( i => i.RecipeId )
+               .OnDelete( DeleteBehavior.Cascade );
 
         builder.HasMany( r => r.Tags )
                .WithMany( t => t.Recipes )
@@ -41,10 +43,12 @@ public class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
 
         builder.HasMany( r => r.Favourite )
                .WithOne()
-               .HasForeignKey( f => f.RecipeId );
+               .HasForeignKey( f => f.RecipeId )
+               .OnDelete( DeleteBehavior.Cascade );
 
         builder.HasMany( r => r.Like )
                .WithOne()
-               .HasForeignKey( l => l.RecipeId );
+               .HasForeignKey( l => l.RecipeId )
+               .OnDelete( DeleteBehavior.Cascade );
     }
 }

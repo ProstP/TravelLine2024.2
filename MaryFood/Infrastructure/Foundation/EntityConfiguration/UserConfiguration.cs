@@ -32,11 +32,11 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasMany( u => u.Favourite )
                .WithOne()
                .HasForeignKey( f => f.UserId )
-               .OnDelete( DeleteBehavior.NoAction );
+               .OnDelete( DeleteBehavior.Restrict );
 
         builder.HasMany( u => u.Like )
                .WithOne()
                .HasForeignKey( l => l.UserId )
-               .OnDelete( DeleteBehavior.NoAction );
+               .OnDelete( DeleteBehavior.Restrict );
     }
 }
