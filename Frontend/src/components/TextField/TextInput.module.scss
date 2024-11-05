@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+@mixin border {
+  border: 2px solid rgba(145, 150, 161, 0.4);
+  border-radius: 15px;
+}
+
+@mixin borderInFocus {
+  border: 2px solid rgba(145, 150, 161, 1);
+  outline: none;
+}
+
+@mixin textColor {
+  color: rgba(37, 41, 45, 0.5);
+}
+
+@mixin text {
+  @include textColor();
+  font: normal 14px "Montserrat";
+}
+
+@mixin padding {
+  padding: 10px 20px;
+}
+
+.input {
+  width: 100%;
+  height: 25px;
+  background-color: white;
+  @include border();
+  @include text();
+  @include padding();
+}
+
+.input::placeholder {
+  @include textColor();
+}
+
+.input:focus {
+  @include borderInFocus();
+}

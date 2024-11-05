@@ -9,7 +9,8 @@ function App() {
     <BrowserRouter>
       <Header></Header>
       <Routes>
-        <Route path="/create-recipe" element={<CreateRecipe />}></Route>
+        {/* <Route path="/create-recipe" element={<CreateRecipe />}></Route> */}
+        <Route path="/" element={<CreateRecipe />}></Route>
       </Routes>
       <Footer></Footer>
     </BrowserRouter>
