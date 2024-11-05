@@ -51,7 +51,7 @@ public class UserController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost, Route( "login" )]
-    public async Task<IActionResult> Login( [FromBody] LoginUserRequest request )
+    public async Task<ActionResult<TokenResponse>> Login( [FromBody] LoginUserRequest request )
     {
         AuthenticateUserCommand command = new()
         {
@@ -76,7 +76,7 @@ public class UserController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost, Route( "refresh-token" )]
-    public async Task<IActionResult> RefreshToken( [FromBody] RefreshTokenRequest request )
+    public async Task<ActionResult<TokenResponse>> RefreshToken( [FromBody] RefreshTokenRequest request )
     {
         RefreshTokenCommand command = new()
         {
