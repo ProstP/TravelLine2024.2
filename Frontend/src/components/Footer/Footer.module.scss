@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+.container {
+  background-color: #fbf9f4;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 10vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  margin-left: 8%;
+  font: bold 24px "Montserrat";
+  color: #fdb100;
+  cursor: default;
+}
+
+.copyright {
+  margin-right: 8%;
+  font: normal 12px "Montserrat";
+  color: #4a525a;
+  cursor: default;
+}
