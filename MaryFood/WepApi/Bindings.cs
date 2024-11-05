@@ -4,15 +4,19 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
+namespace WebApi;
+
 public static class Bindings
 {
-    public static void AddConfiguration( IServiceCollection serviceCollection, IConfiguration configuration )
+    public static IServiceCollection AddConfiguration( this IServiceCollection serviceCollection, IConfiguration configuration )
     {
         serviceCollection.Configure<JWTSettings>( configuration.GetSection( "JWTSettings" ) );
         serviceCollection.Configure<DbSettings>( configuration.GetSection( "DbSettings" ) );
+    
+        return serviceCollection;
     }
 
-    public static void AdddWebApiServices( IServiceCollection serviceCollection )
+    public static IServiceCollection AddWebApiServices( this IServiceCollection serviceCollection )
     {
         JWTSettings jwtSettings = serviceCollection.BuildServiceProvider().GetRequiredService<IOptions<JWTSettings>>().Value;
         byte[] key = Encoding.ASCII.GetBytes( jwtSettings.SecretKey );
@@ -36,5 +40,6 @@ public static class Bindings
                 };
             } );
 
+        return serviceCollection;
     }
 }

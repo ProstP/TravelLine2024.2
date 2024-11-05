@@ -1,13 +1,19 @@
+using Application;
+using Infrastructure.Foundation;
+using WebApi;
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder( args );
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-Bindings.AddConfiguration( builder.Services, builder.Configuration );
-Infrastructure.Foundation.Bindings.AddInfrastructureServices( builder.Services );
-Application.Bindings.AddApplicationServices( builder.Services );
-Bindings.AdddWebApiServices( builder.Services );
+builder.Services.AddConfiguration( builder.Configuration );
+
+builder.Services
+    .AddInfrastructureServices()
+    .AddApplicationServices()
+    .AddWebApiServices();
 
 WebApplication app = builder.Build();
 

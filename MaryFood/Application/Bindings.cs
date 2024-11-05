@@ -7,11 +7,13 @@ namespace Application
 {
     public static class Bindings
     {
-        public static void AddApplicationServices( IServiceCollection serviceCollection )
+        public static IServiceCollection AddApplicationServices( this IServiceCollection serviceCollection )
         {
             serviceCollection.AddScoped<AuthenticateUserCommandHandler>();
             serviceCollection.AddScoped<CreateUserCommandHandler>();
             serviceCollection.AddScoped<RefreshTokenHandler>();
+
+            return serviceCollection;
         }
     }
 }

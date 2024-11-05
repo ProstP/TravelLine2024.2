@@ -16,7 +16,7 @@ using Microsoft.Extensions.Options;
 namespace Infrastructure.Foundation;
 public static class Bindings
 {
-    public static void AddInfrastructureServices( IServiceCollection serviceCollection )
+    public static IServiceCollection AddInfrastructureServices( this IServiceCollection serviceCollection )
     {
         serviceCollection.AddDbContext<MaryFoodDbContext>( ( serviceProvider, options ) =>
         {
@@ -35,5 +35,7 @@ public static class Bindings
         serviceCollection.AddScoped<IPasswordVerifier, PasswordVerifier>();
         serviceCollection.AddScoped<ITokenCreator, TokenCreator>();
         serviceCollection.AddScoped<ITokenDecoder, TokenDecoder>();
+
+        return serviceCollection;
     }
 }
