@@ -39,7 +39,14 @@ public class TokenDecoder : ITokenDecoder
             if ( securityToken is JwtSecurityToken jwtSecurityToken && jwtSecurityToken.Header.Alg.Equals( SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase )
                 && jwtSecurityToken.ValidTo >= DateTime.UtcNow )
             {
-                string loginFromToken = principle.FindFirst( ClaimTypes.NameIdentifier ).Value;
+                Claim loginClaim = principle.FindFirst( ClaimTypes.NameIdentifier );
+
+                if (loginClaim == null)
+                {
+                    return null;
+                }
+
+                string loginFromToken = loginClaim.Value;
 
                 if ( loginFromToken.IsNullOrEmpty() )
                 {
