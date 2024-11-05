@@ -12,7 +12,7 @@ public static class Bindings
     {
         serviceCollection.Configure<JWTSettings>( configuration.GetSection( "JWTSettings" ) );
         serviceCollection.Configure<DbSettings>( configuration.GetSection( "DbSettings" ) );
-    
+
         return serviceCollection;
     }
 

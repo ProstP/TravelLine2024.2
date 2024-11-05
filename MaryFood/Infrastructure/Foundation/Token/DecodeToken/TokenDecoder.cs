@@ -41,7 +41,7 @@ public class TokenDecoder : ITokenDecoder
             {
                 Claim loginClaim = principle.FindFirst( ClaimTypes.NameIdentifier );
 
-                if (loginClaim == null)
+                if ( loginClaim == null )
                 {
                     return null;
                 }
