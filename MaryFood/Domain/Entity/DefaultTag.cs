@@ -1,15 +1,12 @@
-﻿namespace Domain.Entity
+﻿namespace Domain.Entity;
+
+public class DefaultTag : Entity
 {
-    public class DefaultTag
+
+    public int TagId { get; private init; }
+
+    public DefaultTag( int tagId )
     {
-        public int Id { get; private init; }
-
-        public int TagId { get; private init; }
-
-        public DefaultTag( int id, int tagId )
-        {
-            Id = id;
-            TagId = tagId;
-        }
+        TagId = tagId;
     }
 }

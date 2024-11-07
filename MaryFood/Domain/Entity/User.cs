@@ -1,48 +1,43 @@
-﻿namespace Domain.Entity
+﻿namespace Domain.Entity;
+
+public class User : Entity
 {
-    public class User
+    public string Login { get; private set; }
+    public string PasswordHash { get; private set; }
+    public string Name { get; private set; }
+    public string About { get; private set; }
+
+    public List<Favourite> Favourites { get; private init; } = new();
+    public List<Like> Likes { get; private init; } = new();
+
+    public User( string login, string passwordHash )
     {
-        public int Id { get; private init; }
-        public string Login { get; private set; }
-        public string PasswordHash { get; private set; }
-        public string Name { get; private set; }
-        public string About { get; private set; }
-
-        public List<Favourite> Favourite { get; private init; } = new();
-        public List<Like> Like { get; private init; } = new();
-
-        public User( int id, string login, string password, string name, string about )
+        if ( string.IsNullOrWhiteSpace( login ) )
         {
-            Id = id;
-            if ( String.IsNullOrWhiteSpace( login ) )
-            {
-                throw new ArgumentNullException( "Login is empty or white space" );
-            }
-            Login = login;
-            PasswordHash = password;
-            if ( String.IsNullOrWhiteSpace( name ) )
-            {
-                throw new ArgumentNullException( "Name is empty or white space" );
-            }
-            Name = name;
-            About = about;
+            throw new ArgumentNullException( nameof( login ), "Invalid login" );
         }
-
-
-        public void Update( string login, string password, string name, string about )
+        Login = login;
+        if ( string.IsNullOrWhiteSpace( passwordHash ) )
         {
-            if ( String.IsNullOrWhiteSpace( login ) )
-            {
-                throw new ArgumentNullException( "Login is empty or white space" );
-            }
-            Login = login;
-            PasswordHash = password;
-            if ( String.IsNullOrWhiteSpace( name ) )
-            {
-                throw new ArgumentNullException( "Name is empty or white space" );
-            }
-            Name = name;
-            About = about;
+            throw new ArgumentNullException( nameof( passwordHash ), "Invalid passwordHash" );
         }
+        PasswordHash = passwordHash;
+    }
+
+
+    public void Update( string login, string passwordHash, string name, string about )
+    {
+        if ( string.IsNullOrWhiteSpace( login ) )
+        {
+            throw new ArgumentNullException( nameof( login ), "Invalid login" );
+        }
+        Login = login;
+        if ( string.IsNullOrWhiteSpace( passwordHash ) )
+        {
+            throw new ArgumentNullException( nameof( passwordHash ), "Invalid passwordHash" );
+        }
+        PasswordHash = passwordHash;
+        Name = name;
+        About = about;
     }
 }

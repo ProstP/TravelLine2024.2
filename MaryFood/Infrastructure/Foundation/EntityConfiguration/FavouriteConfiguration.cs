@@ -2,14 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Foundation.EntityConfiguration
+namespace Infrastructure.Foundation.EntityConfiguration;
+
+public class FavouriteConfiguration : IEntityTypeConfiguration<Favourite>
 {
-    public class FavouriteConfiguration : IEntityTypeConfiguration<Favourite>
+    public void Configure( EntityTypeBuilder<Favourite> builder )
     {
-        public void Configure( EntityTypeBuilder<Favourite> builder )
-        {
-            builder.ToTable( nameof( Favourite ) )
-                   .HasKey( f => new { f.UserId, f.RecipeId } );
-        }
+        builder.ToTable( nameof( Favourite ) )
+               .HasKey( f => new { f.UserId, f.RecipeId } );
     }
 }

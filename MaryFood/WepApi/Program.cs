@@ -1,17 +1,27 @@
-var builder = WebApplication.CreateBuilder( args );
+using Application;
+using Infrastructure.Foundation;
+using WebApi;
+
+WebApplicationBuilder builder = WebApplication.CreateBuilder( args );
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
+builder.Services.AddConfiguration( builder.Configuration );
 
-if ( app.Environment.IsDevelopment() )
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+builder.Services
+    .AddInfrastructureServices()
+    .AddApplicationServices()
+    .AddWebApiServices();
 
+WebApplication app = builder.Build();
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
