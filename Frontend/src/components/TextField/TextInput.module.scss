@@ -16,16 +16,17 @@
 
 @mixin text {
   @include textColor();
-  font: normal 14px "Montserrat";
+  font: normal 12px "Montserrat";
 }
 
 @mixin padding {
+  box-sizing: border-box;
   padding: 10px 20px;
 }
 
 .input {
   width: 100%;
-  height: 25px;
+  height: 100%;
   background-color: white;
   @include border();
   @include text();
