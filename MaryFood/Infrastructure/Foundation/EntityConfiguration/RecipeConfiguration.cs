@@ -41,12 +41,12 @@ public class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
                .WithMany( t => t.Recipes )
                .UsingEntity( j => j.ToTable( "RecipeToTag" ) );
 
-        builder.HasMany( r => r.Favourite )
+        builder.HasMany( r => r.Favourites )
                .WithOne()
                .HasForeignKey( f => f.RecipeId )
                .OnDelete( DeleteBehavior.Cascade );
 
-        builder.HasMany( r => r.Like )
+        builder.HasMany( r => r.Likes )
                .WithOne()
                .HasForeignKey( l => l.RecipeId )
                .OnDelete( DeleteBehavior.Cascade );

@@ -14,8 +14,8 @@ public class RecipeRepository : Repository<Recipe>, IRecipeRepository
     {
         return await DbSet.Include( r => r.Ingredients )
                           .Include( r => r.Steps )
-                          .Include( r => r.Favourite )
-                          .Include( r => r.Like )
+                          .Include( r => r.Favourites )
+                          .Include( r => r.Likes )
                           .FirstOrDefaultAsync( r => r.Id == id );
     }
 
@@ -23,8 +23,8 @@ public class RecipeRepository : Repository<Recipe>, IRecipeRepository
     {
         return await DbSet.Include( r => r.Ingredients )
                           .Include( r => r.Steps )
-                          .Include( r => r.Favourite )
-                          .Include( r => r.Like )
+                          .Include( r => r.Favourites )
+                          .Include( r => r.Likes )
                           .ToListAsync();
     }
 
@@ -33,8 +33,8 @@ public class RecipeRepository : Repository<Recipe>, IRecipeRepository
         return await DbSet.Where( r => r.Name == name )
                           .Include( r => r.Ingredients )
                           .Include( r => r.Steps )
-                          .Include( r => r.Favourite )
-                          .Include( r => r.Like )
+                          .Include( r => r.Favourites )
+                          .Include( r => r.Likes )
                           .ToListAsync();
     }
 
@@ -43,7 +43,7 @@ public class RecipeRepository : Repository<Recipe>, IRecipeRepository
         return await DbSet.Where( r => r.UserId == userId )
                           .Include( r => r.Ingredients )
                           .Include( r => r.Steps )
-                          .Include( r => r.Favourite )
+                          .Include( r => r.Favourites )
                           .ToListAsync();
     }
 

@@ -11,8 +11,8 @@ public class Recipe : Entity
 
     public List<RecipeStep> Steps { get; private init; } = new();
     public List<Ingredient> Ingredients { get; private init; } = new();
-    public List<Favourite> Favourite { get; private init; } = new();
-    public List<Like> Like { get; private init; } = new();
+    public List<Favourite> Favourites { get; private init; } = new();
+    public List<Like> Likes { get; private init; } = new();
     public List<Tag> Tags { get; private init; } = new();
 
     public Recipe( string name, string description, int cookingTime, int personNum, string image, int userId )

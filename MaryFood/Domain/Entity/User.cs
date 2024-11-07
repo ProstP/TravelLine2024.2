@@ -7,8 +7,8 @@ public class User : Entity
     public string Name { get; private set; }
     public string About { get; private set; }
 
-    public List<Favourite> Favourite { get; private init; } = new();
-    public List<Like> Like { get; private init; } = new();
+    public List<Favourite> Favourites { get; private init; } = new();
+    public List<Like> Likes { get; private init; } = new();
 
     public User( string login, string passwordHash )
     {

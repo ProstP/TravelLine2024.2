@@ -8,6 +8,7 @@ public class LoginUserRequest
     [MinLength( 1 )]
     [MaxLength( 50 )]
     public string Login { get; init; }
+
     [Required]
     [MinLength( 8 )]
     [MaxLength( 50 )]

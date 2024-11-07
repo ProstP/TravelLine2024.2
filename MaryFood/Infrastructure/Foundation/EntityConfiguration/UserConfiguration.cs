@@ -29,12 +29,12 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                .WithOne()
                .HasForeignKey( r => r.UserId );
 
-        builder.HasMany( u => u.Favourite )
+        builder.HasMany( u => u.Favourites )
                .WithOne()
                .HasForeignKey( f => f.UserId )
                .OnDelete( DeleteBehavior.Restrict );
 
-        builder.HasMany( u => u.Like )
+        builder.HasMany( u => u.Likes )
                .WithOne()
                .HasForeignKey( l => l.UserId )
                .OnDelete( DeleteBehavior.Restrict );

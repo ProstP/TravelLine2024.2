@@ -35,7 +35,6 @@ public class TokenDecoder : ITokenDecoder
 
             ClaimsPrincipal principle = tokenHandler.ValidateToken( token, tokenValidationParams, out SecurityToken securityToken );
 
-
             if ( securityToken is JwtSecurityToken jwtSecurityToken && jwtSecurityToken.Header.Alg.Equals( SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase )
                 && jwtSecurityToken.ValidTo >= DateTime.UtcNow )
             {

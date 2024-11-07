@@ -12,8 +12,8 @@ public class UserRepository : Repository<User>, IUserRepository
 
     public async Task<User> Get( int id )
     {
-        return await DbSet.Include( u => u.Favourite )
-                          .Include( u => u.Like )
+        return await DbSet.Include( u => u.Favourites )
+                          .Include( u => u.Likes )
                           .FirstOrDefaultAsync( u => u.Id == id );
     }
 

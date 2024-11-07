@@ -18,15 +18,15 @@ public class TokenCreator : ITokenCreator
 
     public string GenerateAccessToken( string login )
     {
-        return GenerateToken( login, DateTime.UtcNow.AddMinutes( 15 ) );
+        return GenerateToken( login, TimeSpan.FromMinutes( 15 ) );
     }
 
     public string GenerateRefreshToken( string login )
     {
-        return GenerateToken( login, DateTime.UtcNow.AddDays( 1 ) );
+        return GenerateToken( login, TimeSpan.FromDays( 1 ) );
     }
 
-    private string GenerateToken( string login, DateTime lifeTime )
+    private string GenerateToken( string login, TimeSpan lifeTime )
     {
         JwtSecurityTokenHandler tokenHandler = new();
         byte[] key = Encoding.ASCII.GetBytes( _jwtSettings.SecretKey );
@@ -36,7 +36,7 @@ public class TokenCreator : ITokenCreator
             [
                 new Claim(ClaimTypes.NameIdentifier, login),
             ] ),
-            Expires = lifeTime,
+            Expires = DateTime.UtcNow.Add(lifeTime),
             SigningCredentials = new SigningCredentials( new SymmetricSecurityKey( key ), SecurityAlgorithms.HmacSha256Signature )
 
         };
