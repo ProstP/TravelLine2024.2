@@ -2,37 +2,35 @@
 using Domain.Repository;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Foundation.Repository
+namespace Infrastructure.Foundation.Repository;
+
+public class UserRepository : Repository<User>, IUserRepository
 {
-    public class UserRepository : Repository<User>, IUserRepository
+    public UserRepository( MaryFoodDbContext dbContext )
+        : base( dbContext )
+    { }
+
+    public async Task<User> Get( int id )
     {
-        public UserRepository( MaryFoodDbContext dbContext )
-            : base( dbContext )
-        { }
+        return await DbSet.Include( u => u.Favourites )
+                          .Include( u => u.Likes )
+                          .FirstOrDefaultAsync( u => u.Id == id );
+    }
 
-        public async Task<User> Get( int id )
+    public async Task<User> GetByLogin( string login )
+    {
+        return await DbSet.FirstOrDefaultAsync( u => u.Login == login );
+    }
+
+    public User Update( int id, User user )
+    {
+        User old = DbSet.FirstOrDefault( u => u.Id == id );
+        if ( old == null )
         {
-            return await _dbContext.Set<User>()
-                                   .Include( u => u.Favourite )
-                                   .Include( u => u.Like )
-                                   .FirstAsync( u => u.Id == id );
+            return null;
         }
 
-        public async Task<User> GetByLodin( string login )
-        {
-            return await _dbContext.Set<User>().FirstAsync( u => u.Login == login );
-        }
-
-        public User Update( int id, User user )
-        {
-            var old = _dbContext.Set<User>().FirstOrDefault( u => u.Id == id );
-            if ( old == null )
-            {
-                return null;
-            }
-
-            _dbContext.Update( user );
-            return user;
-        }
+        DbSet.Update( user );
+        return user;
     }
 }

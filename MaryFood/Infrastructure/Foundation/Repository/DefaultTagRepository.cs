@@ -2,20 +2,19 @@
 using Domain.Repository;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Foundation.Repository
+namespace Infrastructure.Foundation.Repository;
+
+public class DefaultTagRepository : IDefaultTagRepository
 {
-    public class DefaultTagRepository : IDefaultTagRepository
+    protected readonly DbSet<DefaultTag> _dbSet;
+
+    public DefaultTagRepository( MaryFoodDbContext dbContext )
     {
-        protected readonly MaryFoodDbContext _dbContext;
+        _dbSet = dbContext.Set<DefaultTag>();
+    }
 
-        public DefaultTagRepository( MaryFoodDbContext dbContext )
-        {
-            _dbContext = dbContext;
-        }
-
-        public async Task<List<DefaultTag>> Get()
-        {
-            return await _dbContext.Set<DefaultTag>().Take( 4 ).ToListAsync();
-        }
+    public async Task<List<DefaultTag>> Get()
+    {
+        return await _dbSet.Take( 4 ).ToListAsync();
     }
 }
