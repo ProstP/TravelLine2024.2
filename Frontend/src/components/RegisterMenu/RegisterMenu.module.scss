@@ -1,0 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.title {
+  color: #25292d;
+  font: bold 20px "Montserrat";
+  text-align: start;
+  margin: 10px 0;
+}
+
+.doubleElts {
+  display: flex;
+  gap: 5%;
+}
+
+.fieldWithHelp {
+  width: 115%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.helpText {
+  font: normal 10px "Montserrat";
+  color: rgba($color: #25292d, $alpha: 0.3);
+}
+
+.link {
+  font: bold 12px/24px "Montserrat";
+  color: #fdb100;
+  border-bottom: 1px dashed #fdb100;
+  cursor: pointer;
+}
+
+.link:hover {
+  color: #ffca4e;
+  border-bottom-style: solid;
+}
