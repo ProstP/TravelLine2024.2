@@ -1,0 +1,28 @@
+.container {
+  position: relative;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  gap: 5%;
+  padding: 40px 0;
+  border-radius: 20px;
+}
+
+.required {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 45%;
+}
+
+.about {
+  width: 40%;
+  height: 100%;
+}
+
+.edit {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}

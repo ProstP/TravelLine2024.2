@@ -1,6 +1,6 @@
 import Button from "../../Buttons/Button";
 import PopApMenu from "../../PopApMenu/PopApMenu";
-import TextInput from "../../TextField/TextInput";
+import TextInput from "../../TextField/TextInput/TextInput";
 import styles from "./AuthenticationMenu.module.scss";
 
 type AuthenticationMenuProps = {

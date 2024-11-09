@@ -1,15 +1,16 @@
 import { useMaryFoodStore } from "../../hooks/useMaryFoodStore.ts";
 import styles from "./Header.module.scss";
-import userIcon from "../../svg/user.svg";
-import exitIcon from "../../svg/exit.svg";
+import userIcon from "../../assets/user.svg";
+import exitIcon from "../../assets/exit.svg";
 
 const Header = () => {
   const selected = useMaryFoodStore((store) => store.selectedPage);
+  const username = useMaryFoodStore((store) => store.username);
 
   return (
     <div className={styles.container}>
       <div className={styles.titlecontainer}>
-        <a href="/" className={styles.title}>Mary Food</a>
+        <p className={styles.title}>Mary Food</p>
         <div className={styles.linkcontainer}>
           <a
             className={
@@ -41,12 +42,20 @@ const Header = () => {
         </div>
       </div>
       <div className={styles.usercontainer}>
-        <img src={userIcon}></img>
-        <p className={styles.username}>Привет, user</p>
-        <div className={styles.verticalline}></div>
-        <button className={styles.exitbtn}>
-          <img src={exitIcon}></img>
-        </button>
+        {username !== "" ? (
+          <>
+            <img src={userIcon}></img>
+            <a className={styles.username}>Привет, {username}</a>
+            <div className={styles.verticalline}></div>
+            <button className={styles.exitbtn}>
+              <img src={exitIcon}></img>
+            </button>
+          </>
+        ) : (
+          <>
+            <a className={styles.link}> Войти / Зарегестрироваться</a>
+          </>
+        )}
       </div>
     </div>
   );

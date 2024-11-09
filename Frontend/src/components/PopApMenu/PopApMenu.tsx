@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import styles from "./PopApMenu.module.scss";
-import cross from "../../svg/cross.svg";
+import cross from "../../assets/cross.svg";
 
 type PopApMenuProps = {
   exit: () => void;

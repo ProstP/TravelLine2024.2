@@ -36,11 +36,7 @@
   margin-left: 8%;
   font: bold 24px "Montserrat";
   color: #fdb100;
-  cursor: pointer;
-}
-
-.title:hover {
-  color: #fdb100;
+  cursor: default;
 }
 
 .link {
@@ -63,6 +59,12 @@
   font: normal 16px "Montserrat";
   color: #fdb100;
   margin-left: 10px;
+  cursor: pointer;
+}
+
+.username:hover {
+  color: #fdb100;
+  text-decoration: underline;
 }
 
 .verticalline {
