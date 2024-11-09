@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+@import "../RegisterMenu/RegisterMenu.module.scss";
 
 .container {
   display: flex;
@@ -7,15 +7,11 @@
 }
 
 .title {
-  color: #25292d;
-  font: bold 20px "Montserrat";
-  text-align: start;
-  margin: 10px 0;
+  @include title();
 }
 
 .btns {
-  display: flex;
-  gap: 10px;
+  @include doubleElts();
 }
 
 .link {

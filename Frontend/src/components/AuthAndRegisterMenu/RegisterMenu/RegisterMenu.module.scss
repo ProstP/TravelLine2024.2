@@ -1,5 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
 
+@mixin title {
+  color: #25292d;
+  font: bold 20px "Montserrat";
+  text-align: start;
+  margin: 10px 0;
+}
+
+@mixin doubleElts {
+  display: flex;
+  gap: 5%;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -7,15 +19,11 @@
 }
 
 .title {
-  color: #25292d;
-  font: bold 20px "Montserrat";
-  text-align: start;
-  margin: 10px 0;
+  @include title();
 }
 
 .doubleElts {
-  display: flex;
-  gap: 5%;
+  @include doubleElts();
 }
 
 .fieldWithHelp {

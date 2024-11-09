@@ -2,15 +2,22 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import AuthenticationMenu from "./components/AuthenticationMenu/AuthenticationMenu";
-import RegisterMenu from "./components/RegisterMenu/RegisterMenu";
+import AuthAndRegisterMenu from "./components/AuthAndRegisterMenu/AuthAndRegisteMenu";
+import { useState } from "react";
 
 function App() {
+  const [menuVisible, setMenuVisible] = useState(false);
+
   return (
     <BrowserRouter>
       <Header></Header>
+      {menuVisible ? (
+        <AuthAndRegisterMenu
+          exit={() => setMenuVisible(false)}
+        ></AuthAndRegisterMenu>
+      ) : null}
       <Routes>
-        <Route
+        {/* <Route
           path="/auth"
           element={
             <AuthenticationMenu
@@ -29,7 +36,7 @@ function App() {
               toLogin={() => console.log("To login")}
             />
           }
-        ></Route>
+        ></Route> */}
       </Routes>
       <Footer></Footer>
     </BrowserRouter>

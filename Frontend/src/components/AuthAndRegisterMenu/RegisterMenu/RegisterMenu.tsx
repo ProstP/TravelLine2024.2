@@ -1,6 +1,6 @@
-import Button from "../Buttons/Button";
-import PopApMenu from "../PopApMenu/PopApMenu";
-import TextInput from "../TextField/TextInput";
+import Button from "../../Buttons/Button";
+import PopApMenu from "../../PopApMenu/PopApMenu";
+import TextInput from "../../TextField/TextInput";
 import styles from "./RegisterMenu.module.scss";
 
 type RegisterMenuProps = {
