@@ -12,7 +12,11 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Header></Header>
+      <Header
+        OpenRegAndAuthMenu={() => setMenuVisible(true)}
+        OpenUserProfile={() => setProfileVisible(true)}
+        Logout={() => console.log("Logout")}
+      ></Header>
       {menuVisible ? (
         <AuthAndRegisterMenu
           exit={() => setMenuVisible(false)}
@@ -21,9 +25,6 @@ function App() {
       {profileVisible ? (
         <UserProfile exit={() => setProfileVisible(false)} />
       ) : null}
-      <Routes>
-        {/* <Route path="/user-profile" element={<UserProfile />}></Route> */}
-      </Routes>
       <Footer></Footer>
     </BrowserRouter>
   );

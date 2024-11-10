@@ -39,9 +39,7 @@ const RegisterMenu = ({ exit, toLogin, register }: RegisterMenuProps) => {
           <Button isFilled={true} onClick={register}>
             Зарегестрироваться
           </Button>
-          <Button isFilled={false} onClick={exit}>
-            Отмена
-          </Button>
+          <Button onClick={exit}>Отмена</Button>
         </div>
         <div>
           <span className={styles.link} onClick={toLogin}>

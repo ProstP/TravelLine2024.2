@@ -3,7 +3,17 @@ import styles from "./Header.module.scss";
 import userIcon from "../../assets/user.svg";
 import exitIcon from "../../assets/exit.svg";
 
-const Header = () => {
+type HeaderProps = {
+  OpenRegAndAuthMenu: () => void;
+  OpenUserProfile: () => void;
+  Logout: () => void;
+};
+
+const Header = ({
+  OpenRegAndAuthMenu,
+  OpenUserProfile,
+  Logout,
+}: HeaderProps) => {
   const selected = useMaryFoodStore((store) => store.selectedPage);
   const username = useMaryFoodStore((store) => store.username);
 
@@ -45,15 +55,19 @@ const Header = () => {
         {username !== "" ? (
           <>
             <img src={userIcon}></img>
-            <a className={styles.username}>Привет, {username}</a>
+            <a className={styles.username} onClick={OpenUserProfile}>
+              Привет, {username}
+            </a>
             <div className={styles.verticalline}></div>
-            <button className={styles.exitbtn}>
+            <button className={styles.exitbtn} onClick={Logout}>
               <img src={exitIcon}></img>
             </button>
           </>
         ) : (
           <>
-            <a className={styles.link}> Войти / Зарегестрироваться</a>
+            <a className={styles.link} onClick={OpenRegAndAuthMenu}>
+              Войти / Зарегестрироваться
+            </a>
           </>
         )}
       </div>

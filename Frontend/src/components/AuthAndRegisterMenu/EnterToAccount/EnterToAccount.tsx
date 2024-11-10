@@ -16,9 +16,7 @@ const EnterToAccount = ({ toLogin, toRegister }: EnterToAccountProps) => (
       <Button isFilled={true} onClick={toLogin}>
         Войти
       </Button>
-      <Button isFilled={false} onClick={toRegister}>
-        Регистрация
-      </Button>
+      <Button onClick={toRegister}>Регистрация</Button>
     </div>
   </>
 );

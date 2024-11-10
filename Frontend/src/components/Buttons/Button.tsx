@@ -1,7 +1,7 @@
 import styles from "./Button.module.scss";
 
 type ButtonProps = {
-  isFilled: boolean;
+  isFilled?: boolean;
   children: string;
   onClick: () => void;
 };
