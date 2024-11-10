@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import styles from "./TextInput.module.scss";
 
 type TextInputProps = {
@@ -6,13 +7,21 @@ type TextInputProps = {
 };
 
 const TextInput = ({ setText, placeHolder }: TextInputProps) => {
+  const ref = useRef<HTMLInputElement>(null);
+
   return (
-    <input
-      type="text"
-      className={styles.input}
-      placeholder={placeHolder}
-      onChange={(e) => setText(e.target.value)}
-    ></input>
+    <div className={styles.container}>
+      <input
+        ref={ref}
+        type="text"
+        className={styles.input}
+        placeholder=""
+        onChange={(e) => setText(e.target.value)}
+      ></input>
+      <label className={styles.help} onClick={() => ref.current?.focus()}>
+        {placeHolder}
+      </label>
+    </div>
   );
 };
 

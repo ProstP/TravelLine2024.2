@@ -21,7 +21,27 @@
 
 @mixin padding {
   box-sizing: border-box;
-  padding: 10px 20px;
+  padding: 13px 20px 7px 20px;
+}
+
+@mixin help {
+  top: 11px;
+  left: 21px;
+  position: absolute;
+  cursor: text;
+  @include text();
+}
+
+@mixin helpSelected {
+  font-size: 9px;
+  transform: translateY(-8px);
+  transition: 0.5s;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .input {
@@ -33,10 +53,15 @@
   @include padding();
 }
 
-.input::placeholder {
-  @include textColor();
-}
-
 .input:focus {
   @include borderInFocus();
+}
+
+.help {
+  @include help();
+}
+
+.input:focus + .help,
+.input:not(:placeholder-shown) + .help {
+  @include helpSelected();
 }

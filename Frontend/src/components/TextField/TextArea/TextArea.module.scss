@@ -1,5 +1,11 @@
 @import "../TextInput/TextInput.module.scss";
 
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .area {
   width: 100%;
   height: 100%;
@@ -10,10 +16,15 @@
   @include text();
 }
 
-.area::placeholder {
-  @include textColor();
-}
-
 .area:focus {
   @include borderInFocus();
+}
+
+.help {
+  @include help();
+}
+
+.area:focus + .help,
+.area:not(:placeholder-shown) + .help {
+  @include helpSelected();
 }

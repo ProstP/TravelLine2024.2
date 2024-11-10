@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import styles from "./TextArea.module.scss";
 
 type TextAreaProps = {
@@ -6,12 +7,20 @@ type TextAreaProps = {
 };
 
 const TextArea = ({ setText, placeHolder }: TextAreaProps) => {
+  const ref = useRef<HTMLTextAreaElement>(null);
+
   return (
-    <textarea
-      className={styles.area}
-      onChange={(e) => setText(e.target.value)}
-      placeholder={placeHolder}
-    ></textarea>
+    <div className={styles.container}>
+      <textarea
+        ref={ref}
+        className={styles.area}
+        onChange={(e) => setText(e.target.value)}
+        placeholder=""
+      ></textarea>
+      <label className={styles.help} onClick={() => ref.current?.focus()}>
+        {placeHolder}
+      </label>
+    </div>
   );
 };
 
