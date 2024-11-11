@@ -5,17 +5,21 @@ import Footer from "./components/Footer/Footer";
 import AuthAndRegisterMenu from "./components/AuthAndRegisterMenu/AuthAndRegisteMenu";
 import { useState } from "react";
 import UserProfile from "./components/UserProfile/UserProfile";
+import { Logout } from "./services/UserServices";
 
 function App() {
   const [menuVisible, setMenuVisible] = useState(false);
-  const [profileVisible, setProfileVisible] = useState(true);
+  const [profileVisible, setProfileVisible] = useState(false);
 
   return (
     <BrowserRouter>
       <Header
         OpenRegAndAuthMenu={() => setMenuVisible(true)}
         OpenUserProfile={() => setProfileVisible(true)}
-        Logout={() => console.log("Logout")}
+        Logout={() => {
+          Logout();
+          setProfileVisible(false);
+        }}
       ></Header>
       {menuVisible ? (
         <AuthAndRegisterMenu

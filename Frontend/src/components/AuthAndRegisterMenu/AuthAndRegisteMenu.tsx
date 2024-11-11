@@ -25,14 +25,12 @@ const AuthAndRegisterMenu = ({ exit }: AuthAndRegisteMenuProps) => {
         <AuthenticationMenu
           exit={exit}
           toRegister={() => setState("Register")}
-          login={() => console.log("login")}
         ></AuthenticationMenu>
       ) : null}
       {state == "Register" ? (
         <RegisterMenu
           exit={exit}
           toLogin={() => setState("Login")}
-          register={() => console.log("Reg")}
         ></RegisterMenu>
       ) : null}
     </PopApMenu>

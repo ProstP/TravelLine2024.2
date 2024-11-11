@@ -12,6 +12,7 @@ public static class Bindings
     {
         serviceCollection.Configure<JWTSettings>( configuration.GetSection( "JWTSettings" ) );
         serviceCollection.Configure<DbSettings>( configuration.GetSection( "DbSettings" ) );
+        serviceCollection.Configure<FrontendSettings>( configuration.GetSection( "FrontendSettings" ) );
 
         return serviceCollection;
     }
@@ -39,6 +40,15 @@ public static class Bindings
                     ValidateLifetime = true,
                 };
             } );
+
+        FrontendSettings frontendSettings = serviceCollection.BuildServiceProvider().GetRequiredService<IOptions<FrontendSettings>>().Value;
+        serviceCollection.AddCors( options =>
+        {
+            options.AddPolicy( "AllowSpecificOrigin",
+                policy => policy.WithOrigins( frontendSettings.Url )
+                                  .AllowAnyMethod()
+                                  .AllowAnyHeader() );
+        } );
 
         return serviceCollection;
     }

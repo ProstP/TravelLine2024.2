@@ -10,8 +10,13 @@ public class User : Entity
     public List<Favourite> Favourites { get; private init; } = new();
     public List<Like> Likes { get; private init; } = new();
 
-    public User( string login, string passwordHash )
+    public User( string name, string login, string passwordHash )
     {
+        if ( string.IsNullOrWhiteSpace( name ) )
+        {
+            throw new ArgumentNullException( nameof( name ), "Invalid login" );
+        }
+        Name = name;
         if ( string.IsNullOrWhiteSpace( login ) )
         {
             throw new ArgumentNullException( nameof( login ), "Invalid login" );

@@ -1,6 +1,7 @@
 ﻿using Application.UseCases.Token.RefreshTokens;
 using Application.UseCases.User.Command.AuthenticateUserCommand;
 using Application.UseCases.User.Command.CreateUserCommand;
+using Application.UseCases.User.Query.GetUserQuery;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application
@@ -12,6 +13,7 @@ namespace Application
             serviceCollection.AddScoped<AuthenticateUserCommandHandler>();
             serviceCollection.AddScoped<CreateUserCommandHandler>();
             serviceCollection.AddScoped<RefreshTokenHandler>();
+            serviceCollection.AddScoped<GetUserQueryHandler>();
 
             return serviceCollection;
         }

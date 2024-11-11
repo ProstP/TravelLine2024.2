@@ -16,6 +16,7 @@ const Header = ({
 }: HeaderProps) => {
   const selected = useMaryFoodStore((store) => store.selectedPage);
   const username = useMaryFoodStore((store) => store.username);
+  const setName = useMaryFoodStore((store) => store.setUsername);
 
   return (
     <div className={styles.container}>
@@ -59,7 +60,13 @@ const Header = ({
               Привет, {username}
             </a>
             <div className={styles.verticalline}></div>
-            <button className={styles.exitbtn} onClick={Logout}>
+            <button
+              className={styles.exitbtn}
+              onClick={() => {
+                Logout();
+                setName("");
+              }}
+            >
               <img src={exitIcon}></img>
             </button>
           </>

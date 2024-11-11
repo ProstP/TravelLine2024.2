@@ -1,5 +1,6 @@
 using Application;
 using Infrastructure.Foundation;
+using Microsoft.AspNetCore.Builder;
 using WebApi;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder( args );
@@ -20,6 +21,7 @@ WebApplication app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UseCors( "AllowSpecificOrigin" );
 
 app.UseAuthentication();
 app.UseAuthorization();

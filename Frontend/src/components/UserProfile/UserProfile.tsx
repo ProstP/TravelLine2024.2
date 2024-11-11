@@ -15,7 +15,7 @@ const UserProfile = ({ exit }: UserProfileProps) => {
           Назад
         </a>
         <p className={styles.title}>Мой профиль</p>
-        <UserInfo></UserInfo>
+        <UserInfo exit={exit}></UserInfo>
       </div>
     </div>
   );

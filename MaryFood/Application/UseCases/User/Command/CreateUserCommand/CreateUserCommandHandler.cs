@@ -23,7 +23,7 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand>
         try
         {
             string passwordHash = _passwordHasher.Hash( command.Password );
-            Domain.Entity.User user = new( command.Login, passwordHash );
+            Domain.Entity.User user = new( command.Name, command.Login, passwordHash );
 
             _userRepository.Add( user );
             await _unitOfWork.SaveChangesAsync();

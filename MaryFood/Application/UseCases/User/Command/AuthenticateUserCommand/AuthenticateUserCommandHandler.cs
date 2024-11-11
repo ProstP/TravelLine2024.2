@@ -30,6 +30,7 @@ public class AuthenticateUserCommandHandler : ICommandHandler<AuthenticateUserCo
 
         AuthenticateUserCommandDto result = new()
         {
+            UserName = user.Name,
             AccessToken = _tokenCreator.GenerateAccessToken( user.Login ),
             RefreshToken = _tokenCreator.GenerateRefreshToken( user.Login )
         };

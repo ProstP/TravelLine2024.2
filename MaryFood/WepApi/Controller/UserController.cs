@@ -1,9 +1,11 @@
-﻿using Application.Result;
+﻿using System.Security.Claims;
+using Application.Result;
 using Application.UseCases.Token.Dtos;
 using Application.UseCases.Token.RefreshTokens;
 using Application.UseCases.User.Command.AuthenticateUserCommand;
 using Application.UseCases.User.Command.CreateUserCommand;
 using Application.UseCases.User.Dtos;
+using Application.UseCases.User.Query.GetUserQuery;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Contract.Request;
@@ -18,16 +20,19 @@ public class UserController : ControllerBase
     private readonly CreateUserCommandHandler _createUserCommandHandler;
     private readonly AuthenticateUserCommandHandler _authenticateUserCommandHandler;
     private readonly RefreshTokenHandler _refreshTokenCommandHandler;
+    private readonly GetUserQueryHandler _getUserQueryHandler;
 
     public UserController(
         CreateUserCommandHandler createUserCommandHandler,
         AuthenticateUserCommandHandler authenticateUserCommandHandler,
         RefreshTokenHandler refreshTokenHandler
+        , GetUserQueryHandler getUserQueryHandler
     )
     {
         _createUserCommandHandler = createUserCommandHandler;
         _authenticateUserCommandHandler = authenticateUserCommandHandler;
         _refreshTokenCommandHandler = refreshTokenHandler;
+        _getUserQueryHandler = getUserQueryHandler;
     }
 
     [AllowAnonymous]
@@ -36,6 +41,7 @@ public class UserController : ControllerBase
     {
         CreateUserCommand command = new()
         {
+            Name = request.Name,
             Login = request.Login,
             Password = request.Password,
         };
@@ -45,13 +51,12 @@ public class UserController : ControllerBase
         {
             return BadRequest( result.Error );
         }
-
         return Ok();
     }
 
     [AllowAnonymous]
     [HttpPost, Route( "login" )]
-    public async Task<ActionResult<TokenResponse>> Login( [FromBody] LoginUserRequest request )
+    public async Task<ActionResult<LoginUserResponse>> Login( [FromBody] LoginUserRequest request )
     {
         AuthenticateUserCommand command = new()
         {
@@ -65,18 +70,19 @@ public class UserController : ControllerBase
         {
             return BadRequest( result.Error );
         }
-        TokenResponse tokenResponse = new()
+        LoginUserResponse loginUserResponse = new()
         {
+            Username = result.Value.UserName,
             AccessToken = result.Value.AccessToken,
             RefreshToken = result.Value.RefreshToken
         };
 
-        return Ok( tokenResponse );
+        return Ok( loginUserResponse );
     }
 
     [AllowAnonymous]
     [HttpPost, Route( "refresh-token" )]
-    public async Task<ActionResult<TokenResponse>> RefreshToken( [FromBody] RefreshTokenRequest request )
+    public async Task<ActionResult<RefreshTokenResponse>> RefreshToken( [FromBody] RefreshTokenRequest request )
     {
         RefreshTokenCommand command = new()
         {
@@ -88,12 +94,44 @@ public class UserController : ControllerBase
         {
             return BadRequest( result.Error );
         }
-        TokenResponse tokenResponse = new()
+        RefreshTokenResponse refreshTokenResponse = new()
         {
             AccessToken = result.Value.AccessToken,
             RefreshToken = result.Value.RefreshToken
         };
 
-        return Ok( tokenResponse );
+        return Ok( refreshTokenResponse );
+    }
+
+    [Authorize]
+    [HttpGet, Route( "profile" )]
+    public async Task<ActionResult<UserProfileResponse>> Profile()
+    {
+        string userLogin = User.FindFirstValue( ClaimTypes.NameIdentifier );
+
+        if ( userLogin == null )
+        {
+            return BadRequest();
+        }
+
+        GetUserQuery query = new()
+        {
+            Login = userLogin,
+        };
+
+        Result<GetUserQueryDto> result = await _getUserQueryHandler.HandleAsync( query );
+        if ( !result.IsSuccess )
+        {
+            return BadRequest( result.Error );
+        }
+
+        UserProfileResponse userProfileResponse = new()
+        {
+            Name = result.Value.Name,
+            Login = result.Value.Login,
+            About = result.Value.About,
+        };
+
+        return Ok( userProfileResponse );
     }
 }
