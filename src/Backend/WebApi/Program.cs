@@ -1,6 +1,5 @@
 using Application;
 using Infrastructure.Foundation;
-using Microsoft.AspNetCore.Builder;
 using WebApi;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder( args );
