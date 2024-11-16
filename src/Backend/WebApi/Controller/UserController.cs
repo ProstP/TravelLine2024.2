@@ -25,8 +25,8 @@ public class UserController : ControllerBase
     public UserController(
         CreateUserCommandHandler createUserCommandHandler,
         AuthenticateUserCommandHandler authenticateUserCommandHandler,
-        RefreshTokenHandler refreshTokenHandler
-        , GetUserQueryHandler getUserQueryHandler
+        RefreshTokenHandler refreshTokenHandler,
+        GetUserQueryHandler getUserQueryHandler
     )
     {
         _createUserCommandHandler = createUserCommandHandler;

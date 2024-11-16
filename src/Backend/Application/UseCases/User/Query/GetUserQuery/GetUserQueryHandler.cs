@@ -5,7 +5,7 @@ using Domain.Repository;
 
 namespace Application.UseCases.User.Query.GetUserQuery;
 
-public class GetUserQueryHandler : IQueryHanlder<GetUserQueryDto, GetUserQuery>
+public class GetUserQueryHandler : IQueryHandler<GetUserQueryDto, GetUserQuery>
 {
     private readonly IUserRepository _userRepository;
 
@@ -28,7 +28,6 @@ public class GetUserQueryHandler : IQueryHanlder<GetUserQueryDto, GetUserQuery>
             Name = user.Name,
             Login = user.Login,
             About = user.About,
-
         };
 
         return Result<GetUserQueryDto>.FromSuccess( result );
