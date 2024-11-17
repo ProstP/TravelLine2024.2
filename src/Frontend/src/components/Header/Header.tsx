@@ -73,7 +73,7 @@ const Header = ({
         ) : (
           <>
             <a className={styles.link} onClick={OpenRegAndAuthMenu}>
-              Войти / Зарегестрироваться
+              Войти / Зарегистрироваться
             </a>
           </>
         )}
