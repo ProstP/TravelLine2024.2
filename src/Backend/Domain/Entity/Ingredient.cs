@@ -7,7 +7,7 @@ public class Ingredient : Entity
 
     public int RecipeId { get; private init; }
 
-    public Ingredient( string header, string subIngredients, int recipeId )
+    public Ingredient( string header, string subIngredients )
     {
         if ( string.IsNullOrWhiteSpace( header ) )
         {
@@ -19,7 +19,6 @@ public class Ingredient : Entity
             throw new ArgumentNullException( nameof( subIngredients ), "Invalid subIngredients" );
         }
         SubIngredients = subIngredients;
-        RecipeId = recipeId;
     }
 
     public void Update( string header, string subIngredients )
