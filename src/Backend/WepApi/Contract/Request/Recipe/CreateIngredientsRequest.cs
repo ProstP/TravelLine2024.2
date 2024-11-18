@@ -5,8 +5,8 @@ namespace WebApi.Contract.Request.Recipe;
 public class CreateIngredientsRequest
 {
     [Required]
-    [MinLength(1)]
-    [MaxLength(50)]
+    [MinLength( 1 )]
+    [MaxLength( 50 )]
     public string Header { get; init; }
 
     [Required]

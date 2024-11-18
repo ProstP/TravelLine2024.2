@@ -1,13 +1,11 @@
 ﻿using Application.Result;
 using Application.UseCases.Recipe.Command.CreateRecipeCommand;
+using Application.UseCases.Recipe.Command.DeleteRecipeCommand;
 using Application.UseCases.Recipe.Dtos;
 using Application.UseCases.Recipe.Query.GetRecipeQuery;
-using Azure.Core;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Contract.Request.Recipe;
 using WebApi.Contract.Response.Recipe;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace WebApi.Controller;
 
@@ -17,14 +15,20 @@ public class RecipeController : ControllerBase
 {
     private readonly CreateRecipeCommandHandler _createRecipeCommandHandler;
     private readonly GetRecipeQueryHandler _getRecipeQueryHandler;
+    private readonly DeleteRecipeCommandHandler _deleteRecipeCommandHandler;
 
-    public RecipeController( CreateRecipeCommandHandler createRecipeCommandHandler, GetRecipeQueryHandler getRecipeQueryHandler )
+    public RecipeController(
+        CreateRecipeCommandHandler createRecipeCommandHandler,
+        GetRecipeQueryHandler getRecipeQueryHandler,
+        DeleteRecipeCommandHandler deleteRecipeCommandHandler
+    )
     {
         _createRecipeCommandHandler = createRecipeCommandHandler;
         _getRecipeQueryHandler = getRecipeQueryHandler;
+        _deleteRecipeCommandHandler = deleteRecipeCommandHandler;
     }
 
-    [Authorize]
+    //[Authorize]
     [HttpPost, Route( "create" )]
     public async Task<IActionResult> Create( [FromBody] CreateRecipeRequest request )
     {
@@ -83,6 +87,7 @@ public class RecipeController : ControllerBase
 
         GetRecipeResponse getRecipeResponse = new()
         {
+            Id = result.Value.Id,
             Name = result.Value.Name,
             Description = result.Value.Description,
             CookingTime = result.Value.CookingTime,
@@ -95,6 +100,7 @@ public class RecipeController : ControllerBase
         {
             getRecipeResponse.Ingredients.Add( new GetIngredientResponse()
             {
+                Id = ingredient.Id,
                 Header = ingredient.Header,
                 SubIngredients = ingredient.SubIngredients,
             } );
@@ -104,11 +110,26 @@ public class RecipeController : ControllerBase
         {
             getRecipeResponse.RecipeSteps.Add( new GetRecipeStepResponse()
             {
+                Id = recipeStep.Id,
                 StepNum = recipeStep.StepNum,
                 Description = recipeStep.Description,
             } );
         }
 
         return Ok( getRecipeResponse );
+    }
+
+    //[Authorize]
+    [HttpDelete]
+    public async Task<IActionResult> Remove( [FromBody] DeleteRecipeRequest request )
+    {
+        DeleteRecipeCommand command = new()
+        {
+            Id = request.Id,
+        };
+
+        Result result = await _deleteRecipeCommandHandler.HandleAsync( command );
+
+        return Ok();
     }
 }

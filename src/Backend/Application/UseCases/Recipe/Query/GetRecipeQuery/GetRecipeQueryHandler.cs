@@ -25,6 +25,7 @@ public class GetRecipeQueryHandler : IQueryHandler<RecipeDto, GetRecipeQuery>
 
         RecipeDto recipeDto = new()
         {
+            Id = recipe.Id,
             Name = recipe.Name,
             Description = recipe.Description,
             CookingTime = recipe.CookingTime,
@@ -36,6 +37,7 @@ public class GetRecipeQueryHandler : IQueryHandler<RecipeDto, GetRecipeQuery>
         {
             recipeDto.Ingredients.Add( new IngredientDto()
             {
+                Id = ingredient.Id,
                 Header = ingredient.Header,
                 SubIngredients = ingredient.SubIngredients,
             } );
@@ -45,6 +47,7 @@ public class GetRecipeQueryHandler : IQueryHandler<RecipeDto, GetRecipeQuery>
         {
             recipeDto.RecipeSteps.Add( new RecipeStepDto()
             {
+                Id = recipeStep.Id,
                 StepNum = recipeStep.StepNum,
                 Description = recipeStep.Description,
             } );
