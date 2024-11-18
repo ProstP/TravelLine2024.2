@@ -1,7 +1,13 @@
-﻿using Application.UseCases.Recipe.Command.CreateRecipeCommand;
+﻿using Application.Result;
+using Application.UseCases.Recipe.Command.CreateRecipeCommand;
+using Application.UseCases.Recipe.Dtos;
+using Application.UseCases.Recipe.Query.GetRecipeQuery;
+using Azure.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Contract.Request.Recipe;
+using WebApi.Contract.Response.Recipe;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace WebApi.Controller;
 
@@ -10,13 +16,15 @@ namespace WebApi.Controller;
 public class RecipeController : ControllerBase
 {
     private readonly CreateRecipeCommandHandler _createRecipeCommandHandler;
+    private readonly GetRecipeQueryHandler _getRecipeQueryHandler;
 
-    public RecipeController( CreateRecipeCommandHandler createRecipeCommandHandler )
+    public RecipeController( CreateRecipeCommandHandler createRecipeCommandHandler, GetRecipeQueryHandler getRecipeQueryHandler )
     {
         _createRecipeCommandHandler = createRecipeCommandHandler;
+        _getRecipeQueryHandler = getRecipeQueryHandler;
     }
 
-    [AllowAnonymous]
+    [Authorize]
     [HttpPost, Route( "create" )]
     public async Task<IActionResult> Create( [FromBody] CreateRecipeRequest request )
     {
@@ -48,7 +56,7 @@ public class RecipeController : ControllerBase
             } );
         }
 
-        Application.Result.Result result = await _createRecipeCommandHandler.HandleAsync( command );
+        Result result = await _createRecipeCommandHandler.HandleAsync( command );
 
         if ( !result.IsSuccess )
         {
@@ -56,5 +64,51 @@ public class RecipeController : ControllerBase
         }
 
         return Ok();
+    }
+
+    [HttpGet, Route( "{id:int}" )]
+    public async Task<ActionResult<GetRecipeResponse>> Get( [FromRoute] int id )
+    {
+        GetRecipeQuery query = new()
+        {
+            RecipeId = id
+        };
+
+        Result<RecipeDto> result = await _getRecipeQueryHandler.HandleAsync( query );
+
+        if ( !result.IsSuccess )
+        {
+            return BadRequest( result.Error );
+        }
+
+        GetRecipeResponse getRecipeResponse = new()
+        {
+            Name = result.Value.Name,
+            Description = result.Value.Description,
+            CookingTime = result.Value.CookingTime,
+            PersonNum = result.Value.PersonNum,
+            Image = result.Value.Image,
+            UserId = result.Value.UserId,
+        };
+
+        foreach ( IngredientDto ingredient in result.Value.Ingredients )
+        {
+            getRecipeResponse.Ingredients.Add( new GetIngredientResponse()
+            {
+                Header = ingredient.Header,
+                SubIngredients = ingredient.SubIngredients,
+            } );
+        }
+
+        foreach ( RecipeStepDto recipeStep in result.Value.RecipeSteps )
+        {
+            getRecipeResponse.RecipeSteps.Add( new GetRecipeStepResponse()
+            {
+                StepNum = recipeStep.StepNum,
+                Description = recipeStep.Description,
+            } );
+        }
+
+        return Ok( getRecipeResponse );
     }
 }
