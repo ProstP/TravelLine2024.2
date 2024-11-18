@@ -4,6 +4,8 @@ import {
   RefreshTokenRequest,
   RefreshTokenResponse,
   RegisterUserRequest,
+  UpdateUserRequest,
+  UpdateUserResponse,
   UserProfileResponse,
 } from "../data/contracts/UserContracts";
 import ApiRequest from "./ApiRequsts";
@@ -62,4 +64,20 @@ const Refresh = async (data: RefreshTokenRequest) => {
   }
 };
 
-export { Authenticate, Register, Logout, Profile, Refresh };
+const Update = async (data: UpdateUserRequest) => {
+  const response = await ApiRequest<UpdateUserRequest, UpdateUserResponse>(
+    "user/update",
+    data,
+    "PUT",
+    true
+  );
+
+  if (response.isSuccess) {
+    localStorage.setItem("access-token", response.value.accessToken);
+    localStorage.setItem("refresh-token", response.value.refreshToken);
+  }
+
+  return response;
+};
+
+export { Authenticate, Register, Logout, Profile, Refresh, Update };

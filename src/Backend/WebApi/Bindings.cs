@@ -1,8 +1,9 @@
 ﻿using System.Text;
-using Infrastructure.Foundation;
+using Infrastructure.Foundation.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using WebApi.Options;
 
 namespace WebApi;
 
@@ -17,7 +18,7 @@ public static class Bindings
         return serviceCollection;
     }
 
-    public static IServiceCollection AddWebApiServices( this IServiceCollection serviceCollection )
+    public static IServiceCollection AddWebApiServices( this IServiceCollection serviceCollection, IConfiguration configuration )
     {
         JWTSettings jwtSettings = serviceCollection.BuildServiceProvider().GetRequiredService<IOptions<JWTSettings>>().Value;
         byte[] key = Encoding.ASCII.GetBytes( jwtSettings.SecretKey );
@@ -41,11 +42,11 @@ public static class Bindings
                 };
             } );
 
-        FrontendSettings frontendSettings = serviceCollection.BuildServiceProvider().GetRequiredService<IOptions<FrontendSettings>>().Value;
+        string frontendUrl = configuration.GetSection( "FrontendSettings" ).GetSection("Url").Value;
         serviceCollection.AddCors( options =>
         {
             options.AddPolicy( "AllowSpecificOrigin",
-                policy => policy.WithOrigins( frontendSettings.Url )
+                policy => policy.WithOrigins( frontendUrl )
                                   .AllowAnyMethod()
                                   .AllowAnyHeader() );
         } );

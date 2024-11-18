@@ -6,6 +6,7 @@ type TextInputProps = {
   placeHolder: string;
   disabled?: boolean;
   value?: string;
+  isError?: boolean;
 };
 
 const TextInput = ({
@@ -13,6 +14,7 @@ const TextInput = ({
   placeHolder,
   disabled,
   value,
+  isError,
 }: TextInputProps) => {
   const ref = useRef<HTMLInputElement>(null);
 
@@ -22,7 +24,7 @@ const TextInput = ({
         ref={ref}
         disabled={disabled}
         type="text"
-        className={styles.input}
+        className={`${styles.input} ${isError ? styles.error : ``}`}
         placeholder=""
         onChange={(e) => setText(e.target.value)}
         value={value}

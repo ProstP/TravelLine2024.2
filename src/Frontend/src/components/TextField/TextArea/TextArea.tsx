@@ -6,9 +6,16 @@ type TextAreaProps = {
   placeHolder?: string;
   disabled?: boolean;
   value?: string;
+  isError?: boolean;
 };
 
-const TextArea = ({ setText, placeHolder, disabled, value }: TextAreaProps) => {
+const TextArea = ({
+  setText,
+  placeHolder,
+  disabled,
+  value,
+  isError,
+}: TextAreaProps) => {
   const ref = useRef<HTMLTextAreaElement>(null);
 
   return (
@@ -16,7 +23,7 @@ const TextArea = ({ setText, placeHolder, disabled, value }: TextAreaProps) => {
       <textarea
         ref={ref}
         disabled={disabled}
-        className={styles.area}
+        className={`${styles.area} ${isError ? styles.error : ``}`}
         onChange={(e) => setText(e.target.value)}
         placeholder=""
         value={value}

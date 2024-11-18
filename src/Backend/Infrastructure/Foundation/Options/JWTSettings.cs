@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Foundation;
+﻿namespace Infrastructure.Foundation.Options;
 
 public class JWTSettings
 {

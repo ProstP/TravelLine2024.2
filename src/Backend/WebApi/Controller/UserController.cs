@@ -4,6 +4,7 @@ using Application.UseCases.Token.Dtos;
 using Application.UseCases.Token.RefreshTokens;
 using Application.UseCases.User.Command.AuthenticateUserCommand;
 using Application.UseCases.User.Command.CreateUserCommand;
+using Application.UseCases.User.Command.UpdateUserCommand;
 using Application.UseCases.User.Dtos;
 using Application.UseCases.User.Query.GetUserQuery;
 using Microsoft.AspNetCore.Authorization;
@@ -19,18 +20,21 @@ public class UserController : ControllerBase
 {
     private readonly CreateUserCommandHandler _createUserCommandHandler;
     private readonly AuthenticateUserCommandHandler _authenticateUserCommandHandler;
+    private readonly UpdateUserCommandHandler _updateUserCommandHandler;
     private readonly RefreshTokenHandler _refreshTokenCommandHandler;
     private readonly GetUserQueryHandler _getUserQueryHandler;
 
     public UserController(
         CreateUserCommandHandler createUserCommandHandler,
         AuthenticateUserCommandHandler authenticateUserCommandHandler,
+        UpdateUserCommandHandler updateUserCommandHandler,
         RefreshTokenHandler refreshTokenHandler,
         GetUserQueryHandler getUserQueryHandler
     )
     {
         _createUserCommandHandler = createUserCommandHandler;
         _authenticateUserCommandHandler = authenticateUserCommandHandler;
+        _updateUserCommandHandler = updateUserCommandHandler;
         _refreshTokenCommandHandler = refreshTokenHandler;
         _getUserQueryHandler = getUserQueryHandler;
     }
@@ -130,6 +134,41 @@ public class UserController : ControllerBase
             Name = result.Value.Name,
             Login = result.Value.Login,
             About = result.Value.About,
+        };
+
+        return Ok( userProfileResponse );
+    }
+
+    [Authorize]
+    [HttpPut, Route( "update" )]
+    public async Task<ActionResult<UpdateUserResponse>> Update( [FromBody] UpdateUserRequest request )
+    {
+        string userLogin = User.FindFirstValue( ClaimTypes.NameIdentifier );
+
+        if ( userLogin == null )
+        {
+            return BadRequest();
+        }
+
+        UpdateUserCommand updateUserCommand = new()
+        {
+            OldLogin = userLogin,
+            Login = request.Login,
+            Name = request.Name,
+            Password = request.Password,
+            About = request.About,
+        };
+
+        Result<UpdateUserDto> result = await _updateUserCommandHandler.HandleAsync( updateUserCommand );
+        if ( !result.IsSuccess )
+        {
+            return BadRequest( result.Error );
+        }
+
+        UpdateUserResponse userProfileResponse = new()
+        {
+            AccessToken = result.Value.AccessToken,
+            RefreshToken = result.Value.RefreshToken,
         };
 
         return Ok( userProfileResponse );

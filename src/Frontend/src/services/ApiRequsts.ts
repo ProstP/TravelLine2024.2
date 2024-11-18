@@ -1,4 +1,4 @@
-import { SERVER_ADDRESS } from "../data/data";
+import { SERVER_URI } from "../core/api.config";
 
 type Answer<T> = {
   value: T;
@@ -24,12 +24,9 @@ const ApiRequest = async <RequestType, ResponseType = null>(
 
   let isSuccess = false;
 
-  const response = await fetch(SERVER_ADDRESS + "/api/" + url, option)
+  const response = await fetch(SERVER_URI + "/api/" + url, option)
     .then((response) => {
-      if (!response.ok) {
-        throw Error("Response not ok: " + response.statusText);
-      }
-      isSuccess = true;
+      isSuccess = response.ok;
 
       return response.text();
     })

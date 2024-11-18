@@ -53,6 +53,10 @@
   @include padding();
 }
 
+.error {
+  border-color: #ff4747;
+}
+
 .input:focus {
   @include borderInFocus();
 }

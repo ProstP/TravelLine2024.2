@@ -16,6 +16,10 @@
   @include text();
 }
 
+.error {
+  border-color: #ff4747;
+}
+
 .area:focus {
   @include borderInFocus();
 }

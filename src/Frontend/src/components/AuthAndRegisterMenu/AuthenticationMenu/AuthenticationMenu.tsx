@@ -6,10 +6,16 @@ import styles from "./AuthenticationMenu.module.scss";
 import { LoginUserRequest } from "../../../data/contracts/UserContracts";
 import { Authenticate } from "../../../services/UserServices";
 import { useMaryFoodStore } from "../../../hooks/useMaryFoodStore";
+import ErrorMessage from "../../ErrorMessage/ErrorMessage";
 
 type AuthenticationMenuProps = {
   exit: () => void;
   toRegister: () => void;
+};
+
+type FieldErrors = {
+  login: boolean;
+  password: boolean;
 };
 
 const AuthenticationMenu = ({ exit, toRegister }: AuthenticationMenuProps) => {
@@ -18,11 +24,25 @@ const AuthenticationMenu = ({ exit, toRegister }: AuthenticationMenuProps) => {
     login: "",
     password: "",
   });
+  const [fieldError, setFieldError] = useState<FieldErrors>({
+    login: false,
+    password: false,
+  });
+  const [isError, toggleError] = useState(false);
 
   const Login = async () => {
+    if (data.login === "" || data.password === "") {
+      setFieldError({
+        login: data.login === "",
+        password: data.password === "",
+      });
+
+      return;
+    }
+
     const response = await Authenticate(data);
     if (!response.isSuccess) {
-      console.error("Error");
+      toggleError(true);
       return;
     }
 
@@ -33,14 +53,19 @@ const AuthenticationMenu = ({ exit, toRegister }: AuthenticationMenuProps) => {
   return (
     <PopApMenu exit={exit}>
       <div className={styles.container}>
+        {isError ? (
+          <ErrorMessage>Неправильный логин или пароль</ErrorMessage>
+        ) : null}
         <p className={styles.title}>Войти</p>
         <TextInput
           setText={(text: string) => setData({ ...data, login: text })}
           placeHolder="Логин"
+          isError={fieldError.login}
         ></TextInput>
         <TextInput
           setText={(text: string) => setData({ ...data, password: text })}
           placeHolder="Пароль"
+          isError={fieldError.password}
         ></TextInput>
         <div className={styles.btns}>
           <Button isFilled={true} onClick={Login}>

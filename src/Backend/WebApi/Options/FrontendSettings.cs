@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Foundation;
+﻿namespace WebApi.Options;
 
 public class FrontendSettings
 {

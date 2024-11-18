@@ -7,12 +7,14 @@ type PasswordInputProps = {
   setText: (text: string) => void;
   placeHolder: string;
   value?: string;
+  isError?: boolean;
 };
 
 const PasswordInput = ({
   setText,
   placeHolder,
   disabled,
+  isError,
   value,
 }: PasswordInputProps) => {
   const ref = useRef<HTMLInputElement>(null);
@@ -24,7 +26,7 @@ const PasswordInput = ({
         ref={ref}
         disabled={disabled}
         type={visible ? "text" : "password"}
-        className={styles.input}
+        className={`${styles.input} ${isError ? styles.error : ``}`}
         placeholder=""
         value={value}
         onChange={(e) => setText(e.target.value)}

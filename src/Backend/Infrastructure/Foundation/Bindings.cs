@@ -6,6 +6,7 @@ using Application.UseCases.Token.DecodeToken;
 using Domain.Repository;
 using Infrastructure.Foundation.Crypt.HashPassword;
 using Infrastructure.Foundation.Crypt.VerifyPassword;
+using Infrastructure.Foundation.Options;
 using Infrastructure.Foundation.Repository;
 using Infrastructure.Foundation.Token.CreateToken;
 using Infrastructure.Foundation.Token.DecodeToken;

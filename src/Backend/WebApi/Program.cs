@@ -13,7 +13,7 @@ builder.Services.AddConfiguration( builder.Configuration );
 builder.Services
     .AddInfrastructureServices()
     .AddApplicationServices()
-    .AddWebApiServices();
+    .AddWebApiServices( builder.Configuration );
 
 WebApplication app = builder.Build();
 

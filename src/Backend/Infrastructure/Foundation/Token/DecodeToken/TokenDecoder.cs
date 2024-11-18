@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Application.UseCases.Token.DecodeToken;
 using Application.UseCases.Token.Dtos;
+using Infrastructure.Foundation.Options;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
