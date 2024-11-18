@@ -1,4 +1,5 @@
 ﻿using Application.UseCases.Recipe.Command.CreateRecipeCommand;
+using Application.UseCases.Recipe.Command.DeleteRecipeCommand;
 using Application.UseCases.Recipe.Query.GetRecipeQuery;
 using Application.UseCases.Token.RefreshTokens;
 using Application.UseCases.User.Command.AuthenticateUserCommand;
@@ -16,6 +17,7 @@ namespace Application
             serviceCollection.AddScoped<RefreshTokenHandler>();
             serviceCollection.AddScoped<CreateRecipeCommandHandler>();
             serviceCollection.AddScoped<GetRecipeQueryHandler>();
+            serviceCollection.AddScoped<DeleteRecipeCommandHandler>();
 
             return serviceCollection;
         }
