@@ -6,7 +6,7 @@ public interface IRecipeRepository : IRepository<Recipe>
 {
     Task<Recipe> Get( int id );
 
-    Task<List<Recipe>> GetAll();
+    Task<List<Recipe>> GetGroup(int skip, int take);
 
     Task<List<Recipe>> GetByUserId( int userId );
 

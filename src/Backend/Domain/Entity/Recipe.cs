@@ -9,11 +9,11 @@ public class Recipe : Entity
 
     public int UserId { get; private init; }
 
-    public List<RecipeStep> Steps { get; private init; } = new();
-    public List<Ingredient> Ingredients { get; private init; } = new();
-    public List<Favourite> Favourites { get; private init; } = new();
-    public List<Like> Likes { get; private init; } = new();
-    public List<Tag> Tags { get; private init; } = new();
+    public List<RecipeStep> Steps { get; private init; } = [];
+    public List<Ingredient> Ingredients { get; private init; } = [];
+    public List<Favourite> Favourites { get; private init; } = [];
+    public List<Like> Likes { get; private init; } = [];
+    public List<Tag> Tags { get; private init; } = [];
 
     public Recipe( string name, string description, int cookingTime, int personNum, string image, int userId )
     {
