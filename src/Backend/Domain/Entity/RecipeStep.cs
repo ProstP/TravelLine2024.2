@@ -7,16 +7,14 @@ public class RecipeStep : Entity
 
     public int RecipeId { get; private init; }
 
-    public RecipeStep( int id, int stepNum, string description, int recipeId )
+    public RecipeStep( int stepNum, string description )
     {
-        Id = id;
         StepNum = stepNum;
         if ( string.IsNullOrWhiteSpace( description ) )
         {
             throw new ArgumentNullException( nameof( description ), "Invalid description" );
         }
         Description = description;
-        RecipeId = recipeId;
     }
 
     public void Update( int stepNum, string description )

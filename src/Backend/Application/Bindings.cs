@@ -1,4 +1,5 @@
-﻿using Application.UseCases.Token.RefreshTokens;
+﻿using Application.UseCases.Recipe.Command.CreateRecipeCommand;
+using Application.UseCases.Token.RefreshTokens;
 using Application.UseCases.User.Command.AuthenticateUserCommand;
 using Application.UseCases.User.Command.CreateUserCommand;
 using Application.UseCases.User.Command.UpdateUserCommand;
@@ -16,6 +17,7 @@ namespace Application
             serviceCollection.AddScoped<UpdateUserCommandHandler>();
             serviceCollection.AddScoped<RefreshTokenHandler>();
             serviceCollection.AddScoped<GetUserQueryHandler>();
+            serviceCollection.AddScoped<CreateRecipeCommandHandler>();
 
             return serviceCollection;
         }
