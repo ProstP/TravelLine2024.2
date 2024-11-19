@@ -7,17 +7,17 @@ import {
   UpdateUserRequest,
   UpdateUserResponse,
   UserProfileResponse,
-} from "../data/contracts/UserContracts";
-import ApiRequest from "./ApiRequsts";
+} from "../../data/contracts/UserContracts";
+import SendRequest from "./RequestsServices";
 
 const Authenticate = async (data: LoginUserRequest) => {
-  const response = await ApiRequest<LoginUserRequest, LoginUserResponse>(
+  const response = await SendRequest<LoginUserRequest, LoginUserResponse>(
     "user/login",
     data,
     "POST"
   );
 
-  if (response.isSuccess) {
+  if (response.isSuccess && response.value !== null) {
     localStorage.setItem("access-token", response.value.accessToken);
     localStorage.setItem("refresh-token", response.value.refreshToken);
   }
@@ -26,7 +26,7 @@ const Authenticate = async (data: LoginUserRequest) => {
 };
 
 const Register = async (data: RegisterUserRequest) => {
-  const response = await ApiRequest<RegisterUserRequest>(
+  const response = await SendRequest<RegisterUserRequest>(
     "user/register",
     data,
     "POST"
@@ -41,7 +41,7 @@ const Logout = () => {
 };
 
 const Profile = () => {
-  const response = ApiRequest<null, UserProfileResponse>(
+  const response = SendRequest<null, UserProfileResponse>(
     "user/profile",
     null,
     "GET",
@@ -52,27 +52,27 @@ const Profile = () => {
 };
 
 const Refresh = async (data: RefreshTokenRequest) => {
-  const response = await ApiRequest<RefreshTokenRequest, RefreshTokenResponse>(
+  const response = await SendRequest<RefreshTokenRequest, RefreshTokenResponse>(
     "user/refresh-token",
     data,
     "POST"
   );
 
-  if (response.isSuccess) {
+  if (response.isSuccess && response.value !== null) {
     localStorage.setItem("access-token", response.value.accessToken);
     localStorage.setItem("refresh-token", response.value.refreshToken);
   }
 };
 
 const Update = async (data: UpdateUserRequest) => {
-  const response = await ApiRequest<UpdateUserRequest, UpdateUserResponse>(
+  const response = await SendRequest<UpdateUserRequest, UpdateUserResponse>(
     "user/update",
     data,
     "PUT",
     true
   );
 
-  if (response.isSuccess) {
+  if (response.isSuccess && response.value !== null) {
     localStorage.setItem("access-token", response.value.accessToken);
     localStorage.setItem("refresh-token", response.value.refreshToken);
   }

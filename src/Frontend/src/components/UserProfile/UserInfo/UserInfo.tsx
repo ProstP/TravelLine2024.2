@@ -5,9 +5,9 @@ import TextInput from "../../TextField/TextInput/TextInput";
 import TextArea from "../../TextField/TextArea/TextArea";
 import Button from "../../Buttons/Button";
 import PasswordInput from "../../TextField/PasswordInput/PasswordInput";
-import { Profile, Update } from "../../../services/UserServices";
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
-import { useMaryFoodStore } from "../../../hooks/useMaryFoodStore";
+import { useMaryFoodStore } from "../../../core/hooks/useMaryFoodStore";
+import { Profile, Update } from "../../../core/services/UserServices";
 
 type UserInfoProps = {
   exit: () => void;

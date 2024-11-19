@@ -4,8 +4,8 @@ import PopApMenu from "../../PopApMenu/PopApMenu";
 import TextInput from "../../TextField/TextInput/TextInput";
 import styles from "./RegisterMenu.module.scss";
 import { RegisterUserRequest } from "../../../data/contracts/UserContracts";
-import { Register } from "../../../services/UserServices";
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
+import { Register } from "../../../core/services/UserServices";
 
 type RegisterMenuProps = {
   exit: () => void;

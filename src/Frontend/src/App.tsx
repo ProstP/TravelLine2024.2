@@ -5,7 +5,7 @@ import Footer from "./components/Footer/Footer";
 import AuthAndRegisterMenu from "./components/AuthAndRegisterMenu/AuthAndRegisteMenu";
 import { useState } from "react";
 import UserProfile from "./components/UserProfile/UserProfile";
-import { Logout } from "./services/UserServices";
+import { Logout } from "./core/services/UserServices";
 
 function App() {
   const [menuVisible, setMenuVisible] = useState(false);

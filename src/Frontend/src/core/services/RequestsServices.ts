@@ -1,11 +1,12 @@
-import { SERVER_URI } from "../core/api.config";
+import { SERVER_URI } from "../config/api.config";
 
 type Answer<T> = {
-  value: T;
+  value: T | null;
   isSuccess: boolean;
+  message: string;
 };
 
-const ApiRequest = async <RequestType, ResponseType = null>(
+const SendRequest = async <RequestType, ResponseType = null>(
   url: string,
   request: RequestType,
   type: "POST" | "GET" | "PUT" | "DELETE",
@@ -23,6 +24,7 @@ const ApiRequest = async <RequestType, ResponseType = null>(
   };
 
   let isSuccess = false;
+  let message: string = "";
 
   const response = await fetch(SERVER_URI + "/api/" + url, option)
     .then((response) => {
@@ -37,16 +39,27 @@ const ApiRequest = async <RequestType, ResponseType = null>(
         return null;
       }
     })
-    .catch((error) => {
-      console.error(error);
+    .catch(() => {
+      message = "Не удаётся подключиться к серверу";
 
       isSuccess = false;
     });
 
+    let value: ResponseType | null;
+
+    if (isSuccess) {
+      value = response;
+    }
+    else{
+      value = null;
+      message = response;
+    }
+
   return {
     value: response,
     isSuccess: isSuccess,
+    message: message,
   };
 };
 
-export default ApiRequest;
+export default SendRequest;
