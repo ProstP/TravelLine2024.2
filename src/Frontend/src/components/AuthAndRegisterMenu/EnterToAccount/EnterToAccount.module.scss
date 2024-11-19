@@ -1,7 +1,7 @@
-@import "../RegisterMenu/RegisterMenu.module.scss";
+@use "../RegisterMenu/RegisterMenu.module.scss" as import;
 
 .title {
-  @include title;
+  @include import.title;
 }
 
 .text {
@@ -12,5 +12,5 @@
 
 .btns {
   margin-top: 8%;
-  @include doubleElts();
+  @include import.doubleElts();
 }

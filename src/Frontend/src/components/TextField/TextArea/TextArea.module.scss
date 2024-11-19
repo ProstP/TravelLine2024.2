@@ -1,4 +1,4 @@
-@import "../TextInput/TextInput.module.scss";
+@use "../TextInput/TextInput.module.scss" as import;
 
 .container {
   position: relative;
@@ -11,9 +11,9 @@
   height: 100%;
   background-color: white;
   resize: none;
-  @include border();
-  @include padding();
-  @include text();
+  @include import.border();
+  @include import.padding();
+  @include import.text();
 }
 
 .error {
@@ -21,14 +21,14 @@
 }
 
 .area:focus {
-  @include borderInFocus();
+  @include import.borderInFocus();
 }
 
 .help {
-  @include help();
+  @include import.help();
 }
 
 .area:focus + .help,
 .area:not(:placeholder-shown) + .help {
-  @include helpSelected();
+  @include import.helpSelected();
 }

@@ -1,4 +1,4 @@
-@import "../RegisterMenu/RegisterMenu.module.scss";
+@use "../RegisterMenu/RegisterMenu.module.scss" as import;
 
 .container {
   display: flex;
@@ -7,11 +7,11 @@
 }
 
 .title {
-  @include title();
+  @include import.title();
 }
 
 .btns {
-  @include doubleElts();
+  @include import.doubleElts();
 }
 
 .link {
