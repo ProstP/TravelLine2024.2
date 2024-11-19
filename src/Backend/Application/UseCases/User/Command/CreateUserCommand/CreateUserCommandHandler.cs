@@ -20,14 +20,14 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand>
 
     public async Task<Result.Result> HandleAsync( CreateUserCommand command )
     {
-        Domain.Entity.User userInDb = await _userRepository.GetByLogin( command.Login );
-        if ( userInDb != null )
-        {
-            return Result.Result.FromError( "Login already in use" );
-        }
-
         try
         {
+            Domain.Entity.User userInDb = await _userRepository.GetByLogin( command.Login );
+            if ( userInDb != null )
+            {
+                return Result.Result.FromError( "Login already in use" );
+            }
+
             string passwordHash = _passwordHasher.Hash( command.Password );
             Domain.Entity.User user = new( command.Name, command.Login, passwordHash );
 

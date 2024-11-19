@@ -32,16 +32,16 @@ public class UpdateUserCommandHandler : ICommandHandler<UpdateUserDto, UpdateUse
             return Result.Result<UpdateUserDto>.FromError( "Unknown user" );
         }
 
-        string passwordHash = user.PasswordHash;
-        if ( command.Password != "" )
-        {
-            passwordHash = _passwordHasher.Hash( command.Password );
-        }
-        user.Update( command.Login, passwordHash, command.Name, command.About );
+        string login = string.IsNullOrWhiteSpace( command.Login ) ? user.Login : command.Login;
+        string passwordHash = string.IsNullOrWhiteSpace( command.Password ) ? user.PasswordHash : _passwordHasher.Hash( command.Password );
+        string name = string.IsNullOrWhiteSpace( command.Name ) ? user.Name : command.Name;
+        string about = string.IsNullOrWhiteSpace( command.About ) ? user.About : command.About;
+
+        user.Update( login, passwordHash, name, about );
 
         if ( _userRepository.Update( user.Id, user ) == null )
         {
-            return Result.Result<UpdateUserDto>.FromError( "Error in save" );
+            return Result<UpdateUserDto>.FromError( "Error in save" );
         }
 
         await _unitOfWork.SaveChangesAsync();
@@ -52,6 +52,6 @@ public class UpdateUserCommandHandler : ICommandHandler<UpdateUserDto, UpdateUse
             RefreshToken = _tokenCreator.GenerateRefreshToken( user.Login )
         };
 
-        return Result.Result<UpdateUserDto>.FromSuccess( updateUserDto );
+        return Result<UpdateUserDto>.FromSuccess( updateUserDto );
     }
 }

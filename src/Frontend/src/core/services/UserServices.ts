@@ -66,7 +66,7 @@ const Refresh = async (data: RefreshTokenRequest) => {
 
 const Update = async (data: UpdateUserRequest) => {
   const response = await SendRequest<UpdateUserRequest, UpdateUserResponse>(
-    "user/update",
+    "user/update-profile",
     data,
     "PUT",
     true

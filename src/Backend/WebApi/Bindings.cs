@@ -20,8 +20,8 @@ public static class Bindings
 
     public static IServiceCollection AddWebApiServices( this IServiceCollection serviceCollection, IConfiguration configuration )
     {
-        JWTSettings jwtSettings = serviceCollection.BuildServiceProvider().GetRequiredService<IOptions<JWTSettings>>().Value;
-        byte[] key = Encoding.ASCII.GetBytes( jwtSettings.SecretKey );
+        string secretKey = configuration.GetSection( "JWTSettings" ).GetSection( "SecretKey" ).Value;
+        byte[] key = Encoding.ASCII.GetBytes( secretKey );
 
         serviceCollection.AddAuthentication( x =>
         {
@@ -42,11 +42,11 @@ public static class Bindings
                 };
             } );
 
-        string frontendUrl = configuration.GetSection( "FrontendSettings" ).GetSection("Url").Value;
+        string frontendUrl = configuration.GetSection( "FrontendSettings" ).GetSection( "Url" ).Value;
         serviceCollection.AddCors( options =>
         {
             options.AddPolicy( "AllowSpecificOrigin",
-                policy => policy.WithOrigins( frontendUrl )
+                policy => policy.WithOrigins( frontendUrl! )
                                   .AllowAnyMethod()
                                   .AllowAnyHeader() );
         } );

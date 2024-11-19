@@ -1,4 +1,4 @@
-import { useMaryFoodStore } from "../../hooks/useMaryFoodStore.ts";
+import { useMaryFoodStore } from "../../core/hooks/useMaryFoodStore";
 import styles from "./Header.module.scss";
 import userIcon from "../../assets/user.svg";
 import exitIcon from "../../assets/exit.svg";

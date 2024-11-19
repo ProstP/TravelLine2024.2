@@ -140,7 +140,7 @@ public class UserController : ControllerBase
     }
 
     [Authorize]
-    [HttpPut, Route( "update" )]
+    [HttpPut, Route( "update-profile" )]
     public async Task<ActionResult<UpdateUserResponse>> Update( [FromBody] UpdateUserRequest request )
     {
         string userLogin = User.FindFirstValue( ClaimTypes.NameIdentifier );
