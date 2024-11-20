@@ -81,9 +81,6 @@ const UserInfo = ({ exit }: UserInfoProps) => {
       return;
     }
 
-    console.log(user);
-    console.log(userData);
-
     const request: UserData = {
       login: user.login != userData.current!.login ? user.login : "",
       name: user.name != userData.current!.name ? user.name : "",
@@ -93,7 +90,6 @@ const UserInfo = ({ exit }: UserInfoProps) => {
 
     const response = await Update(request);
     if (!response.isSuccess) {
-      console.log(response.value);
       toggleError(true);
     }
 

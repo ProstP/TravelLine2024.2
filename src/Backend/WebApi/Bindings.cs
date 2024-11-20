@@ -21,7 +21,7 @@ public static class Bindings
     public static IServiceCollection AddWebApiServices( this IServiceCollection serviceCollection, IConfiguration configuration )
     {
         string secretKey = configuration.GetSection( "JWTSettings" ).GetSection( "SecretKey" ).Value;
-        byte[] key = Encoding.ASCII.GetBytes( secretKey );
+        byte[] key = Encoding.ASCII.GetBytes( secretKey! );
 
         serviceCollection.AddAuthentication( x =>
         {

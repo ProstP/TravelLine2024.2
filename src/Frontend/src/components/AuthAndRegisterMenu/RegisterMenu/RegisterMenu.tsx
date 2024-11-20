@@ -66,7 +66,6 @@ const RegisterMenu = ({ exit, toLogin }: RegisterMenuProps) => {
 
     const response = await Register(data);
     if (!response.isSuccess) {
-      console.log(response.value);
       toggleError(true);
       return;
     }
