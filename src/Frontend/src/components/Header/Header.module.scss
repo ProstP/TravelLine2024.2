@@ -1,0 +1,85 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position: fixed;
+  height: 10vh;
+  top: 0;
+  left: 0;
+}
+
+.titlecontainer {
+  width: 50%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.linkcontainer {
+  margin-left: 6%;
+  width: 50%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.usercontainer {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  margin-left: 8%;
+  font: bold 24px "Montserrat";
+  color: #fdb100;
+  cursor: default;
+}
+
+.link {
+  font: normal 16px "Montserrat";
+  color: #9196a1;
+  cursor: pointer;
+}
+
+.link:hover {
+  font-weight: bold;
+  color: #3a3c41;
+}
+
+.bold {
+  font-weight: bold;
+  color: #3a3c41;
+}
+
+.username {
+  font: normal 16px "Montserrat";
+  color: #fdb100;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.username:hover {
+  color: #fdb100;
+  text-decoration: underline;
+}
+
+.verticalline {
+  border-left: 1.6px #fdb100 solid;
+  height: 20px;
+  margin: 0 25px;
+}
+
+.exitbtn {
+  background: none;
+  border: 0;
+  padding: 0;
+  border-radius: 0;
+}
+
+.exitbtn:focus {
+  outline: none;
+}

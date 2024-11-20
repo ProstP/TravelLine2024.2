@@ -1,0 +1,16 @@
+@use "../RegisterMenu/RegisterMenu.module.scss" as import;
+
+.title {
+  @include import.title;
+}
+
+.text {
+  font: normal 14px "Montserrat";
+  color: #4a525a;
+  text-align: start;
+}
+
+.btns {
+  margin-top: 8%;
+  @include import.doubleElts();
+}

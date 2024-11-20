@@ -1,0 +1,45 @@
+.container {
+  position: relative;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 15%;
+  padding: 40px 0;
+  border-radius: 20px;
+}
+
+.fields {
+  width: 100%;
+  gap: 5%;
+  display: flex;
+  justify-content: center;
+}
+
+.btns {
+  margin-left: 5%;
+  margin-bottom: 5%;
+  display: flex;
+  width: 45%;
+  gap: 5%;
+}
+
+.required {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 45%;
+}
+
+.about {
+  width: 40%;
+  height: 100%;
+}
+
+.edit {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}

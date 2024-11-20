@@ -1,1 +1,0 @@
-node --eval "fs.writeFileSync('prettier.config.js','export default { printWidth: 120 };\n')"

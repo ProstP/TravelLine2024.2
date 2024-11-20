@@ -1,0 +1,27 @@
+@use "../RegisterMenu/RegisterMenu.module.scss" as import;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.title {
+  @include import.title();
+}
+
+.btns {
+  @include import.doubleElts();
+}
+
+.link {
+  font: bold 12px/24px "Montserrat";
+  color: #fdb100;
+  border-bottom: 1px dashed #fdb100;
+  cursor: pointer;
+}
+
+.link:hover {
+  color: #ffca4e;
+  border-bottom-style: solid;
+}

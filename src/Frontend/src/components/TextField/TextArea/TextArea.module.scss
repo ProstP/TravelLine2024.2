@@ -1,0 +1,34 @@
+@use "../TextInput/TextInput.module.scss" as import;
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.area {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  resize: none;
+  @include import.border();
+  @include import.padding();
+  @include import.text();
+}
+
+.error {
+  border-color: #ff4747;
+}
+
+.area:focus {
+  @include import.borderInFocus();
+}
+
+.help {
+  @include import.help();
+}
+
+.area:focus + .help,
+.area:not(:placeholder-shown) + .help {
+  @include import.helpSelected();
+}
