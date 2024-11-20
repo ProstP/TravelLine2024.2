@@ -21,6 +21,7 @@ namespace Application
             serviceCollection.AddScoped<UpdateUserCommandHandler>();
             serviceCollection.AddScoped<RefreshTokenHandler>();
             serviceCollection.AddScoped<GetUserQueryHandler>();
+            serviceCollection.AddScoped<RefreshTokenHandler>();
             serviceCollection.AddScoped<CreateRecipeCommandHandler>();
             serviceCollection.AddScoped<GetRecipeQueryHandler>();
             serviceCollection.AddScoped<DeleteRecipeCommandHandler>();
