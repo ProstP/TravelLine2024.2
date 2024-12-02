@@ -48,26 +48,22 @@ public class RecipeController : ControllerBase
             CookingTime = request.CookingTime,
             PersonNum = request.PersonNum,
             Image = request.Image,
-            UserId = 14
+            UserId = 14,
+            Ingredients = request.Ingredients
+                .Select( i =>
+                new CreateIngredientCommand()
+                {
+                    Header = i.Header,
+                    SubIngredients = i.SubIngredients
+                } ).ToList(),
+            RecipeSteps = request.RecipeSteps
+                .Select( rs =>
+                new CreateRecipeStepCommand()
+                {
+                    StepNum = rs.StepNum,
+                    Description = rs.Description,
+                } ).ToList()
         };
-
-        foreach ( CreateIngredientsRequest ingredient in request.Ingredients )
-        {
-            command.Ingredients.Add( new CreateIngredientCommand()
-            {
-                Header = ingredient.Header,
-                SubIngredients = ingredient.SubIngredients,
-            } );
-        }
-
-        foreach ( CreateRecipeStepRequest recipeStep in request.RecipeSteps )
-        {
-            command.RecipeSteps.Add( new CreateRecipeStepCommand()
-            {
-                StepNum = recipeStep.StepNum,
-                Description = recipeStep.Description,
-            } );
-        }
 
         Result result = await _createRecipeCommandHandler.HandleAsync( command );
 
@@ -103,27 +99,23 @@ public class RecipeController : ControllerBase
             PersonNum = result.Value.PersonNum,
             Image = result.Value.Image,
             UserId = result.Value.UserId,
+            Ingredients = result.Value.Ingredients
+                .Select( i =>
+                new GetIngredientResponse()
+                {
+                    Id = i.Id,
+                    Header = i.Header,
+                    SubIngredients = i.SubIngredients,
+                } ).ToList(),
+            RecipeSteps = result.Value.RecipeSteps
+                .Select( rs =>
+                new GetRecipeStepResponse()
+                {
+                    Id = rs.Id,
+                    StepNum = rs.StepNum,
+                    Description = rs.Description,
+                } ).ToList()
         };
-
-        foreach ( IngredientDto ingredient in result.Value.Ingredients )
-        {
-            getRecipeResponse.Ingredients.Add( new GetIngredientResponse()
-            {
-                Id = ingredient.Id,
-                Header = ingredient.Header,
-                SubIngredients = ingredient.SubIngredients,
-            } );
-        }
-
-        foreach ( RecipeStepDto recipeStep in result.Value.RecipeSteps )
-        {
-            getRecipeResponse.RecipeSteps.Add( new GetRecipeStepResponse()
-            {
-                Id = recipeStep.Id,
-                StepNum = recipeStep.StepNum,
-                Description = recipeStep.Description,
-            } );
-        }
 
         return Ok( getRecipeResponse );
     }
@@ -154,27 +146,21 @@ public class RecipeController : ControllerBase
             CookingTime = request.CookingTime,
             PersonNum = request.PersonNum,
             Image = request.Image,
+            Ingredients = request.Ingredients
+                .Select( i =>
+                new UpdateIngredientCommand()
+                {
+                    Header = i.Header,
+                    SubIngredients = i.SubIngredients
+                } ).ToList(),
+            RecipeSteps = request.RecipeSteps
+                .Select( rs =>
+                new UpdateRecipeStepCommand()
+                {
+                    StepNum = rs.StepNum,
+                    Description = rs.Description,
+                } ).ToList()
         };
-
-        foreach ( UpdateIngredientRequest ingredient in request.Ingredients )
-        {
-            updateRecipeCommand.Ingredients.Add( new UpdateIngredientCommand()
-            {
-                Id = ingredient.Id,
-                Header = ingredient.Header,
-                SubIngredients = ingredient.SubIngredients,
-            } );
-        }
-
-        foreach ( UpdateRecipeStepRequest recipeStep in request.RecipeSteps )
-        {
-            updateRecipeCommand.RecipeSteps.Add( new UpdateRecipeStepCommand()
-            {
-                Id = recipeStep.Id,
-                StepNum = recipeStep.StepNum,
-                Description = recipeStep.Description,
-            } );
-        }
 
         Result result = await _updateRecipeCommandHandler.HandleAsync( updateRecipeCommand );
 
@@ -184,62 +170,5 @@ public class RecipeController : ControllerBase
         }
 
         return Ok();
-    }
-
-    [HttpGet, Route( "group" )]
-    public async Task<ActionResult<GetGroupOfRecipeRepsonse>> GetGroup( [FromBody] GetGroupOfRecipesRequest request )
-    {
-        GetGroupOfRecipeQuery query = new()
-        {
-            GroupNum = request.GroupNum,
-            Count = request.Count
-        };
-
-        Result<RecipeListDto> result = await _getGroupOfRecipeQueryHandler.HandleAsync( query );
-
-        if ( !result.IsSuccess )
-        {
-            return BadRequest( result.Error );
-        }
-
-        GetGroupOfRecipeRepsonse repsonse = new();
-
-        foreach ( RecipeDto recipe in result.Value.Recipes )
-        {
-            GetRecipeResponse getRecipeResponse = new()
-            {
-                Id = recipe.Id,
-                Name = recipe.Name,
-                Description = recipe.Description,
-                CookingTime = recipe.CookingTime,
-                PersonNum = recipe.PersonNum,
-                Image = recipe.Image,
-                UserId = recipe.UserId,
-            };
-
-            foreach ( IngredientDto ingredient in recipe.Ingredients )
-            {
-                getRecipeResponse.Ingredients.Add( new GetIngredientResponse()
-                {
-                    Id = ingredient.Id,
-                    Header = ingredient.Header,
-                    SubIngredients = ingredient.SubIngredients,
-                } );
-            }
-
-            foreach ( RecipeStepDto recipeStep in recipe.RecipeSteps )
-            {
-                getRecipeResponse.RecipeSteps.Add( new GetRecipeStepResponse()
-                {
-                    Id = recipeStep.Id,
-                    StepNum = recipeStep.StepNum,
-                    Description = recipeStep.Description,
-                } );
-            }
-
-            repsonse.Recipes.Add( getRecipeResponse );
-        }
-
-        return Ok( repsonse );
     }
 }
