@@ -37,7 +37,7 @@ public class RecipeController : ControllerBase
         _getGroupOfRecipeQueryHandler = getGroupOfRecipeQueryHandler;
     }
 
-    [Authorize]
+    //[Authorize]
     [HttpPost, Route( "create" )]
     public async Task<IActionResult> Create( [FromBody] CreateRecipeRequest request )
     {
@@ -128,7 +128,7 @@ public class RecipeController : ControllerBase
         return Ok( getRecipeResponse );
     }
 
-    [Authorize]
+    //[Authorize]
     [HttpDelete]
     public async Task<IActionResult> Remove( [FromBody] DeleteRecipeRequest request )
     {

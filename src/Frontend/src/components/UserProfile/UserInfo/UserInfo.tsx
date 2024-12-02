@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./UserInfo.module.scss";
 import editIcon from "../../../assets/edit.svg";
 import TextInput from "../../TextField/TextInput/TextInput";
 import TextArea from "../../TextField/TextArea/TextArea";
 import Button from "../../Buttons/Button";
 import PasswordInput from "../../TextField/PasswordInput/PasswordInput";
+import { Profile, Update } from "../../../services/UserServices";
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
-import { useMaryFoodStore } from "../../../core/hooks/useMaryFoodStore";
-import { Profile, Update } from "../../../core/services/UserServices";
+import { useMaryFoodStore } from "../../../hooks/useMaryFoodStore";
 
 type UserInfoProps = {
   exit: () => void;
@@ -27,7 +27,6 @@ type FieldError = {
 };
 
 const UserInfo = ({ exit }: UserInfoProps) => {
-  const userData = useRef<UserData>();
   const setName = useMaryFoodStore((state) => state.setUsername);
   const [user, setUser] = useState<UserData>({
     name: "",
@@ -50,14 +49,12 @@ const UserInfo = ({ exit }: UserInfoProps) => {
         return;
       }
 
-      userData.current = {
-        name: result.value!.name,
-        login: result.value!.login,
+      setUser({
+        name: result.value.name,
+        login: result.value.login,
         password: "",
-        about: result.value!.about,
-      }
-
-      setUser(userData.current);
+        about: result.value.about,
+      });
     };
 
     getUserInfo();
@@ -81,15 +78,9 @@ const UserInfo = ({ exit }: UserInfoProps) => {
       return;
     }
 
-    const request: UserData = {
-      login: user.login != userData.current!.login ? user.login : "",
-      name: user.name != userData.current!.name ? user.name : "",
-      password: user.password != userData.current!.password ? user.password : "",
-      about: user.about != userData.current!.about ? user.about : ""
-    }
-
-    const response = await Update(request);
+    const response = await Update(user);
     if (!response.isSuccess) {
+      console.log(response.value);
       toggleError(true);
     }
 

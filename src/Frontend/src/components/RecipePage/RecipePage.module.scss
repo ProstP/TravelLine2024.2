@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+.container {
+  left: 0;
+  top: 100px;
+  position: absolute;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  padding-bottom: 11vh;
+}
+
+.topPanel {
+  width: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btns {
+  display: flex;
+  gap: 15px;
+}
+
+.smallicon {
+  width: 13px;
+  height: 13px;
+}
+
+.pencilicon {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.deleteBtn {
+  width: 41px;
+  height: 41px;
+  background-color: white;
+  border-radius: 10px;
+  border: 1px solid rgba(145, 150, 161, 0.7);
+  padding: 0 14px;
+}
+
+.deleteBtn:hover {
+  border: 1px solid rgba(145, 150, 161, 0.7);
+}
+
+.deleteBtn:focus {
+  outline: none;
+}
+
+.anotherInfo {
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ingredients {
+  width: 30%;
+}
+
+.steps {
+  width: 65%;
+}
+
+.title {
+  font: bold 36px "Montserrat";
+  color: #25292d;
+  margin: 0;
+}
+
+.smalltitle {
+  font: bold 13px "Montserrat";
+  color: white;
+  margin-right: 20px;
+}
