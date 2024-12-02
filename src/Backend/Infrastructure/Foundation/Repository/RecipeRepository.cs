@@ -19,12 +19,14 @@ public class RecipeRepository : Repository<Recipe>, IRecipeRepository
                           .FirstOrDefaultAsync( r => r.Id == id );
     }
 
-    public async Task<List<Recipe>> GetAll()
+    public async Task<List<Recipe>> GetGroup( int skip, int take )
     {
         return await DbSet.Include( r => r.Ingredients )
                           .Include( r => r.Steps )
                           .Include( r => r.Favourites )
                           .Include( r => r.Likes )
+                          .Skip( skip )
+                          .Take( take )
                           .ToListAsync();
     }
 

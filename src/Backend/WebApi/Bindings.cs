@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using Infrastructure.Foundation.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using WebApi.Options;
 

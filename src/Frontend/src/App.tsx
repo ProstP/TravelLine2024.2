@@ -5,7 +5,9 @@ import Footer from "./components/Footer/Footer";
 import AuthAndRegisterMenu from "./components/AuthAndRegisterMenu/AuthAndRegisteMenu";
 import { useState } from "react";
 import UserProfile from "./components/UserProfile/UserProfile";
-import { Logout } from "./core/services/UserServices";
+import { Logout } from "./services/UserServices";
+import RecipeEditor from "./components/RecipeEditor/RecipeEditor";
+import RecipePage from "./components/RecipePage/RecipePage";
 
 function App() {
   const [menuVisible, setMenuVisible] = useState(false);
@@ -29,6 +31,21 @@ function App() {
       {profileVisible ? (
         <UserProfile exit={() => setProfileVisible(false)} />
       ) : null}
+      {menuVisible || profileVisible ? null : (
+        <Routes>
+          <Route
+            path="create-recipe"
+            element={
+              <RecipeEditor
+                title="Добавить новый рецепт"
+                btnStr="Опубликовать"
+                onClick={(data) => console.log(data)}
+              />
+            }
+          ></Route>
+          <Route path="recipe" element={<RecipePage></RecipePage>}></Route>
+        </Routes>
+      )}
       <Footer></Footer>
     </BrowserRouter>
   );

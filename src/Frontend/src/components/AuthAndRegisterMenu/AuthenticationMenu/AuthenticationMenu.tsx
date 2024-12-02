@@ -4,9 +4,9 @@ import PopApMenu from "../../PopApMenu/PopApMenu";
 import TextInput from "../../TextField/TextInput/TextInput";
 import styles from "./AuthenticationMenu.module.scss";
 import { LoginUserRequest } from "../../../data/contracts/UserContracts";
+import { Authenticate } from "../../../services/UserServices";
+import { useMaryFoodStore } from "../../../hooks/useMaryFoodStore";
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
-import { useMaryFoodStore } from "../../../core/hooks/useMaryFoodStore";
-import { Authenticate } from "../../../core/services/UserServices";
 
 type AuthenticationMenuProps = {
   exit: () => void;

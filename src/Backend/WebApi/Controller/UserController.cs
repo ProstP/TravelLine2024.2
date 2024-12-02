@@ -2,6 +2,7 @@
 using Application.Result;
 using Application.UseCases.Token.Dtos;
 using Application.UseCases.Token.RefreshTokens;
+using Application.UseCases.User.Command.AuthenticateByTokenCommand;
 using Application.UseCases.User.Command.AuthenticateUserCommand;
 using Application.UseCases.User.Command.CreateUserCommand;
 using Application.UseCases.User.Command.UpdateUserCommand;
@@ -23,13 +24,15 @@ public class UserController : ControllerBase
     private readonly UpdateUserCommandHandler _updateUserCommandHandler;
     private readonly RefreshTokenHandler _refreshTokenCommandHandler;
     private readonly GetUserQueryHandler _getUserQueryHandler;
+    private readonly AuthenticateByTokenCommandHandler _authenticateByTokenCommandHandler;
 
     public UserController(
         CreateUserCommandHandler createUserCommandHandler,
         AuthenticateUserCommandHandler authenticateUserCommandHandler,
         UpdateUserCommandHandler updateUserCommandHandler,
         RefreshTokenHandler refreshTokenHandler,
-        GetUserQueryHandler getUserQueryHandler
+        GetUserQueryHandler getUserQueryHandler,
+        AuthenticateByTokenCommandHandler authenticateByTokenCommandHandler
     )
     {
         _createUserCommandHandler = createUserCommandHandler;
@@ -37,6 +40,7 @@ public class UserController : ControllerBase
         _updateUserCommandHandler = updateUserCommandHandler;
         _refreshTokenCommandHandler = refreshTokenHandler;
         _getUserQueryHandler = getUserQueryHandler;
+        _authenticateByTokenCommandHandler = authenticateByTokenCommandHandler;
     }
 
     [AllowAnonymous]
@@ -74,6 +78,35 @@ public class UserController : ControllerBase
         {
             return BadRequest( result.Error );
         }
+        LoginUserResponse loginUserResponse = new()
+        {
+            Username = result.Value.UserName,
+            AccessToken = result.Value.AccessToken,
+            RefreshToken = result.Value.RefreshToken
+        };
+
+        return Ok( loginUserResponse );
+    }
+
+    [Authorize]
+    [HttpPost, Route( "login-by-token" )]
+    public async Task<ActionResult> LoginByToken()
+    {
+        string authStr = Request.Headers.Authorization;
+        string token = authStr.Substring( 7 );
+
+        AuthenticateByTokenCommand command = new()
+        {
+            Token = token,
+        };
+
+        Result<AuthenticateUserCommandDto> result = await _authenticateByTokenCommandHandler.HandleAsync( command );
+
+        if ( !result.IsSuccess )
+        {
+            return BadRequest( result.Error );
+        }
+
         LoginUserResponse loginUserResponse = new()
         {
             Username = result.Value.UserName,

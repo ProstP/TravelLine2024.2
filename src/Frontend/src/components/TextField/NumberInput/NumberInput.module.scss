@@ -1,0 +1,47 @@
+@use "../TextInput/TextInput.module.scss" as import;
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.input {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  @include import.border();
+  @include import.text();
+  @include import.padding();
+}
+
+.input::-webkit-inner-spin-button,
+.input::-webkit-outer-spin-button {
+  display: none;
+}
+
+.error {
+  border-color: #ff4747;
+}
+
+.input:focus {
+  @include import.borderInFocus();
+}
+
+.help {
+  @include import.help();
+}
+
+.input:focus + .help,
+.input:not(:placeholder-shown) + .help {
+  @include import.helpSelected();
+}
+
+.hide {
+  position: absolute;
+  top: 11px;
+  right: 12px;
+  width: 5%;
+  height: 18px;
+  cursor: pointer;
+}

@@ -1,8 +1,9 @@
+import { ReactNode } from "react";
 import styles from "./Button.module.scss";
 
 type ButtonProps = {
   isFilled?: boolean;
-  children: string;
+  children: ReactNode;
   onClick: () => void;
 };
 
