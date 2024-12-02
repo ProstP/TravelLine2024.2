@@ -132,7 +132,7 @@ public class RecipeController : ControllerBase
         return Ok();
     }
 
-    [Authorize]
+    //[Authorize]
     [HttpPut]
     public async Task<IActionResult> Update( [FromBody] UpdateRecipeRequest request )
     {

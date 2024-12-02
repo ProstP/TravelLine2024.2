@@ -9,11 +9,13 @@ public class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeCommand>
 {
     private readonly IRecipeRepository _recipeRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ITagRepository _tagRepository;
 
-    public UpdateRecipeCommandHandler( IRecipeRepository recipeRepository, IUnitOfWork unitOfWork )
+    public UpdateRecipeCommandHandler( IRecipeRepository recipeRepository, IUnitOfWork unitOfWork, ITagRepository tagRepository )
     {
         _recipeRepository = recipeRepository;
         _unitOfWork = unitOfWork;
+        _tagRepository = tagRepository;
     }
 
     public async Task<Result.Result> HandleAsync( UpdateRecipeCommand command )
@@ -26,6 +28,23 @@ public class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeCommand>
         }
 
         recipe.Update( command.Name, command.Description, command.CookingTime, command.PersonNum, command.Image );
+
+        recipe.Tags.Clear();
+        command.Tags.ForEach( name =>
+        {
+            Tag tag = _tagRepository.GetByName( name );
+
+            if ( tag == null )
+            {
+                recipe.Tags.Add( new( name ) );
+            }
+            else
+            {
+                recipe.Tags.Add( tag );
+            }
+        } );
+
+        /*
         List<int> ingredientsToRemove = [];
         for ( int i = 0; i < recipe.Ingredients.Count; i++ )
         {
@@ -89,6 +108,7 @@ public class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeCommand>
                 }
             }
         }
+        */
 
         _recipeRepository.Update( command.Id, recipe );
         await _unitOfWork.SaveChangesAsync();
