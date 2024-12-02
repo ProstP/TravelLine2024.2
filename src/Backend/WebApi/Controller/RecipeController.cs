@@ -3,7 +3,6 @@ using Application.UseCases.Recipe.Command.CreateRecipeCommand;
 using Application.UseCases.Recipe.Command.DeleteRecipeCommand;
 using Application.UseCases.Recipe.Command.UpdateRecipeCommand;
 using Application.UseCases.Recipe.Dtos;
-using Application.UseCases.Recipe.Query.GetGroupOfRecipeQuery;
 using Application.UseCases.Recipe.Query.GetRecipeQuery;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,21 +19,18 @@ public class RecipeController : ControllerBase
     private readonly GetRecipeQueryHandler _getRecipeQueryHandler;
     private readonly DeleteRecipeCommandHandler _deleteRecipeCommandHandler;
     private readonly UpdateRecipeCommandHandler _updateRecipeCommandHandler;
-    private readonly GetGroupOfRecipeQueryHandler _getGroupOfRecipeQueryHandler;
 
     public RecipeController(
         CreateRecipeCommandHandler createRecipeCommandHandler,
         GetRecipeQueryHandler getRecipeQueryHandler,
         DeleteRecipeCommandHandler deleteRecipeCommandHandler,
-        UpdateRecipeCommandHandler updateRecipeCommandHandler,
-        GetGroupOfRecipeQueryHandler getGroupOfRecipeQueryHandler
+        UpdateRecipeCommandHandler updateRecipeCommandHandler
     )
     {
         _createRecipeCommandHandler = createRecipeCommandHandler;
         _getRecipeQueryHandler = getRecipeQueryHandler;
         _deleteRecipeCommandHandler = deleteRecipeCommandHandler;
         _updateRecipeCommandHandler = updateRecipeCommandHandler;
-        _getGroupOfRecipeQueryHandler = getGroupOfRecipeQueryHandler;
     }
 
     //[Authorize]
