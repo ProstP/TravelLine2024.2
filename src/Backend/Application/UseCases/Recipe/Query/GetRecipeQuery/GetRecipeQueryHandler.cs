@@ -31,27 +31,23 @@ public class GetRecipeQueryHandler : IQueryHandler<RecipeDto, GetRecipeQuery>
             CookingTime = recipe.CookingTime,
             PersonNum = recipe.PersonNum,
             Image = recipe.Image,
+            Ingredients = recipe.Ingredients
+                .Select( i =>
+                new IngredientDto()
+                {
+                    Id = i.Id,
+                    Header = i.Header,
+                    SubIngredients = i.SubIngredients,
+                } ).ToList(),
+            RecipeSteps = recipe.Steps
+                .Select( rs =>
+                new RecipeStepDto()
+                {
+                    Id = rs.Id,
+                    Description = rs.Description,
+                    StepNum = rs.StepNum,
+                } ).ToList(),
         };
-
-        foreach ( Domain.Entity.Ingredient ingredient in recipe.Ingredients )
-        {
-            recipeDto.Ingredients.Add( new IngredientDto()
-            {
-                Id = ingredient.Id,
-                Header = ingredient.Header,
-                SubIngredients = ingredient.SubIngredients,
-            } );
-        }
-
-        foreach ( Domain.Entity.RecipeStep recipeStep in recipe.Steps )
-        {
-            recipeDto.RecipeSteps.Add( new RecipeStepDto()
-            {
-                Id = recipeStep.Id,
-                StepNum = recipeStep.StepNum,
-                Description = recipeStep.Description,
-            } );
-        }
 
         return Result<RecipeDto>.FromSuccess( recipeDto );
     }
