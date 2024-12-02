@@ -6,5 +6,5 @@ public interface ITagRepository : IRepository<Tag>
 {
     Task<Tag> Get( int id );
 
-    Task<Tag> GetByNameAsync( string name );
+    Tag GetByName( string name );
 }

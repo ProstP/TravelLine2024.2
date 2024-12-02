@@ -24,13 +24,18 @@ public class CreateRecipeCommandHandler : ICommandHandler<CreateRecipeCommand>
             new( command.Name, command.Description, command.CookingTime, command.PersonNum, command.Image, command.UserId );
 
         recipe.Tags.Clear();
-        command.Tags.ForEach( async name =>
+        command.Tags.ForEach( name =>
         {
-            _tagRepository.Add( new( name ) );
+            Tag tag = _tagRepository.GetByName( name );
 
-            Tag tag = await _tagRepository.GetByNameAsync( name );
-
-            recipe.Tags.Add( tag );
+            if ( tag == null )
+            {
+                recipe.Tags.Add( new( name ) );
+            }
+            else
+            {
+                recipe.Tags.Add( tag );
+            }
         } );
 
         recipe.Ingredients.AddRange( command.Ingredients

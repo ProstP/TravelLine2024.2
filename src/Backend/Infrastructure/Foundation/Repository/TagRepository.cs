@@ -4,23 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Foundation.Repository;
 
-public class TagRepository : ITagRepository
+public class TagRepository : Repository<Tag>, ITagRepository
 {
-    private readonly DbSet<Tag> DbSet;
-
     public TagRepository( MaryFoodDbContext dbContext )
+        : base( dbContext )
     {
-        DbSet = dbContext.Set<Tag>();
-    }
-
-    public void Add( Tag item )
-    {
-        Tag tag = DbSet.FirstOrDefault( t => t.Name == item.Name );
-
-        if ( tag == null )
-        {
-            DbSet.Add( item );
-        }
     }
 
     public async Task<Tag> Get( int id )
@@ -28,13 +16,8 @@ public class TagRepository : ITagRepository
         return await DbSet.FirstOrDefaultAsync( t => t.Id == id );
     }
 
-    public async Task<Tag> GetByNameAsync( string name )
+    public Tag GetByName( string name )
     {
-        return await DbSet.FirstOrDefaultAsync( t => t.Name == name );
-    }
-
-    public void Remove( Tag item )
-    {
-        DbSet.Remove( item );
+        return DbSet.FirstOrDefault( t => t.Name == name );
     }
 }
