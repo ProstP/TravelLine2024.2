@@ -53,10 +53,10 @@ public class RecipeController : ControllerBase
                     SubIngredients = i.SubIngredients
                 } ).ToList(),
             RecipeSteps = request.RecipeSteps
-                .Select( rs =>
+                .Select( ( rs, index ) =>
                 new CreateRecipeStepCommand()
                 {
-                    StepNum = rs.StepNum,
+                    StepNum = index + 1,
                     Description = rs.Description,
                 } ).ToList()
         };
@@ -150,10 +150,10 @@ public class RecipeController : ControllerBase
                     SubIngredients = i.SubIngredients
                 } ).ToList(),
             RecipeSteps = request.RecipeSteps
-                .Select( rs =>
+                .Select( ( rs, index ) =>
                 new UpdateRecipeStepCommand()
                 {
-                    StepNum = rs.StepNum,
+                    StepNum = index + 1,
                     Description = rs.Description,
                 } ).ToList()
         };
