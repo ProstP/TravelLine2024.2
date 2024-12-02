@@ -47,6 +47,7 @@ public class GetRecipeQueryHandler : IQueryHandler<RecipeDto, GetRecipeQuery>
                     Description = rs.Description,
                     StepNum = rs.StepNum,
                 } ).ToList(),
+            Tags = recipe.Tags.Select( t => recipe.Name ).ToList()
         };
 
         return Result<RecipeDto>.FromSuccess( recipeDto );

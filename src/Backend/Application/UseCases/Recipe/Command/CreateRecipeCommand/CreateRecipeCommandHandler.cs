@@ -9,17 +9,29 @@ public class CreateRecipeCommandHandler : ICommandHandler<CreateRecipeCommand>
 {
     private readonly IRecipeRepository _recipeRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ITagRepository _tagRepository;
 
-    public CreateRecipeCommandHandler( IRecipeRepository recipeRepository, IUnitOfWork unitOfWork )
+    public CreateRecipeCommandHandler( IRecipeRepository recipeRepository, IUnitOfWork unitOfWork, ITagRepository tagRepository )
     {
         _recipeRepository = recipeRepository;
         _unitOfWork = unitOfWork;
+        _tagRepository = tagRepository;
     }
 
     public async Task<Result.Result> HandleAsync( CreateRecipeCommand command )
     {
         Domain.Entity.Recipe recipe =
             new( command.Name, command.Description, command.CookingTime, command.PersonNum, command.Image, command.UserId );
+
+        recipe.Tags.Clear();
+        command.Tags.ForEach( async name =>
+        {
+            _tagRepository.Add( new( name ) );
+
+            Tag tag = await _tagRepository.GetByNameAsync( name );
+
+            recipe.Tags.Add( tag );
+        } );
 
         recipe.Ingredients.AddRange( command.Ingredients
                 .Select( i =>

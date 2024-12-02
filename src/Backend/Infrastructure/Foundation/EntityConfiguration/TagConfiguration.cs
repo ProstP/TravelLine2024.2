@@ -15,8 +15,8 @@ public class TagConfiguration : IEntityTypeConfiguration<Tag>
                .HasMaxLength( 20 )
                .IsRequired();
 
-        builder.Property( t => t.Description )
-               .HasMaxLength( 150 );
+        builder.HasIndex( t => t.Name )
+               .IsUnique();
 
         builder.HasOne<DefaultTag>()
                .WithOne()

@@ -58,7 +58,8 @@ public class RecipeController : ControllerBase
                 {
                     StepNum = index + 1,
                     Description = rs.Description,
-                } ).ToList()
+                } ).ToList(),
+            Tags = request.Tags
         };
 
         Result result = await _createRecipeCommandHandler.HandleAsync( command );
@@ -110,7 +111,8 @@ public class RecipeController : ControllerBase
                     Id = rs.Id,
                     StepNum = rs.StepNum,
                     Description = rs.Description,
-                } ).ToList()
+                } ).ToList(),
+            Tags = result.Value.Tags
         };
 
         return Ok( getRecipeResponse );
@@ -155,7 +157,8 @@ public class RecipeController : ControllerBase
                 {
                     StepNum = index + 1,
                     Description = rs.Description,
-                } ).ToList()
+                } ).ToList(),
+            Tags = request.Tags
         };
 
         Result result = await _updateRecipeCommandHandler.HandleAsync( updateRecipeCommand );
