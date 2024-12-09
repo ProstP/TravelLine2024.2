@@ -20,98 +20,103 @@ public class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeCommand>
 
     public async Task<Result.Result> HandleAsync( UpdateRecipeCommand command )
     {
-        Domain.Entity.Recipe recipe = await _recipeRepository.Get( command.Id );
-
-        if ( recipe == null )
+        try
         {
-            return Result.Result.FromError( "Unknown recipe" );
-        }
+            Domain.Entity.Recipe recipe = await _recipeRepository.Get( command.Id );
 
-        recipe.Update( command.Name, command.Description, command.CookingTime, command.PersonNum, command.Image );
-
-        recipe.Tags.Clear();
-        command.Tags.ForEach( name =>
-        {
-            Tag tag = _tagRepository.GetByName( name );
-
-            if ( tag == null )
+            if ( recipe == null )
             {
-                recipe.Tags.Add( new( name ) );
+                return Result.Result.FromError( "Unknown recipe" );
             }
-            else
-            {
-                recipe.Tags.Add( tag );
-            }
-        } );
 
-        /*
-        List<int> ingredientsToRemove = [];
-        for ( int i = 0; i < recipe.Ingredients.Count; i++ )
-        {
-            if ( !command.Ingredients.Any( elt => elt.Id == recipe.Ingredients[ i ].Id ) )
+            recipe.Update( command.Name, command.Description, command.CookingTime, command.PersonNum, command.Image );
+
+            recipe.Tags.Clear();
+            command.Tags.ForEach( name =>
             {
-                ingredientsToRemove.Add( i );
+                Tag tag = _tagRepository.GetByName( name );
+
+                if ( tag == null )
+                {
+                    recipe.Tags.Add( new( name ) );
+                }
+                else
+                {
+                    recipe.Tags.Add( tag );
+                }
+            } );
+
+            List<int> ingredientsToRemove = [];
+            for ( int i = 0; i < recipe.Ingredients.Count; i++ )
+            {
+                if ( !command.Ingredients.Any( elt => elt.Id == recipe.Ingredients[ i ].Id ) )
+                {
+                    ingredientsToRemove.Add( i );
+                }
             }
-        }
-        foreach ( int index in ingredientsToRemove )
-        {
-            recipe.Ingredients.RemoveAt( index );
-        }
-        foreach ( UpdateIngredientCommand update in command.Ingredients )
-        {
-            if ( update.Id == 0 )
+            foreach ( int index in ingredientsToRemove )
             {
-                recipe.Ingredients.Add( new( update.Header, update.SubIngredients ) );
+                recipe.Ingredients.RemoveAt( index );
             }
-            else
+            foreach ( UpdateIngredientCommand update in command.Ingredients )
             {
-                Ingredient ingredient = recipe.Ingredients.FirstOrDefault( i => i.Id == update.Id );
-                if ( ingredient == null )
+                if ( update.Id == 0 )
                 {
                     recipe.Ingredients.Add( new( update.Header, update.SubIngredients ) );
                 }
                 else
                 {
-                    ingredient.Update( update.Header, update.SubIngredients );
+                    Ingredient ingredient = recipe.Ingredients.FirstOrDefault( i => i.Id == update.Id );
+                    if ( ingredient == null )
+                    {
+                        recipe.Ingredients.Add( new( update.Header, update.SubIngredients ) );
+                    }
+                    else
+                    {
+                        ingredient.Update( update.Header, update.SubIngredients );
+                    }
                 }
             }
-        }
 
-        List<int> stepsToRemove = [];
-        for ( int i = 0; i < recipe.Steps.Count; i++ )
-        {
-            if ( !command.RecipeSteps.Any( elt => elt.Id == recipe.Steps[ i ].Id ) )
+            List<int> stepsToRemove = [];
+            for ( int i = 0; i < recipe.Steps.Count; i++ )
             {
-                stepsToRemove.Add( i );
+                if ( !command.RecipeSteps.Any( elt => elt.Id == recipe.Steps[ i ].Id ) )
+                {
+                    stepsToRemove.Add( i );
+                }
             }
-        }
-        foreach ( int index in stepsToRemove )
-        {
-            recipe.Steps.RemoveAt( index );
-        }
-        foreach ( UpdateRecipeStepCommand update in command.RecipeSteps )
-        {
-            if ( update.Id == 0 )
+            foreach ( int index in stepsToRemove )
             {
-                recipe.Steps.Add( new( update.StepNum, update.Description ) );
+                recipe.Steps.RemoveAt( index );
             }
-            else
+            foreach ( UpdateRecipeStepCommand update in command.RecipeSteps )
             {
-                RecipeStep recipeStep = recipe.Steps.FirstOrDefault( i => i.Id == update.Id );
-                if ( recipeStep == null )
+                if ( update.Id == 0 )
                 {
                     recipe.Steps.Add( new( update.StepNum, update.Description ) );
                 }
                 else
                 {
-                    recipeStep.Update( update.StepNum, update.Description );
+                    RecipeStep recipeStep = recipe.Steps.FirstOrDefault( i => i.Id == update.Id );
+                    if ( recipeStep == null )
+                    {
+                        recipe.Steps.Add( new( update.StepNum, update.Description ) );
+                    }
+                    else
+                    {
+                        recipeStep.Update( update.StepNum, update.Description );
+                    }
                 }
             }
-        }
-        */
 
-        _recipeRepository.Update( command.Id, recipe );
-        await _unitOfWork.SaveChangesAsync();
+            _recipeRepository.Update( command.Id, recipe );
+            await _unitOfWork.SaveChangesAsync();
+        }
+        catch ( Exception e )
+        {
+            return Result.Result.FromError( e.Message );
+        }
 
         return Result.Result.FromSuccess();
     }

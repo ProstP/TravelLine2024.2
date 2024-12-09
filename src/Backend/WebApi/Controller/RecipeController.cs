@@ -4,7 +4,6 @@ using Application.UseCases.Recipe.Command.DeleteRecipeCommand;
 using Application.UseCases.Recipe.Command.UpdateRecipeCommand;
 using Application.UseCases.Recipe.Dtos;
 using Application.UseCases.Recipe.Query.GetRecipeQuery;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Contract.Request.Recipe;
 using WebApi.Contract.Response.Recipe;
@@ -87,6 +86,8 @@ public class RecipeController : ControllerBase
             return BadRequest( result.Error );
         }
 
+        List<RecipeStepDto> sortedSteps = result.Value.RecipeSteps.OrderBy( rs => rs.StepNum ).ToList();
+
         GetRecipeResponse getRecipeResponse = new()
         {
             Id = result.Value.Id,
@@ -104,12 +105,11 @@ public class RecipeController : ControllerBase
                     Header = i.Header,
                     SubIngredients = i.SubIngredients,
                 } ).ToList(),
-            RecipeSteps = result.Value.RecipeSteps
+            RecipeSteps = sortedSteps
                 .Select( rs =>
                 new GetRecipeStepResponse()
                 {
                     Id = rs.Id,
-                    StepNum = rs.StepNum,
                     Description = rs.Description,
                 } ).ToList(),
             Tags = result.Value.Tags
@@ -148,6 +148,7 @@ public class RecipeController : ControllerBase
                 .Select( i =>
                 new UpdateIngredientCommand()
                 {
+                    Id = i.Id,
                     Header = i.Header,
                     SubIngredients = i.SubIngredients
                 } ).ToList(),
@@ -155,6 +156,7 @@ public class RecipeController : ControllerBase
                 .Select( ( rs, index ) =>
                 new UpdateRecipeStepCommand()
                 {
+                    Id = rs.Id,
                     StepNum = index + 1,
                     Description = rs.Description,
                 } ).ToList(),
