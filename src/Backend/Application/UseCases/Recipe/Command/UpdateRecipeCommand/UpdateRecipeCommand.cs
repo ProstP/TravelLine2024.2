@@ -11,4 +11,5 @@ public class UpdateRecipeCommand
 
     public List<UpdateIngredientCommand> Ingredients { get; init; } = [];
     public List<UpdateRecipeStepCommand> RecipeSteps { get; init; } = [];
+    public List<string> Tags { get; init; } = [];
 }

@@ -8,16 +8,12 @@ public class TagRepository : Repository<Tag>, ITagRepository
 {
     public TagRepository( MaryFoodDbContext dbContext )
         : base( dbContext )
-    { }
+    {
+    }
 
     public async Task<Tag> Get( int id )
     {
         return await DbSet.FirstOrDefaultAsync( t => t.Id == id );
-    }
-
-    public async Task<List<Tag>> GetAll()
-    {
-        return await DbSet.ToListAsync();
     }
 
     public Tag GetByName( string name )

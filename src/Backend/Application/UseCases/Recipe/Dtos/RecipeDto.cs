@@ -13,4 +13,5 @@ public class RecipeDto
 
     public List<IngredientDto> Ingredients { get; init; } = [];
     public List<RecipeStepDto> RecipeSteps { get; init; } = [];
+    public List<string> Tags { get; init; } = [];
 }
