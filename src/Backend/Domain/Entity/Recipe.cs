@@ -6,6 +6,7 @@ public class Recipe : Entity
     public int CookingTime { get; private set; }
     public int PersonNum { get; private set; }
     public string Image { get; private set; }
+    public DateTime CreatedDate { get; private init; }
 
     public int UserId { get; private init; }
 
@@ -15,7 +16,7 @@ public class Recipe : Entity
     public List<Like> Likes { get; private init; } = [];
     public List<Tag> Tags { get; private init; } = [];
 
-    public Recipe( string name, string description, int cookingTime, int personNum, string image, int userId )
+    public Recipe( string name, string description, int cookingTime, int personNum, string image, DateTime createdDate, int userId )
     {
         if ( string.IsNullOrWhiteSpace( name ) )
         {
@@ -27,6 +28,7 @@ public class Recipe : Entity
         PersonNum = personNum;
         Image = image;
         UserId = userId;
+        CreatedDate = createdDate;
     }
 
     public void Update( string name, string description, int cookingTime, int personNum, string image )

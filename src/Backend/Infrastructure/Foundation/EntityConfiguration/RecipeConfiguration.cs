@@ -27,6 +27,9 @@ public class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
         builder.Property( r => r.Image )
                .HasMaxLength( 100 );
 
+        builder.Property( r => r.CreatedDate )
+               .IsRequired();
+
         builder.HasMany( r => r.Steps )
                .WithOne()
                .HasForeignKey( s => s.RecipeId )
