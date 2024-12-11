@@ -4,16 +4,10 @@ import userIcon from "../../assets/user.svg";
 import exitIcon from "../../assets/exit.svg";
 
 type HeaderProps = {
-  OpenRegAndAuthMenu: () => void;
-  OpenUserProfile: () => void;
   Logout: () => void;
 };
 
-const Header = ({
-  OpenRegAndAuthMenu,
-  OpenUserProfile,
-  Logout,
-}: HeaderProps) => {
+const Header = ({ Logout }: HeaderProps) => {
   const selected = useMaryFoodStore((store) => store.selectedPage);
   const username = useMaryFoodStore((store) => store.username);
   const setName = useMaryFoodStore((store) => store.setUsername);
@@ -56,7 +50,7 @@ const Header = ({
         {username !== "" ? (
           <>
             <img src={userIcon}></img>
-            <a className={styles.username} onClick={OpenUserProfile}>
+            <a className={styles.username} href="/user-profile">
               Привет, {username}
             </a>
             <div className={styles.verticalline}></div>
@@ -71,11 +65,15 @@ const Header = ({
             </button>
           </>
         ) : (
-          <>
-            <a className={styles.link} onClick={OpenRegAndAuthMenu}>
-              Войти / Зарегистрироваться
+          <p className={styles.linktitle}>
+            <a className={styles.link} href="/auth">
+              Войти
+            </a>{" "}
+            /{" "}
+            <a className={styles.link} href="/register">
+              Зарегистрироваться
             </a>
-          </>
+          </p>
         )}
       </div>
     </div>
