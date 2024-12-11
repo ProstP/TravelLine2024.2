@@ -43,6 +43,7 @@ public class RecipeController : ControllerBase
             CookingTime = request.CookingTime,
             PersonNum = request.PersonNum,
             Image = request.Image,
+            CreatedDate = DateTime.UtcNow,
             UserId = 14,
             Ingredients = request.Ingredients
                 .Select( i =>
@@ -96,6 +97,7 @@ public class RecipeController : ControllerBase
             CookingTime = result.Value.CookingTime,
             PersonNum = result.Value.PersonNum,
             Image = result.Value.Image,
+            CreatedDate = result.Value.CreatedDate,
             UserId = result.Value.UserId,
             Ingredients = result.Value.Ingredients
                 .Select( i =>
