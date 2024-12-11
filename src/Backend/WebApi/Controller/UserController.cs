@@ -10,8 +10,8 @@ using Application.UseCases.User.Dtos;
 using Application.UseCases.User.Query.GetUserQuery;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Contract.Request;
-using WebApi.Contract.Response;
+using WebApi.Contract.Request.User;
+using WebApi.Contract.Response.User;
 
 namespace WebApi.Controller;
 

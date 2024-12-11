@@ -21,7 +21,7 @@ public class CreateRecipeCommandHandler : ICommandHandler<CreateRecipeCommand>
     public async Task<Result.Result> HandleAsync( CreateRecipeCommand command )
     {
         Domain.Entity.Recipe recipe =
-            new( command.Name, command.Description, command.CookingTime, command.PersonNum, command.Image, command.UserId );
+            new( command.Name, command.Description, command.CookingTime, command.PersonNum, command.Image, command.CreatedDate, command.UserId );
 
         recipe.Tags.Clear();
         command.Tags.ForEach( name =>
@@ -41,6 +41,7 @@ public class CreateRecipeCommandHandler : ICommandHandler<CreateRecipeCommand>
         recipe.Ingredients.AddRange( command.Ingredients
                 .Select( i =>
                 new Ingredient( i.Header, i.SubIngredients ) ).ToList() );
+
         recipe.Steps.AddRange( command.RecipeSteps
                 .Select( rs =>
                 new RecipeStep( rs.StepNum, rs.Description ) ).ToList() );

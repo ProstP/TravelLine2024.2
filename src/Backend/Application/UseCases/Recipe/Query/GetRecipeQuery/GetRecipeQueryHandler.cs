@@ -31,6 +31,7 @@ public class GetRecipeQueryHandler : IQueryHandler<RecipeDto, GetRecipeQuery>
             CookingTime = recipe.CookingTime,
             PersonNum = recipe.PersonNum,
             Image = recipe.Image,
+            CreatedDate = recipe.CreatedDate,
             Ingredients = recipe.Ingredients
                 .Select( i =>
                 new IngredientDto()

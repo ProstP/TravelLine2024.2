@@ -7,6 +7,7 @@ public class CreateRecipeCommand
     public int CookingTime { get; init; }
     public int PersonNum { get; init; }
     public string Image { get; init; }
+    public DateTime CreatedDate { get; init; }
 
     public int UserId { get; init; }
 

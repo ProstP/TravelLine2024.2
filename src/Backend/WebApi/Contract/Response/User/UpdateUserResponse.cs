@@ -1,4 +1,4 @@
-﻿namespace WebApi.Contract.Response;
+﻿namespace WebApi.Contract.Response.User;
 
 public class UpdateUserResponse
 {
