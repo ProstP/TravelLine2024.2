@@ -22,6 +22,7 @@ const RecipeEditor = ({ title, btnStr, onClick, data }: RecipeEditorProps) => {
   const [recipe, setRecipe] = useState<RecipeType>(
     data === undefined
       ? {
+          id: 0,
           name: "",
           description: "",
           cookingTime: 0,
@@ -35,6 +36,7 @@ const RecipeEditor = ({ title, btnStr, onClick, data }: RecipeEditorProps) => {
     data === undefined
       ? [
           {
+            id: 0,
             text: "",
           },
         ]
@@ -44,14 +46,13 @@ const RecipeEditor = ({ title, btnStr, onClick, data }: RecipeEditorProps) => {
     data === undefined
       ? [
           {
+            id: 0,
             header: "",
             text: "",
           },
         ]
       : data!.ingredients
   );
-
-  console.log(data);
 
   return (
     <div className={styles.container}>

@@ -6,15 +6,21 @@ import pencilIcon from "../../assets/pencil-white.svg";
 import Button from "../Buttons/Button";
 import RecipeStepsDetail from "./RecipeStepsDetail/RecipeStepsDetail";
 import IngredientsDetail from "./IngredientsDetail/IngredientsDetail";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RecipeEditor from "../RecipeEditor/RecipeEditor";
 import image from "../../temp/Panna-cota.png";
+import { useNavigate, useParams } from "react-router-dom";
+import { GetRecipe } from "../../services/RecipeServices";
 
 type RecipePageState = "view" | "edit";
 
 const RecipePage = () => {
+  const idStr = useParams().id;
+  const navigate = useNavigate();
+
   const [data, setData] = useState<RecipeData>({
     info: {
+      id: 0,
       name: "Клубничная Панна-Котта",
       description:
         "Десерт, который невероятно легко и быстро готовится. Советую подавать его порционно в красивых бокалах, украсив взбитыми сливками, свежими ягодами и мятой.",
@@ -25,18 +31,22 @@ const RecipePage = () => {
     },
     steps: [
       {
+        id: 0,
         text: "Приготовим панна котту: Зальем желатин молоком и поставим на 30 минут для набухания. В сливки добавим сахар и ванильный сахар. Доводим до кипения (не кипятим!).",
       },
       {
+        id: 0,
         text: "Добавим в сливки набухший в молоке желатин. Перемешаем до полного растворения. Огонь отключаем. Охладим до комнатной температуры.",
       },
     ],
     ingredients: [
       {
+        id: 0,
         header: "Для панна котты",
         text: "Сливки-20-30% - 500мл.Молоко - 100мл. Желатин - 2ч.л. Сахар - 3ст.л. Ванильный сахар - 2 ч.л.",
       },
       {
+        id: 0,
         header: "Для клубничного желе",
         text: "Сливки-20-30% - 500мл.Молоко - 100мл. Желатин - 2ч.л. Сахар - 3ст.л. Ванильный сахар - 2 ч.л.",
       },
@@ -44,6 +54,43 @@ const RecipePage = () => {
   });
 
   const [state, setState] = useState<RecipePageState>("view");
+
+  useEffect(() => {
+    const getRecipe = async () => {
+      if (idStr === undefined) {
+        navigate("/");
+      }
+
+      const response = await GetRecipe(Number(idStr));
+
+      if (!response.isSuccess) {
+        navigate("/create-recipe");
+      }
+
+      setData({
+        info: {
+          id: response.value.id,
+          name: response.value.name,
+          description: response.value.description,
+          cookingTime: response.value.cookingTime,
+          personNum: response.value.personNum,
+          tags: response.value.tags,
+          image: response.value.image,
+        },
+        ingredients: response.value.ingredients.map((i) => ({
+          id: i.id,
+          header: i.header,
+          text: i.subIngredients,
+        })),
+        steps: response.value.recipeSteps.map((s) => ({
+          id: s.id,
+          text: s.description,
+        })),
+      });
+    };
+
+    getRecipe();
+  }, []);
 
   return (
     <>
