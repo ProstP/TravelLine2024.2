@@ -1,4 +1,5 @@
 export type RecipeType = {
+  id: number;
   name: string;
   description: string;
   cookingTime: number;
@@ -8,11 +9,13 @@ export type RecipeType = {
 };
 
 export type IngredientType = {
+  id: number;
   header: string;
   text: string;
 };
 
 export type StepType = {
+  id: number;
   text: string;
 };
 

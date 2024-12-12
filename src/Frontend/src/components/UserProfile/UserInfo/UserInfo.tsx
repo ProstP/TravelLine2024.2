@@ -8,10 +8,7 @@ import PasswordInput from "../../TextField/PasswordInput/PasswordInput";
 import { Profile, Update } from "../../../services/UserServices";
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
 import { useMaryFoodStore } from "../../../hooks/useMaryFoodStore";
-
-type UserInfoProps = {
-  exit: () => void;
-};
+import { useNavigate } from "react-router-dom";
 
 type UserData = {
   name: string;
@@ -26,7 +23,9 @@ type FieldError = {
   password: boolean;
 };
 
-const UserInfo = ({ exit }: UserInfoProps) => {
+const UserInfo = () => {
+  const navigate = useNavigate();
+
   const setName = useMaryFoodStore((state) => state.setUsername);
   const [user, setUser] = useState<UserData>({
     name: "",
@@ -45,7 +44,7 @@ const UserInfo = ({ exit }: UserInfoProps) => {
       const result = await Profile();
 
       if (!result.isSuccess) {
-        exit();
+        navigate("/");
         return;
       }
 

@@ -7,18 +7,16 @@ import { LoginUserRequest } from "../../../data/contracts/UserContracts";
 import { Authenticate } from "../../../services/UserServices";
 import { useMaryFoodStore } from "../../../hooks/useMaryFoodStore";
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
-
-type AuthenticationMenuProps = {
-  exit: () => void;
-  toRegister: () => void;
-};
+import { useNavigate } from "react-router-dom";
 
 type FieldErrors = {
   login: boolean;
   password: boolean;
 };
 
-const AuthenticationMenu = ({ exit, toRegister }: AuthenticationMenuProps) => {
+const AuthenticationMenu = () => {
+  const navigate = useNavigate();
+
   const setName = useMaryFoodStore((state) => state.setUsername);
   const [data, setData] = useState<LoginUserRequest>({
     login: "",
@@ -47,11 +45,11 @@ const AuthenticationMenu = ({ exit, toRegister }: AuthenticationMenuProps) => {
     }
 
     setName(response.value.username);
-    exit();
+    navigate("/");
   };
 
   return (
-    <PopApMenu exit={exit}>
+    <PopApMenu exit={() => navigate("/")}>
       <div className={styles.container}>
         {isError ? (
           <ErrorMessage>Неправильный логин или пароль</ErrorMessage>
@@ -71,10 +69,10 @@ const AuthenticationMenu = ({ exit, toRegister }: AuthenticationMenuProps) => {
           <Button isFilled={true} onClick={Login}>
             Войти
           </Button>
-          <Button onClick={exit}>Отмена</Button>
+          <Button onClick={() => navigate("/")}>Отмена</Button>
         </div>
         <div>
-          <span className={styles.link} onClick={toRegister}>
+          <span className={styles.link} onClick={() => navigate("/register")}>
             У меня ещё нет аккааунта
           </span>
         </div>

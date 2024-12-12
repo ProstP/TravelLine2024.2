@@ -6,11 +6,7 @@ import styles from "./RegisterMenu.module.scss";
 import { RegisterUserRequest } from "../../../data/contracts/UserContracts";
 import { Register } from "../../../services/UserServices";
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
-
-type RegisterMenuProps = {
-  exit: () => void;
-  toLogin: () => void;
-};
+import { useNavigate } from "react-router-dom";
 
 type RegisterData = RegisterUserRequest & {
   passwordRepeat: string;
@@ -23,7 +19,9 @@ type FieldErrors = {
   passwordRepeat: boolean;
 };
 
-const RegisterMenu = ({ exit, toLogin }: RegisterMenuProps) => {
+const RegisterMenu = () => {
+  const navigate = useNavigate();
+
   const [data, setData] = useState<RegisterData>({
     name: "",
     login: "",
@@ -71,11 +69,11 @@ const RegisterMenu = ({ exit, toLogin }: RegisterMenuProps) => {
       return;
     }
 
-    toLogin();
+    navigate("auth");
   };
 
   return (
-    <PopApMenu exit={exit}>
+    <PopApMenu exit={() => navigate("/")}>
       <div className={styles.container}>
         {isError ? (
           <ErrorMessage>Ошибка при регистрации пользователя</ErrorMessage>
@@ -112,10 +110,10 @@ const RegisterMenu = ({ exit, toLogin }: RegisterMenuProps) => {
           <Button isFilled={true} onClick={register}>
             Зарегестрироваться
           </Button>
-          <Button onClick={exit}>Отмена</Button>
+          <Button onClick={() => navigate("/")}>Отмена</Button>
         </div>
         <div>
-          <span className={styles.link} onClick={toLogin}>
+          <span className={styles.link} onClick={() => navigate("/auth")}>
             У меня ещё нет аккааунта
           </span>
         </div>

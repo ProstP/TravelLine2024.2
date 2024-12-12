@@ -121,12 +121,12 @@ public class RecipeController : ControllerBase
     }
 
     //[Authorize]
-    [HttpDelete]
-    public async Task<IActionResult> Remove( [FromBody] DeleteRecipeRequest request )
+    [HttpDelete, Route("{id:int}")]
+    public async Task<IActionResult> Remove( [FromRoute] int id)
     {
         DeleteRecipeCommand command = new()
         {
-            Id = request.Id,
+            Id = id,
         };
 
         Result result = await _deleteRecipeCommandHandler.HandleAsync( command );

@@ -1,7 +1,7 @@
 import styles from "./Ingredients.module.scss";
 import Button from "../../Buttons/Button";
-import { IngredientType } from "../../../data/entities/recipe";
 import Ingredient from "./Ingredient/Ingredient";
+import { IngredientType } from "../../../data/entities/Recipe";
 
 type IngredientsProps = {
   ingredients: IngredientType[];
@@ -39,7 +39,7 @@ const Ingredients = ({ ingredients, setIngredients }: IngredientsProps) => {
       <div className={styles.btn}>
         <Button
           onClick={() =>
-            setIngredients([...ingredients, { header: "", text: "" }])
+            setIngredients([...ingredients, { id: 0, header: "", text: "" }])
           }
         >
           + Добавить заголовок

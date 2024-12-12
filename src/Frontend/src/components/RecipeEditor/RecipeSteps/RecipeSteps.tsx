@@ -39,7 +39,7 @@ const RecipeSteps = ({ steps, setSteps }: RecipeStepsProps) => {
       ))}
       <div className={styles.btn}>
         <Button
-          onClick={() => setSteps([...steps, { text: "" }])}
+          onClick={() => setSteps([...steps, { id: 0, text: "" }])}
           isFilled={false}
         >
           + Добавить шаг
