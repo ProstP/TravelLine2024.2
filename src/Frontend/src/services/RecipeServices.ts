@@ -1,6 +1,7 @@
 import {
   CreateRecipeRequest,
   GetRecipeResponse,
+  UpdateRecipeRequest,
 } from "../data/contracts/RecipeContracts";
 import ApiRequest from "./ApiRequsts";
 
@@ -25,4 +26,16 @@ const GetRecipe = (id: number) => {
   return response;
 };
 
-export { CreateRecipe, GetRecipe };
+const UpdateRecipe = (data: UpdateRecipeRequest) => {
+  const response = ApiRequest<UpdateRecipeRequest>("recipe", data, "PUT", true);
+
+  return response;
+};
+
+const DeleteRecipe = (id: number) => {
+  const response = ApiRequest<null>("recipe/" + id, null, "DELETE", true);
+
+  return response;
+};
+
+export { CreateRecipe, GetRecipe, UpdateRecipe, DeleteRecipe };

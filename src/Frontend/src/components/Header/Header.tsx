@@ -8,7 +8,6 @@ type HeaderProps = {
 };
 
 const Header = ({ Logout }: HeaderProps) => {
-  const selected = useMaryFoodStore((store) => store.selectedPage);
   const username = useMaryFoodStore((store) => store.username);
   const setName = useMaryFoodStore((store) => store.setUsername);
 
@@ -17,33 +16,9 @@ const Header = ({ Logout }: HeaderProps) => {
       <div className={styles.titlecontainer}>
         <p className={styles.title}>Mary Food</p>
         <div className={styles.linkcontainer}>
-          <a
-            className={
-              selected === "main"
-                ? `${styles.link} ${styles.bold}`
-                : styles.link
-            }
-          >
-            Главная
-          </a>
-          <a
-            className={
-              selected === "recipe"
-                ? `${styles.link} ${styles.bold}`
-                : styles.link
-            }
-          >
-            Рецепты
-          </a>
-          <a
-            className={
-              selected === "favourite"
-                ? `${styles.link} ${styles.bold}`
-                : styles.link
-            }
-          >
-            Избранное
-          </a>
+          <a className={styles.link}>Главная</a>
+          <a className={styles.link}>Рецепты</a>
+          <a className={styles.link}>Избранное</a>
         </div>
       </div>
       <div className={styles.usercontainer}>

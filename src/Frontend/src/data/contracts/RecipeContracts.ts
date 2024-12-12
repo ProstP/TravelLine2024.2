@@ -41,3 +41,26 @@ export type GetRecipeResponse = {
   recipeSteps: GetRecipeStepResponse[];
   tags: string[];
 };
+
+export type UpdateIngredientRequest = {
+  id: number;
+  header: string;
+  subIngredients: string;
+};
+
+export type UpdateRecipeStepRequest = {
+  id: number;
+  description: string;
+};
+
+export type UpdateRecipeRequest = {
+  id: number;
+  name: string;
+  description: string;
+  cookingTime: number;
+  personNum: number;
+  image: string;
+  ingredients: UpdateIngredientRequest[];
+  recipeSteps: UpdateRecipeStepRequest[];
+  tags: string[];
+};
