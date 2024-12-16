@@ -44,7 +44,7 @@ public class RecipeController : ControllerBase
             PersonNum = request.PersonNum,
             Image = request.Image,
             CreatedDate = DateTime.UtcNow,
-            UserId = 14,
+            UserId = 15,
             Ingredients = request.Ingredients
                 .Select( i =>
                 new CreateIngredientCommand()
