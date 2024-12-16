@@ -3,14 +3,20 @@ import image from "../../../temp/Panna-cota.png";
 import styles from "./RecipePreview.module.scss";
 import clockIcon from "../../../assets/clock.svg";
 import personsIcon from "../../../assets/persons.svg";
+import { useNavigate } from "react-router-dom";
 
 type RecipePreviewProps = {
   data: RecipeType;
 };
 
 const RecipePreview = ({ data }: RecipePreviewProps) => {
+  const navigate = useNavigate();
+
   return (
-    <div className={styles.container}>
+    <a
+      className={styles.container}
+      onClick={() => navigate("/recipe/" + data.id)}
+    >
       <img className={styles.image} src={image}></img>
       <div className={styles.info}>
         <div className={styles.taglist}>
@@ -41,7 +47,7 @@ const RecipePreview = ({ data }: RecipePreviewProps) => {
           </div>
         </div>
       </div>
-    </div>
+    </a>
   );
 };
 
