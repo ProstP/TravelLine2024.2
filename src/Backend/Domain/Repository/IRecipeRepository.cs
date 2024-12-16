@@ -13,7 +13,5 @@ public interface IRecipeRepository : IRepository<Recipe>
                                 Expression<Func<Recipe, bool>> selectingExpression,
                                 bool isAsc = false );
 
-    Task<List<Recipe>> GetByName( string name );
-
     Recipe Update( int id, Recipe recipe );
 }
