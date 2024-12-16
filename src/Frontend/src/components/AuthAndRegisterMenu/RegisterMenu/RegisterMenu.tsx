@@ -69,7 +69,7 @@ const RegisterMenu = () => {
       return;
     }
 
-    navigate("auth");
+    navigate("/auth");
   };
 
   return (

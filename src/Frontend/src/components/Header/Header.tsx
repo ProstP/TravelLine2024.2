@@ -16,8 +16,12 @@ const Header = ({ Logout }: HeaderProps) => {
       <div className={styles.titlecontainer}>
         <p className={styles.title}>Mary Food</p>
         <div className={styles.linkcontainer}>
-          <a className={styles.link}>Главная</a>
-          <a className={styles.link}>Рецепты</a>
+          <a className={styles.link} href="/">
+            Главная
+          </a>
+          <a className={styles.link} href="recipes">
+            Рецепты
+          </a>
           <a className={styles.link}>Избранное</a>
         </div>
       </div>

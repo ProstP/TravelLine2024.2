@@ -7,5 +7,4 @@ public class GetRecipeListQuery
     public string SearchName { get; init; }
     public string OrderType { get; init; }
     public bool IsAsc { get; init; }
-    public int UserId { get; init; }
 }
