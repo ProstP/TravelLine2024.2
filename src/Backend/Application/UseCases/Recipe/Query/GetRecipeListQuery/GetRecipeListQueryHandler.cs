@@ -20,7 +20,7 @@ public class GetRecipeListQueryHandler : IQueryHandler<List<RecipeDto>, GetRecip
         Expression<Func<Domain.Entity.Recipe, object>> orderFn = GetOrderExpression( query );
 
         List<Domain.Entity.Recipe> recipes = await _recipeRepository.GetList( ( query.GroupNum - 1 ) * query.Count, query.Count,
-            orderFn );
+            orderFn, query.IsAsc );
 
         List<RecipeDto> recipeDtos = recipes.Select( r => new RecipeDto()
         {

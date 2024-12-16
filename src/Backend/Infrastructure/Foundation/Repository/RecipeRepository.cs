@@ -25,13 +25,23 @@ public class RecipeRepository : Repository<Recipe>, IRecipeRepository
                           .FirstOrDefaultAsync( r => r.Id == id );
     }
 
-    public async Task<List<Recipe>> GetList( int skip, int take, Expression<Func<Recipe, object>> orderExpression )
+    public async Task<List<Recipe>> GetList( int skip, int take, Expression<Func<Recipe, object>> orderExpression, bool isAsc )
     {
-        return await DbSet.Include( r => r.Tags )
-                          .Include( r => r.Favourites )
-                          .Include( r => r.Likes )
-                          .OrderByDescending( orderExpression )
-                          .Skip( skip )
+        IQueryable<Recipe> query
+                    = DbSet.Include( r => r.Tags )
+                           .Include( r => r.Favourites )
+                           .Include( r => r.Likes );
+
+        if ( isAsc )
+        {
+           query = query.OrderBy( orderExpression );
+        }
+        else
+        {
+           query = query.OrderByDescending( orderExpression );
+        }
+
+        return await query.Skip( skip )
                           .Take( take )
                           .ToListAsync();
     }

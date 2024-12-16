@@ -7,7 +7,7 @@ public interface IRecipeRepository : IRepository<Recipe>
 {
     Task<Recipe> Get( int id );
 
-    Task<List<Recipe>> GetList( int skip, int take, Expression<Func<Recipe, object>> orderExpression );
+    Task<List<Recipe>> GetList( int skip, int take, Expression<Func<Recipe, object>> orderExpression, bool isAsc = false );
 
     Task<List<Recipe>> GetByName( string name );
 
