@@ -21,9 +21,17 @@ public class RecipeRepository : Repository<Recipe>, IRecipeRepository
                           .FirstOrDefaultAsync( r => r.Id == id );
     }
 
+    public async Task<List<Recipe>> GetByUserId( int skip, int take, int userId )
+    {
+        return await DbSet.Where( r => r.UserId == userId )
+                          .OrderByDescending( r => r.CreatedDate )
+                          .Skip( skip )
+                          .Take( take )
+                          .ToListAsync();
+    }
+
     public async Task<List<Recipe>> GetList( int skip, int take,
                                             Expression<Func<Recipe, object>> orderExpression,
-                                            Expression<Func<Recipe, bool>> userSelectingExpression,
                                             Expression<Func<Recipe, bool>> selectingExpression,
                                             bool isAsc )
     {
@@ -31,7 +39,6 @@ public class RecipeRepository : Repository<Recipe>, IRecipeRepository
                     = DbSet.Include( r => r.Tags )
                            .Include( r => r.Favourites )
                            .Include( r => r.Likes )
-                           .Where( userSelectingExpression )
                            .Where( selectingExpression );
 
         if ( isAsc )
