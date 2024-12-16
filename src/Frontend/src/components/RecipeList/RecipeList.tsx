@@ -3,8 +3,14 @@ import { RecipeType } from "../../data/entities/Recipe";
 import { GetRecipeList } from "../../services/RecipeListServices";
 import { useNavigate } from "react-router-dom";
 import RecipePreview from "./RecipePreview/RecipePreview";
+import styles from "./RecipeList.module.scss";
+import Button from "../Buttons/Button";
 
-const RecipeList = () => {
+type RecipeListProps = {
+  isForUser?: boolean;
+};
+
+const RecipeList = ({ isForUser }: RecipeListProps) => {
   const navigate = useNavigate();
   const [data, setData] = useState<RecipeType[]>([]);
 
@@ -31,7 +37,18 @@ const RecipeList = () => {
       );
     };
 
-    getRecipes();
+    //getRecipes();
+    setData([
+      {
+        id: 0,
+        name: "Название",
+        description: "Описание",
+        cookingTime: 15,
+        personNum: 5,
+        tags: ["мясо", "обед", "суп"],
+        image: "",
+      },
+    ]);
   }, []);
 
   const loadMore = async () => {
@@ -60,15 +77,17 @@ const RecipeList = () => {
   };
 
   return (
-    <div>
-      <ul>
+    <div className={styles.container}>
+      <ul className={styles.list}>
         {data.map((r) => (
-          <li id={"" + r.id}>
+          <li key={"" + r.id}>
             <RecipePreview data={r}></RecipePreview>
           </li>
         ))}
       </ul>
-      <button onClick={loadMore}>Загрузить ещё</button>
+      <div className={styles.btn}>
+        <Button onClick={() => console.log("Load")}>Загрузить ещё</Button>
+      </div>
     </div>
   );
 };
