@@ -5,8 +5,12 @@
   display: flex;
   width: 100%;
   box-shadow: 0 0 30px rgba(34, 39, 47, 0.1);
-  border-top-left-radius: 60px;
-  height: 50vh;
+  height: 40vh;
+
+  $border-radius: 60px;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
 }
 
 .image {
@@ -37,7 +41,7 @@
   text-align: left;
   margin: 0;
   color: #4a525a;
-  font: normal 14px "Montserrat";
+  font: normal 12px "Montserrat";
 }
 
 .taglist {

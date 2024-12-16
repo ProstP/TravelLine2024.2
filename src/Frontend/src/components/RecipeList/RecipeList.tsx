@@ -48,6 +48,15 @@ const RecipeList = ({ isForUser }: RecipeListProps) => {
         tags: ["мясо", "обед", "суп"],
         image: "",
       },
+      {
+        id: 0,
+        name: "Название",
+        description: "Описание",
+        cookingTime: 15,
+        personNum: 5,
+        tags: ["мясо", "обед", "суп"],
+        image: "",
+      },
     ]);
   }, []);
 
@@ -80,7 +89,7 @@ const RecipeList = ({ isForUser }: RecipeListProps) => {
     <div className={styles.container}>
       <ul className={styles.list}>
         {data.map((r) => (
-          <li key={"" + r.id}>
+          <li key={"" + r.id} className={styles.elt}>
             <RecipePreview data={r}></RecipePreview>
           </li>
         ))}
