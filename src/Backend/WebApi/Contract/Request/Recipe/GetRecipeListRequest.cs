@@ -19,6 +19,7 @@ public class GetRecipeListRequest
         init => count = value < 1 ? 1 : value;
     }
     public string OrderType { get; init; }
+    public string SearchName { get; init; }
     public bool IsAsc { get; init; }
     public int UserId { get; init; }
 }

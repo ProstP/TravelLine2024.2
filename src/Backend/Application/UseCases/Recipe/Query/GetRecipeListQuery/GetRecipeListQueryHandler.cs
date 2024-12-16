@@ -1,6 +1,9 @@
-﻿using Application.CQRSInterfaces;
+﻿using System.Linq.Expressions;
+using System.Net.Http.Headers;
+using Application.CQRSInterfaces;
 using Application.Result;
 using Application.UseCases.Recipe.Dtos;
+using Domain.Entity;
 using Domain.Repository;
 
 namespace Application.UseCases.Recipe.Query.GetRecipeListQuery;
@@ -16,7 +19,10 @@ public class GetRecipeListQueryHandler : IQueryHandler<List<RecipeDto>, GetRecip
 
     public async Task<Result<List<RecipeDto>>> HandleAsync( GetRecipeListQuery query )
     {
-        List<Domain.Entity.Recipe> recipes = await _recipeRepository.GetList( ( query.GroupNum - 1 ) * query.Count, query.Count );
+        Expression<Func<Domain.Entity.Recipe, object>> orderFn = GetOrderExpression( query );
+
+        List<Domain.Entity.Recipe> recipes = await _recipeRepository.GetList( ( query.GroupNum - 1 ) * query.Count, query.Count,
+            orderFn );
 
         List<RecipeDto> recipeDtos = recipes.Select( r => new RecipeDto()
         {
@@ -32,5 +38,11 @@ public class GetRecipeListQueryHandler : IQueryHandler<List<RecipeDto>, GetRecip
         } ).ToList();
 
         return Result<List<RecipeDto>>.FromSuccess( recipeDtos );
+    }
+    private Expression<Func<Domain.Entity.Recipe, object>> GetOrderExpression( GetRecipeListQuery query )
+    {
+        return query.OrderType == "Like"
+            ? recipe => recipe.Likes.Count
+            : recipe => recipe.CreatedDate;
     }
 }

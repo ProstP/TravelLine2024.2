@@ -28,6 +28,7 @@ public class RecipeListController : ControllerBase
             IsAsc = request.IsAsc,
             OrderType = request.OrderType,
             UserId = request.UserId,
+            SearchName = request.SearchName,
         };
 
         Result<List<RecipeDto>> result = await _getRecipeListQueryHandler.HandleAsync( query );

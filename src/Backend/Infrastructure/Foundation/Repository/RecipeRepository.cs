@@ -1,4 +1,5 @@
-﻿using Domain.Entity;
+﻿using System.Linq.Expressions;
+using Domain.Entity;
 using Domain.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,9 +7,13 @@ namespace Infrastructure.Foundation.Repository;
 
 public class RecipeRepository : Repository<Recipe>, IRecipeRepository
 {
+    protected MaryFoodDbContext _dbContext;
+
     public RecipeRepository( MaryFoodDbContext dbContext )
         : base( dbContext )
-    { }
+    {
+        _dbContext = dbContext;
+    }
 
     public async Task<Recipe> Get( int id )
     {
@@ -20,12 +25,12 @@ public class RecipeRepository : Repository<Recipe>, IRecipeRepository
                           .FirstOrDefaultAsync( r => r.Id == id );
     }
 
-    public async Task<List<Recipe>> GetList( int skip, int take )
+    public async Task<List<Recipe>> GetList( int skip, int take, Expression<Func<Recipe, object>> orderExpression )
     {
         return await DbSet.Include( r => r.Tags )
                           .Include( r => r.Favourites )
                           .Include( r => r.Likes )
-                          .OrderByDescending( r => r.CreatedDate )
+                          .OrderByDescending( orderExpression )
                           .Skip( skip )
                           .Take( take )
                           .ToListAsync();
