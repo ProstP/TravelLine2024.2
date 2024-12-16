@@ -27,13 +27,16 @@ public class RecipeRepository : Repository<Recipe>, IRecipeRepository
 
     public async Task<List<Recipe>> GetList( int skip, int take,
                                             Expression<Func<Recipe, object>> orderExpression,
-                                            Expression<Func<Recipe, bool>> userSelectingExpression, bool isAsc )
+                                            Expression<Func<Recipe, bool>> userSelectingExpression,
+                                            Expression<Func<Recipe, bool>> selectingExpression, 
+                                            bool isAsc )
     {
         IQueryable<Recipe> query
                     = DbSet.Include( r => r.Tags )
                            .Include( r => r.Favourites )
                            .Include( r => r.Likes )
-                           .Where( userSelectingExpression );
+                           .Where( userSelectingExpression )
+                           .Where( selectingExpression );
 
         if ( isAsc )
         {
