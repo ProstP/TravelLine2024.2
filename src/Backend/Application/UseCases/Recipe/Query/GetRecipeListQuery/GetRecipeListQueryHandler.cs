@@ -1,9 +1,7 @@
 ﻿using System.Linq.Expressions;
-using System.Net.Http.Headers;
 using Application.CQRSInterfaces;
 using Application.Result;
 using Application.UseCases.Recipe.Dtos;
-using Domain.Entity;
 using Domain.Repository;
 
 namespace Application.UseCases.Recipe.Query.GetRecipeListQuery;
@@ -43,6 +41,8 @@ public class GetRecipeListQueryHandler : IQueryHandler<List<RecipeDto>, GetRecip
     {
         return query.OrderType == "Like"
             ? recipe => recipe.Likes.Count
-            : recipe => recipe.CreatedDate;
+            : query.OrderType == "Favourite"
+                ? recipe => recipe.Favourites.Count
+                : recipe => recipe.CreatedDate;
     }
 }
