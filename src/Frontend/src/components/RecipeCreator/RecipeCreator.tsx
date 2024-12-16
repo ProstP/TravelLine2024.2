@@ -22,7 +22,7 @@ const RecipeCreator = () => {
     });
 
     if (response.isSuccess) {
-      navigate("/");
+      navigate("/recipes");
     }
   };
 

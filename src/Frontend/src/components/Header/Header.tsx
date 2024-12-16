@@ -19,7 +19,7 @@ const Header = ({ Logout }: HeaderProps) => {
           <a className={styles.link} href="/">
             Главная
           </a>
-          <a className={styles.link} href="recipes">
+          <a className={styles.link} href="/recipes">
             Рецепты
           </a>
           <a className={styles.link}>Избранное</a>
