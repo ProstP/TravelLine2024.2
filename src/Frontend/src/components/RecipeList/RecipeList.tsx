@@ -1,88 +1,34 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RecipeType } from "../../data/entities/Recipe";
-import { GetRecipeList } from "../../services/RecipeListServices";
-import { useNavigate } from "react-router-dom";
 import RecipePreview from "./RecipePreview/RecipePreview";
 import styles from "./RecipeList.module.scss";
 import Button from "../Buttons/Button";
 
 type RecipeListProps = {
-  isForUser?: boolean;
+  getRecipes: (groupNum: number) => Promise<RecipeType[]>;
 };
 
-const RecipeList = ({ isForUser }: RecipeListProps) => {
-  const navigate = useNavigate();
+const RecipeList = ({ getRecipes }: RecipeListProps) => {
   const [data, setData] = useState<RecipeType[]>([]);
+  const nextGroupNum = useRef(2);
 
   useEffect(() => {
-    const getRecipes = async () => {
-      const response = await GetRecipeList(1);
-
-      if (!response.isSuccess) {
-        navigate("/");
-      }
-
-      console.log(response.value);
-
-      setData(
-        response.value.map((r) => ({
-          id: r.id,
-          name: r.name,
-          description: r.description,
-          cookingTime: r.cookingTime,
-          personNum: r.personNum,
-          tags: r.tags,
-          image: r.image,
-        }))
-      );
+    const getRecipeList = async () => {
+      setData(await getRecipes(1));
     };
 
-    //getRecipes();
-    setData([
-      {
-        id: 0,
-        name: "Название",
-        description: "Описание",
-        cookingTime: 15,
-        personNum: 5,
-        tags: ["мясо", "обед", "суп"],
-        image: "",
-      },
-      {
-        id: 0,
-        name: "Название",
-        description: "Описание",
-        cookingTime: 15,
-        personNum: 5,
-        tags: ["мясо", "обед", "суп"],
-        image: "",
-      },
-    ]);
+    getRecipeList();
   }, []);
 
-  const loadMore = async () => {
-    const response = await GetRecipeList(2);
+  const loadMore = () => {
+    const getRecipeList = async () => {
+      const newData = data.concat(await getRecipes(nextGroupNum.current));
 
-    if (!response.isSuccess) {
-      navigate("/");
-    }
+      nextGroupNum.current++;
+      setData(newData);
+    };
 
-    console.log(response.value);
-
-    const newData = [...data];
-    newData.concat(
-      response.value.map((r) => ({
-        id: r.id,
-        name: r.name,
-        description: r.description,
-        cookingTime: r.cookingTime,
-        personNum: r.personNum,
-        tags: r.tags,
-        image: r.image,
-      }))
-    );
-
-    setData(newData);
+    getRecipeList();
   };
 
   return (
@@ -95,7 +41,7 @@ const RecipeList = ({ isForUser }: RecipeListProps) => {
         ))}
       </ul>
       <div className={styles.btn}>
-        <Button onClick={() => console.log("Load")}>Загрузить ещё</Button>
+        <Button onClick={loadMore}>Загрузить ещё</Button>
       </div>
     </div>
   );

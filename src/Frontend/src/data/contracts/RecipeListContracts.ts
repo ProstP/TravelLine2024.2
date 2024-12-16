@@ -1,9 +1,9 @@
 export type GetRecipeListRequest = {
   groupNum: number;
   count: number;
-  orderType: string;
+  orderType?: string;
+  searchName?: string;
   isAsc: boolean;
-  userId: number;
 };
 
 export type GetRecipeListResponse = {
