@@ -19,7 +19,7 @@ public class RecipeListController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<List<GetRecipeResponse>>> GetList( [FromBody] GetRecipeListRequest request )
+    public async Task<ActionResult<List<GetRecipeListResponse>>> GetList( [FromBody] GetRecipeListRequest request )
     {
         GetRecipeListQuery query = new()
         {
@@ -37,7 +37,7 @@ public class RecipeListController : ControllerBase
             return BadRequest( result.Error );
         }
 
-        List<GetRecipeResponse> getRecipeResponses = result.Value.Select( r => new GetRecipeResponse()
+        List<GetRecipeListResponse> getRecipeResponses = result.Value.Select( r => new GetRecipeListResponse()
         {
             Id = r.Id,
             Name = r.Name,
@@ -50,6 +50,6 @@ public class RecipeListController : ControllerBase
             Tags = r.Tags,
         } ).ToList();
 
-        return Ok( getRecipeResponses );    
+        return Ok( getRecipeResponses );
     }
 }

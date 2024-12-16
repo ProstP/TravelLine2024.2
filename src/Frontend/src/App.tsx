@@ -8,6 +8,7 @@ import RecipePage from "./components/RecipePage/RecipePage";
 import AuthenticationMenu from "./components/AuthAndRegisterMenu/AuthenticationMenu/AuthenticationMenu";
 import RegisterMenu from "./components/AuthAndRegisterMenu/RegisterMenu/RegisterMenu";
 import RecipeCreator from "./components/RecipeCreator/RecipeCreator";
+import RecipeList from "./components/RecipeList/RecipeList";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         }}
       ></Header>
       <Routes>
+        <Route path="/recipes" element={<RecipeList></RecipeList>}></Route>
         <Route
           path="/user-profile"
           element={<UserProfile></UserProfile>}
