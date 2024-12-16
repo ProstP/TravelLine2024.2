@@ -18,10 +18,10 @@ public class GetRecipeListQueryHandler : IQueryHandler<List<RecipeDto>, GetRecip
     public async Task<Result<List<RecipeDto>>> HandleAsync( GetRecipeListQuery query )
     {
         Expression<Func<Domain.Entity.Recipe, object>> orderExp = GetOrderExpression( query );
-        Expression<Func<Domain.Entity.Recipe, bool>> selectExp = GetSelectExpression( query );
+        Expression<Func<Domain.Entity.Recipe, bool>> userSelectExp = GetUserSelectExpression( query );
 
         List<Domain.Entity.Recipe> recipes = await _recipeRepository.GetList( ( query.GroupNum - 1 ) * query.Count, query.Count,
-            orderExp, selectExp, query.IsAsc );
+            orderExp, userSelectExp, query.IsAsc );
 
         List<RecipeDto> recipeDtos = recipes.Select( r => new RecipeDto()
         {
@@ -39,7 +39,7 @@ public class GetRecipeListQueryHandler : IQueryHandler<List<RecipeDto>, GetRecip
         return Result<List<RecipeDto>>.FromSuccess( recipeDtos );
     }
 
-    private Expression<Func<Domain.Entity.Recipe, bool>> GetSelectExpression( GetRecipeListQuery query )
+    private Expression<Func<Domain.Entity.Recipe, bool>> GetUserSelectExpression( GetRecipeListQuery query )
     {
         return query.UserId != 0 
             ? recipe => recipe.UserId == query.UserId
