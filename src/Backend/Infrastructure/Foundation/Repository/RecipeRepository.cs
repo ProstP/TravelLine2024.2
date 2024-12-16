@@ -7,13 +7,9 @@ namespace Infrastructure.Foundation.Repository;
 
 public class RecipeRepository : Repository<Recipe>, IRecipeRepository
 {
-    protected MaryFoodDbContext _dbContext;
-
     public RecipeRepository( MaryFoodDbContext dbContext )
         : base( dbContext )
-    {
-        _dbContext = dbContext;
-    }
+    { }
 
     public async Task<Recipe> Get( int id )
     {
