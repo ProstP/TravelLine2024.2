@@ -28,7 +28,7 @@ public class DeleteRecipeCommandHandler : ICommandHandler<DeleteRecipeCommand>
 
         Domain.Entity.Recipe recipe = await _recipeRepository.Get( command.Id );
 
-        if ( recipe != null)
+        if ( recipe != null )
         {
             if ( recipe.UserId != user.Id )
             {
