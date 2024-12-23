@@ -53,6 +53,10 @@ public class GetRecipeListQueryHandler : IQueryHandler<List<RecipeDto>, GetRecip
             ? recipe => recipe.Likes.Count
             : query.OrderType == "Favourite"
                 ? recipe => recipe.Favourites.Count
-                : recipe => recipe.CreatedDate;
+                : query.OrderType == "PersonNum" 
+                    ? recipe => recipe.PersonNum
+                    : query.OrderType == "CookingTime" 
+                        ? recipe => recipe.CookingTime
+                        : recipe => recipe.CreatedDate;
     }
 }

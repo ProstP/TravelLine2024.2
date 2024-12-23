@@ -5,7 +5,15 @@ import { GetRecipeList } from "../../services/RecipeListServices";
 import DropBtn from "../DropBtn/DropBtn";
 import { useState } from "react";
 
-type SortType = "Date" | "Like" | "Favourite";
+type SortType = "Date" | "Like" | "Favourite" | "PersonNum" | "CookingTime";
+
+const SortToName = new Map<string, string>([
+  ["Date", "Дате публикации"],
+  ["Like", "Лайкам"],
+  ["Favourite", "Избранным"],
+  ["PersonNum", "Количество персон"],
+  ["CookingTime", "Времени приготовления"],
+]);
 
 const RecipeListPage = () => {
   const [searchStr, setSearchStr] = useState("");
@@ -43,21 +51,21 @@ const RecipeListPage = () => {
         <p className={styles.sorttitle}>Сортировать:</p>
         <div className={styles.sortbtn}>
           <DropBtn
-            options={["Дате публикации", "Лайкам", "Избранным"]}
-            value={
-              sortType === "Date"
-                ? "Дате публикации"
-                : sortType === "Favourite"
-                  ? "Избранным"
-                  : "Лайкам"
-            }
-            onChange={(value) =>
-              value === "Дате публикации"
-                ? setSort("Date")
-                : value === "Лайкам"
-                  ? setSort("Like")
-                  : setSort("Favourite")
-            }
+            options={[
+              SortToName.get("Date")!,
+              SortToName.get("Like")!,
+              SortToName.get("Favourite")!,
+              SortToName.get("PersonNum")!,
+              SortToName.get("CookingTime")!,
+            ]}
+            value={SortToName.get(sortType)!}
+            onChange={(value) => {
+              for (const [key, name] of SortToName) {
+                if (value === name) {
+                  setSort(key as SortType);
+                }
+              }
+            }}
           ></DropBtn>
         </div>
         <p className={styles.sorttitle}>по:</p>
