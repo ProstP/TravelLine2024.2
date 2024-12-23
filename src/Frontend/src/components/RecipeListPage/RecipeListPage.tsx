@@ -20,8 +20,14 @@ const RecipeListPage = () => {
   const [sortType, setSort] = useState<SortType>("Date");
   const [isAsc, togleAsc] = useState<boolean>(false);
 
-  const getRecipes = async (groupNum: number) => {
-    const response = await GetRecipeList(groupNum, isAsc, sortType, searchStr);
+  const getRecipes = async (groupNum: number, count: number) => {
+    const response = await GetRecipeList(
+      groupNum,
+      count,
+      isAsc,
+      sortType,
+      searchStr
+    );
 
     if (!response.isSuccess) {
       return [];

@@ -4,8 +4,8 @@ import RecipeList from "../RecipeList/RecipeList";
 import { GetRecipeListByUser } from "../../services/RecipeListServices";
 
 const UserProfile = () => {
-  const getRecipes = async (groupNum: number) => {
-    const response = await GetRecipeListByUser(groupNum);
+  const getRecipes = async (groupNum: number, count: number) => {
+    const response = await GetRecipeListByUser(groupNum, count);
 
     if (!response.isSuccess) {
       return [];

@@ -5,10 +5,9 @@ import {
 } from "../data/contracts/RecipeListContracts";
 import ApiRequest from "./ApiRequsts";
 
-const Count = 4;
-
 const GetRecipeList = async (
   groupNum: number,
+  count: number,
   isAsc: boolean,
   orderType?: string,
   searchName?: string
@@ -20,7 +19,7 @@ const GetRecipeList = async (
     "recipes",
     {
       groupNum: groupNum,
-      count: Count,
+      count: count,
       isAsc: isAsc,
       orderType: orderType,
       searchName: searchName,
@@ -31,7 +30,7 @@ const GetRecipeList = async (
   return response;
 };
 
-const GetRecipeListByUser = async (groupNum: number) => {
+const GetRecipeListByUser = async (groupNum: number, count: number) => {
   const response = await ApiRequest<
     GetRecipeListByUserRequest,
     GetRecipeListResponse[]
@@ -39,7 +38,7 @@ const GetRecipeListByUser = async (groupNum: number) => {
     "recipes/by-user",
     {
       groupNum: groupNum,
-      count: Count,
+      count: count,
     },
     "POST",
     true

@@ -5,16 +5,17 @@ import styles from "./RecipeList.module.scss";
 import Button from "../Buttons/Button";
 
 type RecipeListProps = {
-  getRecipes: (groupNum: number) => Promise<RecipeType[]>;
+  getRecipes: (groupNum: number, count: number) => Promise<RecipeType[]>;
 };
+
+const Count = 4;
 
 const RecipeList = ({ getRecipes }: RecipeListProps) => {
   const [data, setData] = useState<RecipeType[]>([]);
-  const nextGroupNum = useRef(2);
 
   useEffect(() => {
     const getRecipeList = async () => {
-      setData(await getRecipes(1));
+      setData(await getRecipes(1, Count));
     };
 
     getRecipeList();
@@ -22,9 +23,10 @@ const RecipeList = ({ getRecipes }: RecipeListProps) => {
 
   const loadMore = () => {
     const getRecipeList = async () => {
-      const newData = data.concat(await getRecipes(nextGroupNum.current));
+      const nextGroupNum = Math.floor(data.length / Count) + 1;
 
-      nextGroupNum.current++;
+      const newData = data.concat(await getRecipes(nextGroupNum, Count));
+
       setData(newData);
     };
 
