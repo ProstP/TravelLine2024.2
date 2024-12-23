@@ -4,25 +4,42 @@ import RecipePreview from "./RecipePreview/RecipePreview";
 import styles from "./RecipeList.module.scss";
 import Button from "../Buttons/Button";
 
+type SortType = "Date" | "Like" | "Favourite";
+
 type RecipeListProps = {
-  getRecipes: (groupNum: number) => Promise<RecipeType[]>;
+  sortType: SortType;
+  isAsc: boolean;
+  searchStr: string;
+  getRecipes: (
+    groupNum: number,
+    isAsc: boolean,
+    sortType: SortType,
+    searchStr: string
+  ) => Promise<RecipeType[]>;
 };
 
-const RecipeList = ({ getRecipes }: RecipeListProps) => {
+const RecipeList = ({
+  getRecipes,
+  isAsc,
+  sortType,
+  searchStr,
+}: RecipeListProps) => {
   const [data, setData] = useState<RecipeType[]>([]);
   const nextGroupNum = useRef(2);
 
   useEffect(() => {
     const getRecipeList = async () => {
-      setData(await getRecipes(1));
+      setData(await getRecipes(1, isAsc, sortType, searchStr));
     };
 
     getRecipeList();
-  }, []);
+  }, [isAsc, sortType, searchStr]);
 
   const loadMore = () => {
     const getRecipeList = async () => {
-      const newData = data.concat(await getRecipes(nextGroupNum.current));
+      const newData = data.concat(
+        await getRecipes(nextGroupNum.current, isAsc, sortType, searchStr)
+      );
 
       nextGroupNum.current++;
       setData(newData);

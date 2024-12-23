@@ -2,12 +2,15 @@ import { useState } from "react";
 import styles from "./SearchRecipeInput.module.scss";
 import Button from "../Buttons/Button";
 
-type SearchRecipeInput = {
+type SearchRecipeInputProps = {
   text?: string;
   onClick: (text: string) => void;
 };
 
-const SearchRecipeInput = ({ onClick, text: value }: SearchRecipeInput) => {
+const SearchRecipeInput = ({
+  onClick,
+  text: value,
+}: SearchRecipeInputProps) => {
   const [text, setText] = useState(value ?? "");
 
   return (
