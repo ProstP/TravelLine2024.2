@@ -9,6 +9,8 @@ public class UpdateRecipeCommand
     public int PersonNum { get; init; }
     public string Image { get; init; }
 
+    public string UserLogin { get; init; }
+
     public List<UpdateIngredientCommand> Ingredients { get; init; } = [];
     public List<UpdateRecipeStepCommand> RecipeSteps { get; init; } = [];
     public List<string> Tags { get; init; } = [];

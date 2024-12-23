@@ -2,7 +2,7 @@
 
 namespace WebApi.Contract.Request.Recipe;
 
-public class GetRecipeListRequest
+public class GetRecipeListByUserRequest
 {
     private int groupNum;
     [Required]
@@ -18,7 +18,4 @@ public class GetRecipeListRequest
         get => count;
         init => count = value < 1 ? 1 : value;
     }
-    public string OrderType { get; init; }
-    public string SearchName { get; init; }
-    public bool IsAsc { get; init; }
 }

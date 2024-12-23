@@ -1,9 +1,11 @@
-﻿using Application.Result;
+﻿using System.Security.Claims;
+using Application.Result;
 using Application.UseCases.Recipe.Command.CreateRecipeCommand;
 using Application.UseCases.Recipe.Command.DeleteRecipeCommand;
 using Application.UseCases.Recipe.Command.UpdateRecipeCommand;
 using Application.UseCases.Recipe.Dtos;
 using Application.UseCases.Recipe.Query.GetRecipeQuery;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Contract.Request.Recipe;
 using WebApi.Contract.Response.Recipe;
@@ -32,10 +34,12 @@ public class RecipeController : ControllerBase
         _updateRecipeCommandHandler = updateRecipeCommandHandler;
     }
 
-    //[Authorize]
+    [Authorize]
     [HttpPost, Route( "create" )]
     public async Task<IActionResult> Create( [FromBody] CreateRecipeRequest request )
     {
+        string userLogin = User.FindFirstValue( ClaimTypes.NameIdentifier );
+
         CreateRecipeCommand command = new()
         {
             Name = request.Name,
@@ -44,7 +48,7 @@ public class RecipeController : ControllerBase
             PersonNum = request.PersonNum,
             Image = request.Image,
             CreatedDate = DateTime.UtcNow,
-            UserId = 15,
+            UserLogin = userLogin,
             Ingredients = request.Ingredients
                 .Select( i =>
                 new CreateIngredientCommand()
@@ -120,24 +124,34 @@ public class RecipeController : ControllerBase
         return Ok( getRecipeResponse );
     }
 
-    //[Authorize]
-    [HttpDelete, Route("{id:int}")]
-    public async Task<IActionResult> Remove( [FromRoute] int id)
+    [Authorize]
+    [HttpDelete, Route( "{id:int}" )]
+    public async Task<IActionResult> Remove( [FromRoute] int id )
     {
+        string userLogin = User.FindFirstValue( ClaimTypes.NameIdentifier );
+
         DeleteRecipeCommand command = new()
         {
             Id = id,
+            UserLogin = userLogin,
         };
 
         Result result = await _deleteRecipeCommandHandler.HandleAsync( command );
 
+        if ( !result.IsSuccess )
+        {
+            return BadRequest( result.Error );
+        }
+
         return Ok();
     }
 
-    //[Authorize]
+    [Authorize]
     [HttpPut]
     public async Task<IActionResult> Update( [FromBody] UpdateRecipeRequest request )
     {
+        string userLogin = User.FindFirstValue( ClaimTypes.NameIdentifier );
+
         UpdateRecipeCommand updateRecipeCommand = new()
         {
             Id = request.Id,
@@ -146,6 +160,7 @@ public class RecipeController : ControllerBase
             CookingTime = request.CookingTime,
             PersonNum = request.PersonNum,
             Image = request.Image,
+            UserLogin = userLogin,
             Ingredients = request.Ingredients
                 .Select( i =>
                 new UpdateIngredientCommand()

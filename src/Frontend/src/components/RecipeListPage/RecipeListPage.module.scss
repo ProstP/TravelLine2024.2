@@ -1,0 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+.container {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 100px;
+}
+
+.searchfield {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  width: 70%;
+}
+
+.searchtitle {
+  width: 25%;
+  color: #25292d;
+  text-align: left;
+  font: bold 20px "Montserrat";
+}
+
+.sorttitle {
+  margin-right: 10px;
+  color: #25292d;
+  text-align: left;
+  font: bold 16px "Montserrat";
+}
+
+.sortbtns {
+  margin-top: 20px;
+  width: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.sortbtn {
+  width: 25%;
+  margin-right: 20px;
+}
+
+.list {
+  width: 70%;
+}

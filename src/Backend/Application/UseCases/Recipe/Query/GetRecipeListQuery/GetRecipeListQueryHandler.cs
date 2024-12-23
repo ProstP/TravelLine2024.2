@@ -18,11 +18,10 @@ public class GetRecipeListQueryHandler : IQueryHandler<List<RecipeDto>, GetRecip
     public async Task<Result<List<RecipeDto>>> HandleAsync( GetRecipeListQuery query )
     {
         Expression<Func<Domain.Entity.Recipe, object>> orderExp = GetOrderExpression( query );
-        Expression<Func<Domain.Entity.Recipe, bool>> userSelectExp = GetUserSelectExpression( query );
         Expression<Func<Domain.Entity.Recipe, bool>> selectExp = GetSelectExpression( query );
 
         List<Domain.Entity.Recipe> recipes = await _recipeRepository.GetList( ( query.GroupNum - 1 ) * query.Count, query.Count,
-            orderExp, userSelectExp, selectExp, query.IsAsc );
+            orderExp, selectExp, query.IsAsc );
 
         List<RecipeDto> recipeDtos = recipes.Select( r => new RecipeDto()
         {
@@ -40,13 +39,6 @@ public class GetRecipeListQueryHandler : IQueryHandler<List<RecipeDto>, GetRecip
         return Result<List<RecipeDto>>.FromSuccess( recipeDtos );
     }
 
-    private Expression<Func<Domain.Entity.Recipe, bool>> GetUserSelectExpression( GetRecipeListQuery query )
-    {
-        return query.UserId != 0
-            ? recipe => recipe.UserId == query.UserId
-            : recipe => true;
-    }
-
     private Expression<Func<Domain.Entity.Recipe, bool>> GetSelectExpression( GetRecipeListQuery query )
     {
         return query.SearchName != null
@@ -61,6 +53,10 @@ public class GetRecipeListQueryHandler : IQueryHandler<List<RecipeDto>, GetRecip
             ? recipe => recipe.Likes.Count
             : query.OrderType == "Favourite"
                 ? recipe => recipe.Favourites.Count
-                : recipe => recipe.CreatedDate;
+                : query.OrderType == "PersonNum" 
+                    ? recipe => recipe.PersonNum
+                    : query.OrderType == "CookingTime" 
+                        ? recipe => recipe.CookingTime
+                        : recipe => recipe.CreatedDate;
     }
 }

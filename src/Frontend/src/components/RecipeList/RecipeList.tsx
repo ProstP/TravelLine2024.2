@@ -1,74 +1,50 @@
 import { useEffect, useState } from "react";
 import { RecipeType } from "../../data/entities/Recipe";
-import { GetRecipeList } from "../../services/RecipeListServices";
-import { useNavigate } from "react-router-dom";
 import RecipePreview from "./RecipePreview/RecipePreview";
+import styles from "./RecipeList.module.scss";
+import Button from "../Buttons/Button";
 
-const RecipeList = () => {
-  const navigate = useNavigate();
+type RecipeListProps = {
+  getRecipes: (groupNum: number, count: number) => Promise<RecipeType[]>;
+};
+
+const Count = 4;
+
+const RecipeList = ({ getRecipes }: RecipeListProps) => {
   const [data, setData] = useState<RecipeType[]>([]);
 
   useEffect(() => {
-    const getRecipes = async () => {
-      const response = await GetRecipeList(1);
-
-      if (!response.isSuccess) {
-        navigate("/");
-      }
-
-      console.log(response.value);
-
-      setData(
-        response.value.map((r) => ({
-          id: r.id,
-          name: r.name,
-          description: r.description,
-          cookingTime: r.cookingTime,
-          personNum: r.personNum,
-          tags: r.tags,
-          image: r.image,
-        }))
-      );
+    const getRecipeList = async () => {
+      setData(await getRecipes(1, Count));
     };
 
-    getRecipes();
-  }, []);
+    getRecipeList();
+  }, [getRecipes]);
 
-  const loadMore = async () => {
-    const response = await GetRecipeList(2);
+  const loadMore = () => {
+    const getRecipeList = async () => {
+      const nextGroupNum = Math.floor(data.length / Count) + 1;
 
-    if (!response.isSuccess) {
-      navigate("/");
-    }
+      const newData = data.concat(await getRecipes(nextGroupNum, Count));
 
-    console.log(response.value);
+      setData(newData);
+    };
 
-    const newData = [...data];
-    newData.concat(
-      response.value.map((r) => ({
-        id: r.id,
-        name: r.name,
-        description: r.description,
-        cookingTime: r.cookingTime,
-        personNum: r.personNum,
-        tags: r.tags,
-        image: r.image,
-      }))
-    );
-
-    setData(newData);
+    getRecipeList();
   };
 
   return (
-    <div>
-      <ul>
+    <div className={styles.container}>
+      <ul className={styles.list}>
         {data.map((r) => (
-          <li id={"" + r.id}>
+          <li key={"" + r.id} className={styles.elt}>
             <RecipePreview data={r}></RecipePreview>
           </li>
         ))}
       </ul>
-      <button onClick={loadMore}>Загрузить ещё</button>
+      <div className={styles.btn}>
+        <Button onClick={loadMore}>Загрузить ещё</Button>
+      </div>
     </div>
   );
 };

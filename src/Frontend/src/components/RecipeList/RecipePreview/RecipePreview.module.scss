@@ -1,0 +1,97 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+.container {
+  background-color: white;
+  display: flex;
+  width: 100%;
+  box-shadow: 0 0 30px rgba(34, 39, 47, 0.1);
+  height: 40vh;
+  cursor: pointer;
+
+  $border-radius: 60px;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
+}
+
+.image {
+  width: 30%;
+  height: 100%;
+}
+
+.info {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-left: 50px;
+  width: 60%;
+}
+
+.title {
+  text-align: left;
+  margin: 7px 0;
+  color: #25292d;
+  font: bold 26px "Montserrat";
+}
+
+.description {
+  width: 70%;
+}
+
+.text {
+  text-align: left;
+  margin: 0;
+  color: #4a525a;
+  font: normal 12px "Montserrat";
+}
+
+.taglist {
+  margin: 30px 0;
+  display: flex;
+  gap: 10px;
+}
+
+.tagcontainer {
+  border-radius: 5px;
+  background-color: rgba(253, 177, 0, 0.2);
+}
+
+.tag {
+  margin: 2px 15px;
+  color: #f29e1f;
+  font: normal 13px "Montserrat";
+}
+
+.bottompanel {
+  position: absolute;
+  bottom: 50px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.bottomelt {
+  width: 37%;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  $side: 38px;
+
+  width: $side;
+  height: $side;
+}
+
+.bottomelttext {
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bottomelttitle {
+  margin: 5px 0;
+  color: rgba(37, 41, 45, 0.5);
+  font: normal 10px "Montserrat";
+}

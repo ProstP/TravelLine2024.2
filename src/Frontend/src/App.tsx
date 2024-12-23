@@ -8,18 +8,25 @@ import RecipePage from "./components/RecipePage/RecipePage";
 import AuthenticationMenu from "./components/AuthAndRegisterMenu/AuthenticationMenu/AuthenticationMenu";
 import RegisterMenu from "./components/AuthAndRegisterMenu/RegisterMenu/RegisterMenu";
 import RecipeCreator from "./components/RecipeCreator/RecipeCreator";
-import RecipeList from "./components/RecipeList/RecipeList";
+import RecipeListPage from "./components/RecipeListPage/RecipeListPage";
+import { useMaryFoodStore } from "./hooks/useMaryFoodStore";
 
 function App() {
+  const setName = useMaryFoodStore((store) => store.setUsername);
+
   return (
     <BrowserRouter>
       <Header
         Logout={() => {
           Logout();
+          setName("");
         }}
       ></Header>
       <Routes>
-        <Route path="/recipes" element={<RecipeList></RecipeList>}></Route>
+        <Route
+          path="/recipes"
+          element={<RecipeListPage></RecipeListPage>}
+        ></Route>
         <Route
           path="/user-profile"
           element={<UserProfile></UserProfile>}

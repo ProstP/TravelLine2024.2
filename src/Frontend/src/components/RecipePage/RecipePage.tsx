@@ -89,7 +89,7 @@ const RecipePage = () => {
     const response = await DeleteRecipe(id);
 
     if (response.isSuccess) {
-      navigate("/");
+      navigate("/recipes");
     }
   };
 
