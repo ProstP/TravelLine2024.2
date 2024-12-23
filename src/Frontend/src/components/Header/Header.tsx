@@ -1,7 +1,7 @@
-import { useMaryFoodStore } from "../../hooks/useMaryFoodStore.ts";
 import styles from "./Header.module.scss";
 import userIcon from "../../assets/user.svg";
 import exitIcon from "../../assets/exit.svg";
+import { useMaryFoodStore } from "../../hooks/useMaryFoodStore";
 
 type HeaderProps = {
   Logout: () => void;
@@ -9,7 +9,6 @@ type HeaderProps = {
 
 const Header = ({ Logout }: HeaderProps) => {
   const username = useMaryFoodStore((store) => store.username);
-  const setName = useMaryFoodStore((store) => store.setUsername);
 
   return (
     <div className={styles.container}>
@@ -37,7 +36,6 @@ const Header = ({ Logout }: HeaderProps) => {
               className={styles.exitbtn}
               onClick={() => {
                 Logout();
-                setName("");
               }}
             >
               <img src={exitIcon}></img>

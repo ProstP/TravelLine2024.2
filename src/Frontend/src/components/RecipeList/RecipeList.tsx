@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { RecipeType } from "../../data/entities/Recipe";
 import RecipePreview from "./RecipePreview/RecipePreview";
 import styles from "./RecipeList.module.scss";

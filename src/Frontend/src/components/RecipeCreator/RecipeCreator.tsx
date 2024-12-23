@@ -2,9 +2,19 @@ import { useNavigate } from "react-router-dom";
 import { RecipeData } from "../../data/entities/Recipe";
 import { CreateRecipe } from "../../services/RecipeServices";
 import RecipeEditor from "../RecipeEditor/RecipeEditor";
+import { useMaryFoodStore } from "../../hooks/useMaryFoodStore";
+import { useEffect } from "react";
 
 const RecipeCreator = () => {
   const navigate = useNavigate();
+
+  const username = useMaryFoodStore((store) => store.username);
+
+  useEffect(() => {
+    if (username === "") {
+      navigate("/");
+    }
+  }, [username]);
 
   const sendRequest = async (data: RecipeData) => {
     const response = await CreateRecipe({

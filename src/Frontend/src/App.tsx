@@ -9,13 +9,17 @@ import AuthenticationMenu from "./components/AuthAndRegisterMenu/AuthenticationM
 import RegisterMenu from "./components/AuthAndRegisterMenu/RegisterMenu/RegisterMenu";
 import RecipeCreator from "./components/RecipeCreator/RecipeCreator";
 import RecipeListPage from "./components/RecipeListPage/RecipeListPage";
+import { useMaryFoodStore } from "./hooks/useMaryFoodStore";
 
 function App() {
+  const setName = useMaryFoodStore((store) => store.setUsername);
+
   return (
     <BrowserRouter>
       <Header
         Logout={() => {
           Logout();
+          setName("");
         }}
       ></Header>
       <Routes>

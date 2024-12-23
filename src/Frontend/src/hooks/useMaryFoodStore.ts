@@ -6,10 +6,17 @@ type StoreData = {
 };
 
 export const useMaryFoodStore = create<StoreData>()((set, get) => ({
-  username: "",
-  setUsername: (name: string) =>
+  username: localStorage.getItem("username") ?? "",
+  setUsername: (name: string) => {
+    if (name === "") {
+      localStorage.removeItem("username");
+    } else {
+      localStorage.setItem("username", name);
+    }
+
     set({
       ...get(),
       username: name,
-    }),
+    });
+  },
 }));
