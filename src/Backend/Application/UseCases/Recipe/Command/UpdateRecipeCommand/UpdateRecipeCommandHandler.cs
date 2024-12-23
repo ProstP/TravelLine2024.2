@@ -10,23 +10,41 @@ public class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeCommand>
     private readonly IRecipeRepository _recipeRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ITagRepository _tagRepository;
+    private readonly IUserRepository _userRepository;
 
-    public UpdateRecipeCommandHandler( IRecipeRepository recipeRepository, IUnitOfWork unitOfWork, ITagRepository tagRepository )
+    public UpdateRecipeCommandHandler(
+        IRecipeRepository recipeRepository,
+        IUnitOfWork unitOfWork,
+        ITagRepository tagRepository,
+        IUserRepository userRepository )
     {
         _recipeRepository = recipeRepository;
         _unitOfWork = unitOfWork;
         _tagRepository = tagRepository;
+        _userRepository = userRepository;
     }
 
     public async Task<Result.Result> HandleAsync( UpdateRecipeCommand command )
     {
         try
         {
+            Domain.Entity.User user = await _userRepository.GetByLogin( command.UserLogin );
+
+            if ( user == null )
+            {
+                return Result.Result.FromError( "Uknown user" );
+            }
+
             Domain.Entity.Recipe recipe = await _recipeRepository.Get( command.Id );
 
             if ( recipe == null )
             {
                 return Result.Result.FromError( "Unknown recipe" );
+            }
+
+            if ( recipe.UserId != user.Id )
+            {
+                return Result.Result.FromError( "You can not delete this recipe" );
             }
 
             recipe.Update( command.Name, command.Description, command.CookingTime, command.PersonNum, command.Image );

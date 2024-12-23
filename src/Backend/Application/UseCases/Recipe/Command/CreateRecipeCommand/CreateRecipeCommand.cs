@@ -9,7 +9,7 @@ public class CreateRecipeCommand
     public string Image { get; init; }
     public DateTime CreatedDate { get; init; }
 
-    public int UserId { get; init; }
+    public string UserLogin { get; init; }
 
     public List<CreateIngredientCommand> Ingredients { get; init; } = [];
     public List<CreateRecipeStepCommand> RecipeSteps { get; init; } = [];

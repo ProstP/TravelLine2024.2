@@ -10,18 +10,31 @@ public class CreateRecipeCommandHandler : ICommandHandler<CreateRecipeCommand>
     private readonly IRecipeRepository _recipeRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ITagRepository _tagRepository;
+    private readonly IUserRepository _userRepository;
 
-    public CreateRecipeCommandHandler( IRecipeRepository recipeRepository, IUnitOfWork unitOfWork, ITagRepository tagRepository )
+    public CreateRecipeCommandHandler(
+        IRecipeRepository recipeRepository,
+        IUnitOfWork unitOfWork,
+        ITagRepository tagRepository,
+        IUserRepository userRepository )
     {
         _recipeRepository = recipeRepository;
         _unitOfWork = unitOfWork;
         _tagRepository = tagRepository;
+        _userRepository = userRepository;
     }
 
     public async Task<Result.Result> HandleAsync( CreateRecipeCommand command )
     {
+        Domain.Entity.User user = await _userRepository.GetByLogin( command.UserLogin );
+
+        if ( user == null )
+        {
+            return Result.Result.FromError( "Unknown user" );
+        }
+
         Domain.Entity.Recipe recipe =
-            new( command.Name, command.Description, command.CookingTime, command.PersonNum, command.Image, command.CreatedDate, command.UserId );
+            new( command.Name, command.Description, command.CookingTime, command.PersonNum, command.Image, command.CreatedDate, user.Id );
 
         recipe.Tags.Clear();
         command.Tags.ForEach( name =>
