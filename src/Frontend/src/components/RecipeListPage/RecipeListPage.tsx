@@ -12,12 +12,7 @@ const RecipeListPage = () => {
   const [sortType, setSort] = useState<SortType>("Date");
   const [isAsc, togleAsc] = useState<boolean>(false);
 
-  const getRecipes = async (
-    groupNum: number,
-    isAsc: boolean,
-    sortType: SortType,
-    searchStr: string
-  ) => {
+  const getRecipes = async (groupNum: number) => {
     const response = await GetRecipeList(groupNum, isAsc, sortType, searchStr);
 
     if (!response.isSuccess) {
@@ -74,12 +69,9 @@ const RecipeListPage = () => {
           ></DropBtn>
         </div>
       </div>
-      <RecipeList
-        sortType={sortType}
-        isAsc={isAsc}
-        searchStr={searchStr}
-        getRecipes={getRecipes}
-      ></RecipeList>
+      <div className={styles.list}>
+        <RecipeList getRecipes={getRecipes}></RecipeList>
+      </div>
     </div>
   );
 };

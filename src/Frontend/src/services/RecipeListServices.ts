@@ -1,8 +1,11 @@
 import {
+  GetRecipeListByUserRequest,
   GetRecipeListRequest,
   GetRecipeListResponse,
 } from "../data/contracts/RecipeListContracts";
 import ApiRequest from "./ApiRequsts";
+
+const Count = 4;
 
 const GetRecipeList = async (
   groupNum: number,
@@ -17,7 +20,7 @@ const GetRecipeList = async (
     "recipes",
     {
       groupNum: groupNum,
-      count: 4,
+      count: Count,
       isAsc: isAsc,
       orderType: orderType,
       searchName: searchName,
@@ -28,4 +31,21 @@ const GetRecipeList = async (
   return response;
 };
 
-export { GetRecipeList };
+const GetRecipeListByUser = async (groupNum: number) => {
+  const response = await ApiRequest<
+    GetRecipeListByUserRequest,
+    GetRecipeListResponse[]
+  >(
+    "recipes/by-user",
+    {
+      groupNum: groupNum,
+      count: Count,
+    },
+    "POST",
+    true
+  );
+
+  return response;
+};
+
+export { GetRecipeList, GetRecipeListByUser };

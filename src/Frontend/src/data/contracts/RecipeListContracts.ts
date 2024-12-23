@@ -17,3 +17,8 @@ export type GetRecipeListResponse = {
   userId: number;
   tags: string[];
 };
+
+export type GetRecipeListByUserRequest = {
+  groupNum: number;
+  count: number;
+};
