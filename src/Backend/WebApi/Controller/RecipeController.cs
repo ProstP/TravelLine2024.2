@@ -138,6 +138,11 @@ public class RecipeController : ControllerBase
 
         Result result = await _deleteRecipeCommandHandler.HandleAsync( command );
 
+        if ( !result.IsSuccess )
+        {
+            return BadRequest( result.Error );
+        }
+
         return Ok();
     }
 
