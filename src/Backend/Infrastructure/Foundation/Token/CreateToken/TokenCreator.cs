@@ -19,7 +19,7 @@ public class TokenCreator : ITokenCreator
 
     public string GenerateAccessToken( string login )
     {
-        return GenerateToken( login, TimeSpan.FromMinutes( 15 ) );
+        return GenerateToken( login, TimeSpan.FromSeconds( 1 ) );
     }
 
     public string GenerateRefreshToken( string login )
@@ -37,7 +37,7 @@ public class TokenCreator : ITokenCreator
             [
                 new Claim(ClaimTypes.NameIdentifier, login),
             ] ),
-            Expires = DateTime.UtcNow.Add(lifeTime),
+            Expires = DateTime.UtcNow.Add( lifeTime ),
             SigningCredentials = new SigningCredentials( new SymmetricSecurityKey( key ), SecurityAlgorithms.HmacSha256Signature )
 
         };
