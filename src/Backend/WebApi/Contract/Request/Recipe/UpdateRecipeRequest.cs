@@ -32,7 +32,7 @@ public class UpdateRecipeRequest
     }
 
     [Required]
-    [MaxLength( 255 )]
+    //[MaxLength( 255 )]
     public string Image { get; init; }
 
     public List<UpdateIngredientRequest> Ingredients { get; init; } = [];
