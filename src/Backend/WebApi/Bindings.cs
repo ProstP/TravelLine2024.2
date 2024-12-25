@@ -38,6 +38,7 @@ public static class Bindings
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
                 };
             } );
 

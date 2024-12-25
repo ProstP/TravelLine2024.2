@@ -1,8 +1,6 @@
 import {
   LoginUserRequest,
   LoginUserResponse,
-  RefreshTokenRequest,
-  RefreshTokenResponse,
   RegisterUserRequest,
   UpdateUserRequest,
   UpdateUserResponse,
@@ -51,19 +49,6 @@ const Profile = () => {
   return response.then();
 };
 
-const Refresh = async (data: RefreshTokenRequest) => {
-  const response = await ApiRequest<RefreshTokenRequest, RefreshTokenResponse>(
-    "user/refresh-token",
-    data,
-    "POST"
-  );
-
-  if (response.isSuccess) {
-    localStorage.setItem("access-token", response.value.accessToken);
-    localStorage.setItem("refresh-token", response.value.refreshToken);
-  }
-};
-
 const Update = async (data: UpdateUserRequest) => {
   const response = await ApiRequest<UpdateUserRequest, UpdateUserResponse>(
     "user/update",
@@ -80,4 +65,4 @@ const Update = async (data: UpdateUserRequest) => {
   return response;
 };
 
-export { Authenticate, Register, Logout, Profile, Refresh, Update };
+export { Authenticate, Register, Logout, Profile, Update };

@@ -37,7 +37,7 @@ public class TokenCreator : ITokenCreator
             [
                 new Claim(ClaimTypes.NameIdentifier, login),
             ] ),
-            Expires = DateTime.UtcNow.Add(lifeTime),
+            Expires = DateTime.Now.Add( lifeTime ),
             SigningCredentials = new SigningCredentials( new SymmetricSecurityKey( key ), SecurityAlgorithms.HmacSha256Signature )
 
         };
