@@ -1,4 +1,5 @@
 ﻿using Application.CQRSInterfaces;
+using Application.ImageStore.LoadImage;
 using Application.Result;
 using Application.UseCases.Recipe.Dtos;
 using Domain.Repository;
@@ -8,10 +9,12 @@ namespace Application.UseCases.Recipe.Query.GetRecipeQuery;
 public class GetRecipeQueryHandler : IQueryHandler<RecipeDto, GetRecipeQuery>
 {
     private readonly IRecipeRepository _recipeRepository;
+    private readonly IImageLoader _imageLoader;
 
-    public GetRecipeQueryHandler( IRecipeRepository recipeRepository )
+    public GetRecipeQueryHandler( IRecipeRepository recipeRepository, IImageLoader imageLoader )
     {
         _recipeRepository = recipeRepository;
+        _imageLoader = imageLoader;
     }
 
     public async Task<Result<RecipeDto>> HandleAsync( GetRecipeQuery query )
@@ -30,7 +33,7 @@ public class GetRecipeQueryHandler : IQueryHandler<RecipeDto, GetRecipeQuery>
             Description = recipe.Description,
             CookingTime = recipe.CookingTime,
             PersonNum = recipe.PersonNum,
-            Image = recipe.Image,
+            Image = _imageLoader.Load( recipe.Image ),
             CreatedDate = recipe.CreatedDate,
             Ingredients = recipe.Ingredients
                 .Select( i =>

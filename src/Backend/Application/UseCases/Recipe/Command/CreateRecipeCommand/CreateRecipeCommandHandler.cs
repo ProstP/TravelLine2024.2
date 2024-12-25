@@ -1,4 +1,5 @@
 ﻿using Application.CQRSInterfaces;
+using Application.ImageStore.SaveImage;
 using Application.UnitOfWork;
 using Domain.Entity;
 using Domain.Repository;
@@ -11,17 +12,20 @@ public class CreateRecipeCommandHandler : ICommandHandler<CreateRecipeCommand>
     private readonly IUnitOfWork _unitOfWork;
     private readonly ITagRepository _tagRepository;
     private readonly IUserRepository _userRepository;
+    private readonly IImageSaver _imageSaver;
 
     public CreateRecipeCommandHandler(
         IRecipeRepository recipeRepository,
         IUnitOfWork unitOfWork,
         ITagRepository tagRepository,
-        IUserRepository userRepository )
+        IUserRepository userRepository,
+        IImageSaver imageSaver )
     {
         _recipeRepository = recipeRepository;
         _unitOfWork = unitOfWork;
         _tagRepository = tagRepository;
         _userRepository = userRepository;
+        _imageSaver = imageSaver;
     }
 
     public async Task<Result.Result> HandleAsync( CreateRecipeCommand command )
@@ -33,8 +37,10 @@ public class CreateRecipeCommandHandler : ICommandHandler<CreateRecipeCommand>
             return Result.Result.FromError( "Unknown user" );
         }
 
+        string path = _imageSaver.Save( command.Image );
+
         Domain.Entity.Recipe recipe =
-            new( command.Name, command.Description, command.CookingTime, command.PersonNum, command.Image, command.CreatedDate, user.Id );
+            new( command.Name, command.Description, command.CookingTime, command.PersonNum, path, command.CreatedDate, user.Id );
 
         recipe.Tags.Clear();
         command.Tags.ForEach( name =>
