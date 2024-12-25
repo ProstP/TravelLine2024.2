@@ -120,8 +120,6 @@ const ApiRequest = async <RequestType, ResponseType = null>(
       }
     })
     .catch((error) => {
-      console.log(error);
-
       console.error(error);
 
       isSuccess = false;
