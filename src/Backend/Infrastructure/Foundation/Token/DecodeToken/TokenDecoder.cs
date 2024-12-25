@@ -32,6 +32,7 @@ public class TokenDecoder : ITokenDecoder
                 ValidateIssuer = false,
                 ValidateAudience = false,
                 ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
             };
 
             ClaimsPrincipal principle = tokenHandler.ValidateToken( token, tokenValidationParams, out SecurityToken securityToken );

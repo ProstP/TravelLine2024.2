@@ -55,7 +55,6 @@ const RefreshToken = async () => {
   }
 
   const data = response as RefreshTokenResponse;
-  console.log(data);
 
   localStorage.setItem("access-token", data.accessToken);
   localStorage.setItem("refresh-token", data.refreshToken);
@@ -80,16 +79,11 @@ const ApiRequest = async <RequestType, ResponseType = null>(
     body: request === null ? null : JSON.stringify(request),
   };
 
-  console.log(localStorage.getItem("access-token"));
-  console.log(localStorage.getItem("refresh-token"));
-
   let isSuccess = false;
 
-  let response = await SendRequest(url, options)
+  const response = await SendRequest(url, options)
     .then(async (response) => {
       isSuccess = response.ok;
-
-      console.log(response.url);
 
       if (response.status === 401) {
         if (await RefreshToken()) {
@@ -104,7 +98,13 @@ const ApiRequest = async <RequestType, ResponseType = null>(
             body: request === null ? null : JSON.stringify(request),
           };
 
-          return (await SendRequest(url, options)).text();
+          return (
+            await SendRequest(url, options).then((response) => {
+              isSuccess = response.ok;
+
+              return response;
+            })
+          ).text();
         } else {
           return null;
         }
@@ -120,6 +120,8 @@ const ApiRequest = async <RequestType, ResponseType = null>(
       }
     })
     .catch((error) => {
+      console.log(error);
+
       console.error(error);
 
       isSuccess = false;
