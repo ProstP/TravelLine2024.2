@@ -6,6 +6,13 @@ public class ImageDeleter : IImageDeleter
 {
     public void Delete( string path )
     {
-        throw new NotImplementedException();
+        string folderPath = Path.Combine( Directory.GetCurrentDirectory(), "Images" );
+
+        string filePath = Path.Combine( folderPath, path );
+        
+        if ( File.Exists( filePath ) )
+        {
+            File.Delete( filePath );
+        }
     }
 }
