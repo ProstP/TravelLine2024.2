@@ -31,7 +31,7 @@ public class UpdateRecipeRequest
         init => personNum = value > 15 ? 15 : value < 1 ? 1 : value;
     }
 
-    [MaxLength( 100 )]
+    [MaxLength( 255 )]
     public string Image { get; init; }
 
     public List<UpdateIngredientRequest> Ingredients { get; init; } = [];
