@@ -22,7 +22,10 @@ const RecipeCreator = () => {
       description: data.info.description,
       cookingTime: data.info.cookingTime,
       personNum: data.info.personNum,
-      image: data.info.image,
+      image: data.info.image.slice(
+        data.info.image.indexOf(",") + 1,
+        data.info.image.length
+      ),
       tags: data.info.tags,
       ingredients: data.ingredients.map((i) => ({
         header: i.header,
