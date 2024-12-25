@@ -14,7 +14,7 @@ public class ImageSaver : IImageSaver
     {
         string fileName = GenerateRandomPath( 20 );
 
-        string folderPath = Path.Combine( Directory.GetCurrentDirectory() + "../Images" );
+        string folderPath = Path.Combine( Directory.GetCurrentDirectory() , "Images" );
 
         string filePath = Path.Combine( folderPath, fileName );
 
