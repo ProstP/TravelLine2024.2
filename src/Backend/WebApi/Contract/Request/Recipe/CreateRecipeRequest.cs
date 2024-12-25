@@ -28,6 +28,7 @@ public class CreateRecipeRequest
         init => personNum = value > 15 ? 15 : value < 1 ? 1 : value;
     }
 
+    [Required]
     [MaxLength( 255 )]
     public string Image { get; init; }
 
