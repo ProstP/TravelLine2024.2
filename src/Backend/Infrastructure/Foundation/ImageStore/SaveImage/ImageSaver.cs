@@ -7,14 +7,9 @@ public class ImageSaver : IImageSaver
 {
     public string Save( string image )
     {
-        return SaveImageInBase64( image );
-    }
-
-    private static string SaveImageInBase64( string imageBase64 )
-    {
         string fileName = GenerateRandomPath( 20 );
 
-        string folderPath = Path.Combine( Directory.GetCurrentDirectory() , "Images" );
+        string folderPath = Path.Combine( Directory.GetCurrentDirectory(), "Images" );
 
         string filePath = Path.Combine( folderPath, fileName );
 
@@ -23,7 +18,7 @@ public class ImageSaver : IImageSaver
             Directory.CreateDirectory( folderPath );
         }
 
-        byte[] imageBytes = Convert.FromBase64String( imageBase64 );
+        byte[] imageBytes = Convert.FromBase64String( image );
 
         File.WriteAllBytes( filePath, imageBytes );
 
