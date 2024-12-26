@@ -23,11 +23,21 @@ const RecipeList = ({ getRecipes }: RecipeListProps) => {
 
   const loadMore = () => {
     const getRecipeList = async () => {
+      if (data.length % Count !== 0) {
+        return;
+      }
+
+      const recipes = [...data];
       const nextGroupNum = Math.floor(data.length / Count) + 1;
 
-      const newData = data.concat(await getRecipes(nextGroupNum, Count));
+      const newData = await getRecipes(nextGroupNum, Count);
+      newData.forEach((recipe) => {
+        if (!recipes.some((r) => r.id === recipe.id)) {
+          recipes.push(recipe);
+        }
+      });
 
-      setData(newData);
+      setData(recipes);
     };
 
     getRecipeList();
