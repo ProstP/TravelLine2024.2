@@ -9,7 +9,8 @@ public class ImageSaver : IImageSaver
     {
         string fileName = GenerateRandomPath( 20 );
 
-        string folderPath = Path.Combine( Directory.GetCurrentDirectory(), "Images" );
+        string rootPath = Path.Combine( Directory.GetCurrentDirectory(), "wwwroot" );
+        string folderPath = Path.Combine( rootPath, "Images" );
 
         string filePath = Path.Combine( folderPath, fileName );
 

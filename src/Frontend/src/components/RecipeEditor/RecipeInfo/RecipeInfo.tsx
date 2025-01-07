@@ -15,13 +15,7 @@ const RecipeInfo = ({ data, setData }: RecipeInfoProps) => {
     <div className={styles.container}>
       <div className={styles.image}>
         <ImageInput
-          image={
-            data.image !== null && data.image !== ""
-              ? data.image.indexOf(",") === -1
-                ? "data:image/jpeg;base64," + data.image
-                : data.image
-              : ""
-          }
+          image={data.image !== null && data.image !== "" ? data.image : ""}
           setImage={(path) => setData({ ...data, image: path })}
         ></ImageInput>
       </div>

@@ -6,7 +6,8 @@ public class ImageDeleter : IImageDeleter
 {
     public void Delete( string path )
     {
-        string folderPath = Path.Combine( Directory.GetCurrentDirectory(), "Images" );
+        string rootPath = Path.Combine( Directory.GetCurrentDirectory(), "wwwroot" );
+        string folderPath = Path.Combine( rootPath, "Images" );
 
         string filePath = Path.Combine( folderPath, path );
         

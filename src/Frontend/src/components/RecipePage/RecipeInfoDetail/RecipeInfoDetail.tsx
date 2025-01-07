@@ -10,14 +10,7 @@ type RecipeInfoDetailProps = {
 const RecipeInfoDetail = ({ data }: RecipeInfoDetailProps) => {
   return (
     <div className={styles.container}>
-      <img
-        className={styles.image}
-        src={
-          data.image.indexOf(",") === -1
-            ? "data:image/jpeg;base64," + data.image
-            : data.image
-        }
-      ></img>
+      <img className={styles.image} src={data.image}></img>
       <div className={styles.fields}>
         <div className={styles.topPanel}>
           <div className={styles.tags}>

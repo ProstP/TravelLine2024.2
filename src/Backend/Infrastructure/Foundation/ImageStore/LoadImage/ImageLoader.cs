@@ -4,11 +4,12 @@ namespace Infrastructure.Foundation.ImageStore.LoadImage;
 
 public class ImageLoader : IImageLoader
 {
-    public string Load( string path )
+    public string Load( string name )
     {
-        string folderPath = Path.Combine( Directory.GetCurrentDirectory(), "Images" );
+        string rootPath = Path.Combine( Directory.GetCurrentDirectory(), "wwwroot" );
+        string folderPath = Path.Combine( rootPath, "Images" );
 
-        string filePath = Path.Combine( folderPath, path );
+        string filePath = Path.Combine( folderPath, name );
 
         if ( !Directory.Exists( folderPath ) )
         {
@@ -20,10 +21,6 @@ public class ImageLoader : IImageLoader
             return "";
         }
 
-        byte[] imageBytes = File.ReadAllBytes( filePath );
-
-        string imageBase64 = Convert.ToBase64String( imageBytes );
-
-        return imageBase64;
+        return "http://localhost:5208/Images/" + name;
     }
 }

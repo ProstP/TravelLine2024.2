@@ -16,10 +16,7 @@ const RecipePreview = ({ data }: RecipePreviewProps) => {
       className={styles.container}
       onClick={() => navigate("/recipe/" + data.id)}
     >
-      <img
-        className={styles.image}
-        src={"data:image/jpeg;base64," + data.image}
-      ></img>
+      <img className={styles.image} src={data.image}></img>
       <div className={styles.info}>
         <div className={styles.taglist}>
           {data.tags.map((t, index) => (
