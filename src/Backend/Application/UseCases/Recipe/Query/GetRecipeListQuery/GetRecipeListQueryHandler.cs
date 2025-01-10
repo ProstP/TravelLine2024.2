@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Application.CQRSInterfaces;
+using Application.ImageStore.LoadImage;
 using Application.Result;
 using Application.UseCases.Recipe.Dtos;
 using Domain.Repository;
@@ -9,10 +10,12 @@ namespace Application.UseCases.Recipe.Query.GetRecipeListQuery;
 public class GetRecipeListQueryHandler : IQueryHandler<List<RecipeDto>, GetRecipeListQuery>
 {
     private readonly IRecipeRepository _recipeRepository;
+    private readonly IImageLoader _imageLoader;
 
-    public GetRecipeListQueryHandler( IRecipeRepository recipeRepository )
+    public GetRecipeListQueryHandler( IRecipeRepository recipeRepository, IImageLoader imageLoader )
     {
         _recipeRepository = recipeRepository;
+        _imageLoader = imageLoader;
     }
 
     public async Task<Result<List<RecipeDto>>> HandleAsync( GetRecipeListQuery query )
@@ -33,7 +36,7 @@ public class GetRecipeListQueryHandler : IQueryHandler<List<RecipeDto>, GetRecip
             Tags = r.Tags.Select( t => t.Name ).ToList(),
             CreatedDate = r.CreatedDate,
             UserId = r.UserId,
-            Image = r.Image
+            Image = _imageLoader.Load( r.Image )
         } ).ToList();
 
         return Result<List<RecipeDto>>.FromSuccess( recipeDtos );
@@ -53,9 +56,9 @@ public class GetRecipeListQueryHandler : IQueryHandler<List<RecipeDto>, GetRecip
             ? recipe => recipe.Likes.Count
             : query.OrderType == "Favourite"
                 ? recipe => recipe.Favourites.Count
-                : query.OrderType == "PersonNum" 
+                : query.OrderType == "PersonNum"
                     ? recipe => recipe.PersonNum
-                    : query.OrderType == "CookingTime" 
+                    : query.OrderType == "CookingTime"
                         ? recipe => recipe.CookingTime
                         : recipe => recipe.CreatedDate;
     }

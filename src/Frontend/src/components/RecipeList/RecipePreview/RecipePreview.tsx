@@ -1,5 +1,4 @@
 import { RecipeType } from "../../../data/entities/Recipe";
-import image from "../../../temp/Panna-cota.png";
 import styles from "./RecipePreview.module.scss";
 import clockIcon from "../../../assets/clock.svg";
 import personsIcon from "../../../assets/persons.svg";
@@ -17,7 +16,7 @@ const RecipePreview = ({ data }: RecipePreviewProps) => {
       className={styles.container}
       onClick={() => navigate("/recipe/" + data.id)}
     >
-      <img className={styles.image} src={image}></img>
+      <img className={styles.image} src={data.image}></img>
       <div className={styles.info}>
         <div className={styles.taglist}>
           {data.tags.map((t, index) => (

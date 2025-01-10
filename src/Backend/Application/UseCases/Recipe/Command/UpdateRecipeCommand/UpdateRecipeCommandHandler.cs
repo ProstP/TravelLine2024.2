@@ -1,4 +1,6 @@
 ﻿using Application.CQRSInterfaces;
+using Application.ImageStore.DeleteImage;
+using Application.ImageStore.SaveImage;
 using Application.UnitOfWork;
 using Domain.Entity;
 using Domain.Repository;
@@ -11,17 +13,23 @@ public class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeCommand>
     private readonly IUnitOfWork _unitOfWork;
     private readonly ITagRepository _tagRepository;
     private readonly IUserRepository _userRepository;
+    private readonly IImageSaver _imageSaver;
+    private readonly IImageDeleter _imageDeleter;
 
     public UpdateRecipeCommandHandler(
         IRecipeRepository recipeRepository,
         IUnitOfWork unitOfWork,
         ITagRepository tagRepository,
-        IUserRepository userRepository )
+        IUserRepository userRepository,
+        IImageSaver imageSaver,
+        IImageDeleter imageDeleter )
     {
         _recipeRepository = recipeRepository;
         _unitOfWork = unitOfWork;
         _tagRepository = tagRepository;
         _userRepository = userRepository;
+        _imageSaver = imageSaver;
+        _imageDeleter = imageDeleter;
     }
 
     public async Task<Result.Result> HandleAsync( UpdateRecipeCommand command )
@@ -47,7 +55,9 @@ public class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeCommand>
                 return Result.Result.FromError( "You can not delete this recipe" );
             }
 
-            recipe.Update( command.Name, command.Description, command.CookingTime, command.PersonNum, command.Image );
+            _imageDeleter.Delete( recipe.Image );
+            string path = _imageSaver.Save( command.Image );
+            recipe.Update( command.Name, command.Description, command.CookingTime, command.PersonNum, path );
 
             recipe.Tags.Clear();
             command.Tags.ForEach( name =>

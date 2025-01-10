@@ -1,11 +1,17 @@
 ﻿using Application.Crypt.HashPassword;
 using Application.Crypt.VerifyPassword;
+using Application.ImageStore.DeleteImage;
+using Application.ImageStore.LoadImage;
+using Application.ImageStore.SaveImage;
 using Application.UnitOfWork;
 using Application.UseCases.Token.CreateToken;
 using Application.UseCases.Token.DecodeToken;
 using Domain.Repository;
 using Infrastructure.Foundation.Crypt.HashPassword;
 using Infrastructure.Foundation.Crypt.VerifyPassword;
+using Infrastructure.Foundation.ImageStore.DeleteImage;
+using Infrastructure.Foundation.ImageStore.LoadImage;
+using Infrastructure.Foundation.ImageStore.SaveImage;
 using Infrastructure.Foundation.Options;
 using Infrastructure.Foundation.Repository;
 using Infrastructure.Foundation.Token.CreateToken;
@@ -36,6 +42,9 @@ public static class Bindings
         serviceCollection.AddScoped<IPasswordVerifier, PasswordVerifier>();
         serviceCollection.AddScoped<ITokenCreator, TokenCreator>();
         serviceCollection.AddScoped<ITokenDecoder, TokenDecoder>();
+        serviceCollection.AddScoped<IImageSaver, ImageSaver>();
+        serviceCollection.AddScoped<IImageLoader, ImageLoader>();
+        serviceCollection.AddScoped<IImageDeleter, ImageDeleter>();
 
         return serviceCollection;
     }

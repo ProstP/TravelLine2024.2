@@ -3,7 +3,7 @@ import loadIcon from "../../assets/load.svg";
 
 type ImageInputProps = {
   image?: string;
-  setImage: (path: string) => void;
+  setImage: (image: string) => void;
 };
 
 const ImageInput = ({ image, setImage }: ImageInputProps) => {
