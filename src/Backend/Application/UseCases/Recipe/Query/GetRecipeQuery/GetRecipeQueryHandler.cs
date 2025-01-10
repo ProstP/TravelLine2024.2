@@ -10,11 +10,13 @@ public class GetRecipeQueryHandler : IQueryHandler<RecipeDto, GetRecipeQuery>
 {
     private readonly IRecipeRepository _recipeRepository;
     private readonly IImageLoader _imageLoader;
+    private readonly ILikeRepository _likeRepository;
 
-    public GetRecipeQueryHandler( IRecipeRepository recipeRepository, IImageLoader imageLoader )
+    public GetRecipeQueryHandler( IRecipeRepository recipeRepository, IImageLoader imageLoader, ILikeRepository likeRepository )
     {
         _recipeRepository = recipeRepository;
         _imageLoader = imageLoader;
+        _likeRepository = likeRepository;
     }
 
     public async Task<Result<RecipeDto>> HandleAsync( GetRecipeQuery query )
@@ -51,7 +53,8 @@ public class GetRecipeQueryHandler : IQueryHandler<RecipeDto, GetRecipeQuery>
                     Description = rs.Description,
                     StepNum = rs.StepNum,
                 } ).ToList(),
-            Tags = recipe.Tags.Select( t => t.Name ).ToList()
+            Tags = recipe.Tags.Select( t => t.Name ).ToList(),
+            LikeCount = await _likeRepository.GetByRecipeId( recipe.Id )
         };
 
         return Result<RecipeDto>.FromSuccess( recipeDto );

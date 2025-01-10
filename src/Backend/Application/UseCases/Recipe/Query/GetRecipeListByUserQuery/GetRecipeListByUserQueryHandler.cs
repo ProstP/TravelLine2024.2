@@ -11,12 +11,18 @@ public class GetRecipeListByUserQueryHandler : IQueryHandler<List<RecipeDto>, Ge
     private readonly IRecipeRepository _recipeRepository;
     private readonly IUserRepository _userRepository;
     private readonly IImageLoader _imageLoader;
+    private readonly ILikeRepository _likeRepository;
 
-    public GetRecipeListByUserQueryHandler( IRecipeRepository recipeRepository, IUserRepository userRepository, IImageLoader imageLoader )
+    public GetRecipeListByUserQueryHandler(
+        IRecipeRepository recipeRepository,
+        IUserRepository userRepository,
+        IImageLoader imageLoader,
+        ILikeRepository likeRepository )
     {
         _recipeRepository = recipeRepository;
         _userRepository = userRepository;
         _imageLoader = imageLoader;
+        _likeRepository = likeRepository;
     }
 
     public async Task<Result<List<RecipeDto>>> HandleAsync( GetRecipeListByUserQuery query )
@@ -30,7 +36,7 @@ public class GetRecipeListByUserQueryHandler : IQueryHandler<List<RecipeDto>, Ge
 
         List<Domain.Entity.Recipe> recipes = await _recipeRepository.GetByUserId( ( query.GroupNum - 1 ) * query.Count, query.Count, user.Id );
 
-        List<RecipeDto> result = recipes.Select( r => new RecipeDto()
+        RecipeDto[] result = await Task.WhenAll( recipes.Select( async r => new RecipeDto()
         {
             Id = r.Id,
             Name = r.Name,
@@ -40,9 +46,10 @@ public class GetRecipeListByUserQueryHandler : IQueryHandler<List<RecipeDto>, Ge
             Image = _imageLoader.Load( r.Image ),
             CreatedDate = r.CreatedDate,
             UserId = user.Id,
-            Tags = r.Tags.Select( t => t.Name ).ToList()
-        } ).ToList();
+            Tags = r.Tags.Select( t => t.Name ).ToList(),
+            LikeCount = await _likeRepository.GetByRecipeId( r.Id )
+        } ) );
 
-        return Result<List<RecipeDto>>.FromSuccess( result );
+        return Result<List<RecipeDto>>.FromSuccess( result.ToList() );
     }
 }

@@ -12,4 +12,5 @@ public class GetRecipeListResponse
 
     public int UserId;
     public List<string> Tags { get; init; } = [];
+    public int LikeCount { get; init; }
 }

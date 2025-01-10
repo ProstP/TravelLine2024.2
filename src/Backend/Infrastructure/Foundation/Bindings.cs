@@ -45,6 +45,7 @@ public static class Bindings
         serviceCollection.AddScoped<IImageSaver, ImageSaver>();
         serviceCollection.AddScoped<IImageLoader, ImageLoader>();
         serviceCollection.AddScoped<IImageDeleter, ImageDeleter>();
+        serviceCollection.AddScoped<ILikeRepository, LikeRepository>();
 
         return serviceCollection;
     }
