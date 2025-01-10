@@ -29,7 +29,6 @@ public class CreateRecipeRequest
     }
 
     [Required]
-    //[MaxLength( 255 )]
     public string Image { get; init; }
 
     public List<CreateIngredientsRequest> Ingredients { get; init; } = [];
