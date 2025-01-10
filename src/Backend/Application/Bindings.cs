@@ -1,4 +1,5 @@
-﻿using Application.UseCases.Recipe.Command.CreateRecipeCommand;
+﻿using Application.UseCases.Like.Command.CreateLike;
+using Application.UseCases.Recipe.Command.CreateRecipeCommand;
 using Application.UseCases.Recipe.Command.DeleteRecipeCommand;
 using Application.UseCases.Recipe.Command.UpdateRecipeCommand;
 using Application.UseCases.Recipe.Query.GetRecipeListByUserQuery;
@@ -31,6 +32,7 @@ namespace Application
             serviceCollection.AddScoped<AuthenticateByTokenCommandHandler>();
             serviceCollection.AddScoped<GetRecipeListQueryHandler>();
             serviceCollection.AddScoped<GetRecipeListByUserQueryHandler>();
+            serviceCollection.AddScoped<CreateLikeCommandHanlder>();
 
             return serviceCollection;
         }
