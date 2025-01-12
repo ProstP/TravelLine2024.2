@@ -36,7 +36,7 @@ public class GetRecipeListByUserQueryHandler : IQueryHandler<List<RecipeDto>, Ge
 
         List<Domain.Entity.Recipe> recipes = await _recipeRepository.GetByUserId( ( query.GroupNum - 1 ) * query.Count, query.Count, user.Id );
 
-        RecipeDto[] result = await Task.WhenAll( recipes.Select( async r => new RecipeDto()
+        List<RecipeDto> result = recipes.Select( r => new RecipeDto()
         {
             Id = r.Id,
             Name = r.Name,
@@ -47,9 +47,9 @@ public class GetRecipeListByUserQueryHandler : IQueryHandler<List<RecipeDto>, Ge
             CreatedDate = r.CreatedDate,
             UserId = user.Id,
             Tags = r.Tags.Select( t => t.Name ).ToList(),
-            LikeCount = await _likeRepository.GetByRecipeId( r.Id )
-        } ) );
+            LikeCount = r.Likes.Count,
+        } ).ToList();
 
-        return Result<List<RecipeDto>>.FromSuccess( result.ToList() );
+        return Result<List<RecipeDto>>.FromSuccess( result );
     }
 }

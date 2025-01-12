@@ -54,7 +54,7 @@ public class GetRecipeQueryHandler : IQueryHandler<RecipeDto, GetRecipeQuery>
                     StepNum = rs.StepNum,
                 } ).ToList(),
             Tags = recipe.Tags.Select( t => t.Name ).ToList(),
-            LikeCount = await _likeRepository.GetByRecipeId( recipe.Id )
+            LikeCount = recipe.Likes.Count,
         };
 
         return Result<RecipeDto>.FromSuccess( recipeDto );

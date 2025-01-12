@@ -25,27 +25,35 @@ public class GetRecipeListQueryHandler : IQueryHandler<List<RecipeDto>, GetRecip
 
     public async Task<Result<List<RecipeDto>>> HandleAsync( GetRecipeListQuery query )
     {
-        Expression<Func<Domain.Entity.Recipe, object>> orderExp = GetOrderExpression( query );
-        Expression<Func<Domain.Entity.Recipe, bool>> selectExp = GetSelectExpression( query );
-
-        List<Domain.Entity.Recipe> recipes = await _recipeRepository.GetList( ( query.GroupNum - 1 ) * query.Count, query.Count,
-            orderExp, selectExp, query.IsAsc );
-
-        RecipeDto[] recipeDtos = await Task.WhenAll( recipes.Select( async r => new RecipeDto()
+        try
         {
-            Id = r.Id,
-            Name = r.Name,
-            Description = r.Description,
-            CookingTime = r.CookingTime,
-            PersonNum = r.PersonNum,
-            Tags = r.Tags.Select( t => t.Name ).ToList(),
-            CreatedDate = r.CreatedDate,
-            UserId = r.UserId,
-            Image = _imageLoader.Load( r.Image ),
-            LikeCount = await _likeRepository.GetByRecipeId( r.Id ),
-        } ) );
 
-        return Result<List<RecipeDto>>.FromSuccess( recipeDtos.ToList() );
+            Expression<Func<Domain.Entity.Recipe, object>> orderExp = GetOrderExpression( query );
+            Expression<Func<Domain.Entity.Recipe, bool>> selectExp = GetSelectExpression( query );
+
+            List<Domain.Entity.Recipe> recipes = await _recipeRepository.GetList( ( query.GroupNum - 1 ) * query.Count, query.Count,
+                orderExp, selectExp, query.IsAsc );
+
+            List<RecipeDto> recipeDtos = recipes.Select( r => new RecipeDto()
+            {
+                Id = r.Id,
+                Name = r.Name,
+                Description = r.Description,
+                CookingTime = r.CookingTime,
+                PersonNum = r.PersonNum,
+                Tags = r.Tags.Select( t => t.Name ).ToList(),
+                CreatedDate = r.CreatedDate,
+                UserId = r.UserId,
+                Image = _imageLoader.Load( r.Image ),
+                LikeCount = r.Likes.Count,
+            } ).ToList();
+
+            return Result<List<RecipeDto>>.FromSuccess( recipeDtos );
+        }
+        catch ( Exception ex )
+        {
+            return Result<List<RecipeDto>>.FromError( ex.Message );
+        }
     }
 
     private Expression<Func<Domain.Entity.Recipe, bool>> GetSelectExpression( GetRecipeListQuery query )
@@ -59,7 +67,7 @@ public class GetRecipeListQueryHandler : IQueryHandler<List<RecipeDto>, GetRecip
     private Expression<Func<Domain.Entity.Recipe, object>> GetOrderExpression( GetRecipeListQuery query )
     {
         return query.OrderType == "Like"
-            ? recipe => recipe.LikeCount
+            ? recipe => recipe.Likes.Count
             : query.OrderType == "Favourite"
                 ? recipe => recipe.Favourites.Count
                 : query.OrderType == "PersonNum"

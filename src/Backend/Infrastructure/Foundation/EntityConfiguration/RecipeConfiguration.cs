@@ -50,7 +50,7 @@ public class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
                .HasForeignKey( f => f.RecipeId )
                .OnDelete( DeleteBehavior.Cascade );
 
-        builder.HasMany<Like>()
+        builder.HasMany( r => r.Likes )
                .WithOne()
                .HasForeignKey( l => l.RecipeId )
                .OnDelete( DeleteBehavior.Cascade );

@@ -13,10 +13,8 @@ public class Recipe : Entity
     public List<RecipeStep> Steps { get; private init; } = [];
     public List<Ingredient> Ingredients { get; private init; } = [];
     public List<Favourite> Favourites { get; private init; } = [];
+    public List<Like> Likes { get; private init; } = [];
     public List<Tag> Tags { get; private init; } = [];
-
-    public int LikeCount { get; set; } = 0;
-    public int FavouriteCount { get; set; } = 0;
 
     public Recipe( string name, string description, int cookingTime, int personNum, string image, DateTime createdDate, int userId )
     {

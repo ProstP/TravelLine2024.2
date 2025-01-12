@@ -17,6 +17,7 @@ public class RecipeRepository : Repository<Recipe>, IRecipeRepository
                           .Include( r => r.Ingredients )
                           .Include( r => r.Steps )
                           .Include( r => r.Favourites )
+                          .Include( r => r.Likes )
                           .FirstOrDefaultAsync( r => r.Id == id );
     }
 
@@ -36,7 +37,7 @@ public class RecipeRepository : Repository<Recipe>, IRecipeRepository
     {
         IQueryable<Recipe> query
                     = DbSet.Include( r => r.Tags )
-                           .Include( r => r.Favourites )
+                           .Include( r => r.Likes )
                            .Where( selectingExpression );
 
         if ( isAsc )
