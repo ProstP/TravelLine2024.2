@@ -11,16 +11,13 @@ public class GetRecipeListQueryHandler : IQueryHandler<List<RecipeDto>, GetRecip
 {
     private readonly IRecipeRepository _recipeRepository;
     private readonly IImageLoader _imageLoader;
-    private readonly ILikeRepository _likeRepository;
 
     public GetRecipeListQueryHandler(
         IRecipeRepository recipeRepository,
-        IImageLoader imageLoader,
-        ILikeRepository likeRepository )
+        IImageLoader imageLoader )
     {
         _recipeRepository = recipeRepository;
         _imageLoader = imageLoader;
-        _likeRepository = likeRepository;
     }
 
     public async Task<Result<List<RecipeDto>>> HandleAsync( GetRecipeListQuery query )
