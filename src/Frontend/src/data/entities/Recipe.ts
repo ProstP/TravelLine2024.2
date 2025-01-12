@@ -6,6 +6,7 @@ export type RecipeType = {
   personNum: number;
   tags: string[];
   image: string;
+  likeCount: number;
 };
 
 export type IngredientType = {

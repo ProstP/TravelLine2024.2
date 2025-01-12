@@ -41,6 +41,7 @@ const RecipeListPage = () => {
       personNum: r.personNum,
       tags: r.tags,
       image: r.image,
+      likeCount: r.likeCount,
     }));
   };
 

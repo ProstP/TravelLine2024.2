@@ -46,6 +46,7 @@ const RecipePage = () => {
           personNum: response.value.personNum,
           tags: response.value.tags,
           image: response.value.image,
+          likeCount: response.value.likeCount,
         },
         ingredients: response.value.ingredients.map((i) => ({
           id: i.id,

@@ -29,6 +29,7 @@ const RecipeEditor = ({ title, btnStr, onClick, data }: RecipeEditorProps) => {
           personNum: 0,
           tags: [],
           image: "",
+          likeCount: 0,
         }
       : data!.info
   );
