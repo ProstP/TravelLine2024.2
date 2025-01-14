@@ -2,6 +2,7 @@ import styles from "./RecipeInfoDetail.module.scss";
 import { RecipeType } from "../../../data/entities/Recipe";
 import clockIcon from "../../../assets/clock.svg";
 import personsIcon from "../../../assets/persons.svg";
+import LikeBtn from "../../LikeBtn/LikeBtn";
 
 type RecipeInfoDetailProps = {
   data: RecipeType;
@@ -12,6 +13,9 @@ const RecipeInfoDetail = ({ data }: RecipeInfoDetailProps) => {
     <div className={styles.container}>
       <img className={styles.image} src={data.image}></img>
       <div className={styles.fields}>
+        <div className={styles.like}>
+          <LikeBtn count={data.likeCount} recipeId={data.id}></LikeBtn>
+        </div>
         <div className={styles.topPanel}>
           <div className={styles.tags}>
             {data.tags.map((value) => (

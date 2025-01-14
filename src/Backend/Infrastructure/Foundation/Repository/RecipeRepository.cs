@@ -24,6 +24,9 @@ public class RecipeRepository : Repository<Recipe>, IRecipeRepository
     public async Task<List<Recipe>> GetByUserId( int skip, int take, int userId )
     {
         return await DbSet.Where( r => r.UserId == userId )
+                          .Include( r => r.Tags )
+                          .Include( r => r.Likes )
+                          .Include( r => r.Favourites )
                           .OrderByDescending( r => r.CreatedDate )
                           .Skip( skip )
                           .Take( take )
