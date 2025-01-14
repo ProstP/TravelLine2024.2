@@ -16,4 +16,5 @@ public class GetRecipeResponse
     public List<GetRecipeStepResponse> RecipeSteps { get; init; } = [];
     public List<string> Tags { get; init; } = [];
     public int LikeCount { get; init; }
+    public int FavouriteCount { get; init; }
 }

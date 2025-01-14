@@ -7,6 +7,7 @@ export type RecipeType = {
   tags: string[];
   image: string;
   likeCount: number;
+  favouriteCount: number;
 };
 
 export type IngredientType = {

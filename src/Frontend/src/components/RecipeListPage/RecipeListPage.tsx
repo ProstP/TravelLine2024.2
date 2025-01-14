@@ -42,6 +42,7 @@ const RecipeListPage = () => {
       tags: r.tags,
       image: r.image,
       likeCount: r.likeCount,
+      favouriteCount: r.favouriteCount,
     }));
   };
 

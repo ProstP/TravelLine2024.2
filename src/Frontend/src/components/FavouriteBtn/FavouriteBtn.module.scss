@@ -1,0 +1,35 @@
+@mixin border {
+  border: 1px solid #fdb100;
+}
+
+.btn {
+  background-color: white;
+  color: #fdb100;
+  padding: 7px 10px;
+
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  @include border();
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn:hover {
+  @include border();
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.icon {
+  height: 65%;
+}
+
+.text {
+  margin-left: 4px;
+  padding: 0;
+}

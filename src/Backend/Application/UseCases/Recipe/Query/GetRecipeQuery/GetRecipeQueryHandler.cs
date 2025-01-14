@@ -53,6 +53,7 @@ public class GetRecipeQueryHandler : IQueryHandler<RecipeDto, GetRecipeQuery>
                 } ).ToList(),
             Tags = recipe.Tags.Select( t => t.Name ).ToList(),
             LikeCount = recipe.Likes.Count,
+            FavouriteCount = recipe.Favourites.Count,
         };
 
         return Result<RecipeDto>.FromSuccess( recipeDto );

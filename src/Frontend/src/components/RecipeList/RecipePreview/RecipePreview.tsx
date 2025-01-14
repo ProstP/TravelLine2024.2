@@ -4,6 +4,7 @@ import clockIcon from "../../../assets/clock.svg";
 import personsIcon from "../../../assets/persons.svg";
 import { useNavigate } from "react-router-dom";
 import LikeBtn from "../../LikeBtn/LikeBtn";
+import FavouriteBtn from "../../FavouriteBtn/FavouriteBtn";
 
 type RecipePreviewProps = {
   data: RecipeType;
@@ -14,6 +15,12 @@ const RecipePreview = ({ data }: RecipePreviewProps) => {
 
   return (
     <div className={styles.container}>
+      <div className={styles.favouriteBtn}>
+        <FavouriteBtn
+          count={data.favouriteCount}
+          recipeId={data.id}
+        ></FavouriteBtn>
+      </div>
       <div className={styles.likeBtn}>
         <LikeBtn count={data.likeCount} recipeId={data.id}></LikeBtn>
       </div>

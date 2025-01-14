@@ -43,6 +43,7 @@ public class GetRecipeListQueryHandler : IQueryHandler<List<RecipeDto>, GetRecip
                 UserId = r.UserId,
                 Image = _imageLoader.Load( r.Image ),
                 LikeCount = r.Likes.Count,
+                FavouriteCount = r.Favourites.Count,
             } ).ToList();
 
             return Result<List<RecipeDto>>.FromSuccess( recipeDtos );

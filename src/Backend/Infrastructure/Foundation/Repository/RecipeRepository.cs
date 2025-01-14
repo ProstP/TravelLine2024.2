@@ -41,6 +41,7 @@ public class RecipeRepository : Repository<Recipe>, IRecipeRepository
         IQueryable<Recipe> query
                     = DbSet.Include( r => r.Tags )
                            .Include( r => r.Likes )
+                           .Include( r => r.Favourites )
                            .Where( selectingExpression );
 
         if ( isAsc )

@@ -54,6 +54,7 @@ public class RecipeListController : ControllerBase
             UserId = r.UserId,
             Tags = r.Tags,
             LikeCount = r.LikeCount,
+            FavouriteCount = r.FavouriteCount,
         } ).ToList();
 
         return Ok( getRecipeResponses );
@@ -96,6 +97,7 @@ public class RecipeListController : ControllerBase
             UserId = r.UserId,
             Tags = r.Tags,
             LikeCount = r.LikeCount,
+            FavouriteCount = r.FavouriteCount,
         } ).ToList();
 
         return Ok( getRecipeListResponses );

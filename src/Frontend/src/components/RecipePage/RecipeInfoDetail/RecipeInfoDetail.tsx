@@ -3,6 +3,7 @@ import { RecipeType } from "../../../data/entities/Recipe";
 import clockIcon from "../../../assets/clock.svg";
 import personsIcon from "../../../assets/persons.svg";
 import LikeBtn from "../../LikeBtn/LikeBtn";
+import FavouriteBtn from "../../FavouriteBtn/FavouriteBtn";
 
 type RecipeInfoDetailProps = {
   data: RecipeType;
@@ -15,6 +16,12 @@ const RecipeInfoDetail = ({ data }: RecipeInfoDetailProps) => {
       <div className={styles.fields}>
         <div className={styles.like}>
           <LikeBtn count={data.likeCount} recipeId={data.id}></LikeBtn>
+        </div>
+        <div className={styles.favourite}>
+          <FavouriteBtn
+            count={data.favouriteCount}
+            recipeId={data.id}
+          ></FavouriteBtn>
         </div>
         <div className={styles.topPanel}>
           <div className={styles.tags}>

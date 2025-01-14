@@ -119,7 +119,8 @@ public class RecipeController : ControllerBase
                     Description = rs.Description,
                 } ).ToList(),
             Tags = result.Value.Tags,
-            LikeCount = result.Value.LikeCount
+            LikeCount = result.Value.LikeCount,
+            FavouriteCount = result.Value.FavouriteCount,
         };
 
         return Ok( getRecipeResponse );

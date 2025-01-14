@@ -10,6 +10,7 @@ public class RecipeDto
     public string Image { get; init; }
     public DateTime CreatedDate { get; init; }
     public int LikeCount { get; init; }
+    public int FavouriteCount { get; init; }
 
     public int UserId { get; init; }
 
