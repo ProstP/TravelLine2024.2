@@ -1,4 +1,7 @@
-﻿using Application.UseCases.Like.Command.CreateLike;
+﻿using Application.UseCases.Favourite.Command.CreateFavourite;
+using Application.UseCases.Favourite.Query.GetFavouriteCount;
+using Application.UseCases.Favourite.Query.IdUserSetFavourite;
+using Application.UseCases.Like.Command.CreateLike;
 using Application.UseCases.Like.Query.GetLikeCount;
 using Application.UseCases.Like.Query.IsUserSetLike;
 using Application.UseCases.Recipe.Command.CreateRecipeCommand;
@@ -37,6 +40,9 @@ namespace Application
             serviceCollection.AddScoped<CreateLikeCommandHanlder>();
             serviceCollection.AddScoped<IsUserSetLikeQueryHandler>();
             serviceCollection.AddScoped<GetLikeCountQueryHandler>();
+            serviceCollection.AddScoped<CreateFavouriteCommandHandler>();
+            serviceCollection.AddScoped<IsUserSetFavouriteQueryHandler>();
+            serviceCollection.AddScoped<GetFavouriteCountQueryHandler>();
 
             return serviceCollection;
         }
