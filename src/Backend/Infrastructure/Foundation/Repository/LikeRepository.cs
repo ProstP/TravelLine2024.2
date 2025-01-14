@@ -12,15 +12,13 @@ public class LikeRepository : Repository<Like>, ILikeRepository
 
     public async Task<int> GetByRecipeId( int recipeId )
     {
-        return await DbSet.GroupBy( l => l.RecipeId )
-                          .Where( g => g.Key == recipeId )
+        return await DbSet.Where( l => l.RecipeId == recipeId )
                           .CountAsync();
     }
 
     public async Task<int> GetByUserId( int userId )
     {
-        return await DbSet.GroupBy( l => l.UserId )
-                          .Where( g => g.Key == userId )
+        return await DbSet.Where( l => l.UserId == userId )
                           .CountAsync();
     }
 

@@ -1,4 +1,6 @@
 import {
+  GetLikeCountByRecipeRequest,
+  GetLikeCountByRecipeResponse,
   IsUserSetLikeRequest,
   IsUserSetLikeResponse,
   SetLikeRequest,
@@ -19,9 +21,7 @@ const IsUserSetLike = async (data: IsUserSetLikeRequest) => {
   const response = await ApiRequest<
     IsUserSetLikeRequest,
     IsUserSetLikeResponse
-  >("like/user", data, "POST", true);
-
-  console.log(response.value);
+  >("like/is-user", data, "POST", true);
 
   if (!response.isSuccess) {
     return false;
@@ -30,4 +30,17 @@ const IsUserSetLike = async (data: IsUserSetLikeRequest) => {
   return response.value.isSet;
 };
 
-export { SetLike, IsUserSetLike };
+const GetLikeCountByRecipe = async (data: GetLikeCountByRecipeRequest) => {
+  const response = await ApiRequest<
+    GetLikeCountByRecipeRequest,
+    GetLikeCountByRecipeResponse
+  >("like/recipe", data, "POST");
+
+  if (!response.isSuccess) {
+    return 0;
+  }
+
+  return response.value.count;
+};
+
+export { SetLike, IsUserSetLike, GetLikeCountByRecipe };

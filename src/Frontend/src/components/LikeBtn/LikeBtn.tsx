@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import styles from "./LikeBtn.module.scss";
-import { IsUserSetLike, SetLike } from "../../services/LikeServices";
+import {
+  GetLikeCountByRecipe,
+  IsUserSetLike,
+  SetLike,
+} from "../../services/LikeServices";
 import likeIcon from "../../assets/like.svg";
 import fillLikeIcon from "../../assets/likeFill.svg";
 
@@ -17,6 +21,10 @@ const LikeBtn = ({ count, recipeId }: LikeBtnProps) => {
     toggleUserSet(await IsUserSetLike({ recipeId: recipeId }));
   };
 
+  const getLikeCount = async () => {
+    setValue(await GetLikeCountByRecipe({ recipeId: recipeId }));
+  };
+
   useEffect(() => {
     getIsUserSet();
   }, []);
@@ -25,9 +33,7 @@ const LikeBtn = ({ count, recipeId }: LikeBtnProps) => {
     const response = await SetLike({ recipeId: recipeId });
 
     if (response.isSuccess) {
-      const newValue = isUserSet ? value - 1 : value + 1;
-
-      setValue(newValue);
+      getLikeCount();
       getIsUserSet();
     }
   };

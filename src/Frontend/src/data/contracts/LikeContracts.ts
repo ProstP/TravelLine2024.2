@@ -9,3 +9,11 @@ export type IsUserSetLikeRequest = {
 export type IsUserSetLikeResponse = {
   isSet: boolean;
 };
+
+export type GetLikeCountByRecipeRequest = {
+  recipeId: number;
+};
+
+export type GetLikeCountByRecipeResponse = {
+  count: number;
+};

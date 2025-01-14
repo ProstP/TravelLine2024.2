@@ -1,4 +1,5 @@
 ﻿using Application.UseCases.Like.Command.CreateLike;
+using Application.UseCases.Like.Query.GetLikeCount;
 using Application.UseCases.Like.Query.IsUserSetLike;
 using Application.UseCases.Recipe.Command.CreateRecipeCommand;
 using Application.UseCases.Recipe.Command.DeleteRecipeCommand;
@@ -35,6 +36,7 @@ namespace Application
             serviceCollection.AddScoped<GetRecipeListByUserQueryHandler>();
             serviceCollection.AddScoped<CreateLikeCommandHanlder>();
             serviceCollection.AddScoped<IsUserSetLikeQueryHandler>();
+            serviceCollection.AddScoped<GetLikeCountQueryHandler>();
 
             return serviceCollection;
         }
