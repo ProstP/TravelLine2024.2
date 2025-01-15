@@ -82,17 +82,19 @@ public class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeCommand>
                 }
             } );
 
-            List<int> ingredientsToRemove = [];
+
+
+            List<Ingredient> ingredientsToRemove = [];
             for ( int i = 0; i < recipe.Ingredients.Count; i++ )
             {
                 if ( !command.Ingredients.Any( elt => elt.Id == recipe.Ingredients[ i ].Id ) )
                 {
-                    ingredientsToRemove.Add( i );
+                    ingredientsToRemove.Add( recipe.Ingredients[ i ] );
                 }
             }
-            foreach ( int index in ingredientsToRemove )
+            foreach ( Ingredient ingredient in ingredientsToRemove )
             {
-                recipe.Ingredients.RemoveAt( index );
+                recipe.Ingredients.Remove( ingredient );
             }
             foreach ( UpdateIngredientCommand update in command.Ingredients )
             {
@@ -114,17 +116,17 @@ public class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeCommand>
                 }
             }
 
-            List<int> stepsToRemove = [];
+            List<RecipeStep> stepsToRemove = [];
             for ( int i = 0; i < recipe.Steps.Count; i++ )
             {
                 if ( !command.RecipeSteps.Any( elt => elt.Id == recipe.Steps[ i ].Id ) )
                 {
-                    stepsToRemove.Add( i );
+                    stepsToRemove.Add( recipe.Steps[ i ] );
                 }
             }
-            foreach ( int index in stepsToRemove )
+            foreach ( RecipeStep step in stepsToRemove )
             {
-                recipe.Steps.RemoveAt( index );
+                recipe.Steps.Remove( step );
             }
             foreach ( UpdateRecipeStepCommand update in command.RecipeSteps )
             {
