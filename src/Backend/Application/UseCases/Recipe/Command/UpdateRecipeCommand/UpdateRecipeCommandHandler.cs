@@ -55,8 +55,16 @@ public class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeCommand>
                 return Result.Result.FromError( "You can not delete this recipe" );
             }
 
-            _imageDeleter.Delete( recipe.Image );
-            string path = _imageSaver.Save( command.Image );
+            string path;
+            if ( !string.IsNullOrWhiteSpace( command.Image ) )
+            {
+                _imageDeleter.Delete( recipe.Image );
+                path = _imageSaver.Save( command.Image );
+            }
+            else
+            {
+                path = recipe.Image;
+            }
             recipe.Update( command.Name, command.Description, command.CookingTime, command.PersonNum, path );
 
             recipe.Tags.Clear();

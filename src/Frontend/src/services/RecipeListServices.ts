@@ -47,4 +47,21 @@ const GetRecipeListByUser = async (groupNum: number, count: number) => {
   return response;
 };
 
-export { GetRecipeList, GetRecipeListByUser };
+const GetRecipeListByFavourite = async (groupNum: number, count: number) => {
+  const response = await ApiRequest<
+    GetRecipeListByUserRequest,
+    GetRecipeListResponse[]
+  >(
+    "recipes/favourite",
+    {
+      groupNum: groupNum,
+      count: count,
+    },
+    "POST",
+    true
+  );
+
+  return response;
+};
+
+export { GetRecipeList, GetRecipeListByUser, GetRecipeListByFavourite };

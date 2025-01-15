@@ -7,6 +7,7 @@ using Application.UseCases.Like.Query.IsUserSetLike;
 using Application.UseCases.Recipe.Command.CreateRecipeCommand;
 using Application.UseCases.Recipe.Command.DeleteRecipeCommand;
 using Application.UseCases.Recipe.Command.UpdateRecipeCommand;
+using Application.UseCases.Recipe.Query.GetRecipeInFavouriteQuery;
 using Application.UseCases.Recipe.Query.GetRecipeListByUserQuery;
 using Application.UseCases.Recipe.Query.GetRecipeListQuery;
 using Application.UseCases.Recipe.Query.GetRecipeQuery;
@@ -43,6 +44,7 @@ namespace Application
             serviceCollection.AddScoped<CreateFavouriteCommandHandler>();
             serviceCollection.AddScoped<IsUserSetFavouriteQueryHandler>();
             serviceCollection.AddScoped<GetFavouriteCountQueryHandler>();
+            serviceCollection.AddScoped<GetRecipeInFavouriteQueryHandler>();
 
             return serviceCollection;
         }

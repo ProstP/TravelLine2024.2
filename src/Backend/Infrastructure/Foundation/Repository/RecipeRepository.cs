@@ -28,6 +28,45 @@ public class RecipeRepository : Repository<Recipe>, IRecipeRepository
         return recipe;
     }
 
+    public async Task<List<Recipe>> GetByUserFavourite( int skip, int take, int userId )
+    {
+        List<int> recipesInFavourite = await DbContext.Set<Favourite>()
+                                                      .Where( f => f.UserId == userId )
+                                                      .Select( f => f.RecipeId )
+                                                      .ToListAsync();
+
+        List<Recipe> list = await DbSet.Where( r => recipesInFavourite.Contains( r.Id ) )
+                                       .ToListAsync();
+
+        var likes = await DbContext.Set<Like>()
+                                   .GroupBy( l => l.RecipeId )
+                                   .Select( g => new
+                                   {
+                                       RecipeId = g.Key,
+                                       Count = g.Count()
+                                   } )
+                                   .ToListAsync();
+
+        var favourites = await DbContext.Set<Favourite>()
+                                        .GroupBy( f => f.RecipeId )
+                                        .Select( g => new
+                                        {
+                                            RecipeId = g.Key,
+                                            Count = g.Count()
+                                        } )
+                                        .ToListAsync();
+
+        list.ForEach( r =>
+        {
+            var likeGroup = likes.FirstOrDefault( l => l.RecipeId == r.Id );
+            r.LikeCount = likeGroup == null ? 0 : likeGroup.Count;
+            var favouriteGroup = favourites.FirstOrDefault( f => f.RecipeId == r.Id );
+            r.FavouriteCount = favouriteGroup == null ? 0 : favouriteGroup.Count;
+        } );
+
+        return list;
+    }
+
     public async Task<List<Recipe>> GetByUserId( int skip, int take, int userId )
     {
         List<Recipe> list = await DbSet.Where( r => r.UserId == userId )

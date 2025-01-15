@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using Application.Result;
 using Application.UseCases.Recipe.Dtos;
+using Application.UseCases.Recipe.Query.GetRecipeInFavouriteQuery;
 using Application.UseCases.Recipe.Query.GetRecipeListByUserQuery;
 using Application.UseCases.Recipe.Query.GetRecipeListQuery;
 using Microsoft.AspNetCore.Authorization;
@@ -16,11 +17,16 @@ public class RecipeListController : ControllerBase
 {
     private readonly GetRecipeListQueryHandler _getRecipeListQueryHandler;
     private readonly GetRecipeListByUserQueryHandler _getRecipeListByUserQueryHandler;
+    private readonly GetRecipeInFavouriteQueryHandler _getRecipeInFavouriteQueryHandler;
 
-    public RecipeListController( GetRecipeListQueryHandler getRecipeListQueryHandler, GetRecipeListByUserQueryHandler getRecipeListByUserQueryHandler )
+    public RecipeListController(
+        GetRecipeListQueryHandler getRecipeListQueryHandler,
+        GetRecipeListByUserQueryHandler getRecipeListByUserQueryHandler,
+        GetRecipeInFavouriteQueryHandler getRecipeInFavouriteQueryHandler )
     {
         _getRecipeListQueryHandler = getRecipeListQueryHandler;
         _getRecipeListByUserQueryHandler = getRecipeListByUserQueryHandler;
+        _getRecipeInFavouriteQueryHandler = getRecipeInFavouriteQueryHandler;
     }
 
     [HttpPost]
@@ -103,7 +109,46 @@ public class RecipeListController : ControllerBase
         return Ok( getRecipeListResponses );
     }
 
-    //[Authorize]
-    //[HttpPost]
-    //public 
+    [Authorize]
+    [HttpPost, Route( "favourite" )]
+    public async Task<ActionResult<GetRecipeListResponse>> GetFavourite( [FromBody] GetRecipeListByUserRequest request )
+    {
+        string userLogin = User.FindFirstValue( ClaimTypes.NameIdentifier );
+
+        if ( userLogin == null )
+        {
+            return BadRequest();
+        }
+
+        GetRecipeInFavouriteQuery query = new()
+        {
+            Count = request.Count,
+            GroupNum = request.GroupNum,
+            UserLogin = userLogin,
+        };
+
+        Result<List<RecipeDto>> result = await _getRecipeInFavouriteQueryHandler.HandleAsync( query );
+
+        if ( !result.IsSuccess )
+        {
+            return BadRequest( result.Error );
+        }
+
+        List<GetRecipeListResponse> getRecipeListResponses = result.Value.Select( r => new GetRecipeListResponse()
+        {
+            Id = r.Id,
+            Name = r.Name,
+            Description = r.Description,
+            CookingTime = r.CookingTime,
+            PersonNum = r.PersonNum,
+            Image = r.Image,
+            CreatedDate = r.CreatedDate,
+            UserId = r.UserId,
+            Tags = r.Tags,
+            LikeCount = r.LikeCount,
+            FavouriteCount = r.FavouriteCount,
+        } ).ToList();
+
+        return Ok( getRecipeListResponses );
+    }
 }
