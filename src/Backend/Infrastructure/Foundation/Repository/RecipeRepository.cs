@@ -13,49 +13,104 @@ public class RecipeRepository : Repository<Recipe>, IRecipeRepository
 
     public async Task<Recipe> Get( int id )
     {
-        return await DbSet.Include( r => r.Tags )
-                          .Include( r => r.Ingredients )
-                          .Include( r => r.Steps )
-                          .Include( r => r.Favourites )
-                          .Include( r => r.Likes )
-                          .FirstOrDefaultAsync( r => r.Id == id );
+        Recipe recipe = await DbSet.Include( r => r.Tags )
+                                   .Include( r => r.Ingredients )
+                                   .Include( r => r.Steps )
+                                   .FirstOrDefaultAsync( r => r.Id == id );
+
+        recipe.LikeCount = await DbContext.Set<Like>()
+                                          .Where( l => l.RecipeId == recipe.Id )
+                                          .CountAsync();
+        recipe.FavouriteCount = await DbContext.Set<Favourite>()
+                                          .Where( f => f.RecipeId == recipe.Id )
+                                          .CountAsync();
+
+        return recipe;
     }
 
     public async Task<List<Recipe>> GetByUserId( int skip, int take, int userId )
     {
-        return await DbSet.Where( r => r.UserId == userId )
-                          .Include( r => r.Tags )
-                          .Include( r => r.Likes )
-                          .Include( r => r.Favourites )
-                          .OrderByDescending( r => r.CreatedDate )
-                          .Skip( skip )
-                          .Take( take )
-                          .ToListAsync();
+        List<Recipe> list = await DbSet.Where( r => r.UserId == userId )
+                                       .Include( r => r.Tags )
+                                       .OrderByDescending( r => r.CreatedDate )
+                                       .Skip( skip )
+                                       .Take( take )
+                                       .ToListAsync();
+
+        var likes = await DbContext.Set<Like>()
+                                   .GroupBy( l => l.RecipeId )
+                                   .Select( g => new
+                                   {
+                                       RecipeId = g.Key,
+                                       Count = g.Count()
+                                   } )
+                                   .ToListAsync();
+
+        var favourites = await DbContext.Set<Favourite>()
+                                        .GroupBy( f => f.RecipeId )
+                                        .Select( g => new
+                                        {
+                                            RecipeId = g.Key,
+                                            Count = g.Count()
+                                        } )
+                                        .ToListAsync();
+
+        list.ForEach( r =>
+        {
+            r.LikeCount = likes.FirstOrDefault( l => l.RecipeId == r.Id ).Count;
+            r.FavouriteCount = favourites.FirstOrDefault( f => f.RecipeId == r.Id ).Count;
+        } );
+
+        return list;
     }
 
     public async Task<List<Recipe>> GetList( int skip, int take,
-                                            Expression<Func<Recipe, object>> orderExpression,
+                                            Func<Recipe, object> orderFunc,
                                             Expression<Func<Recipe, bool>> selectingExpression,
                                             bool isAsc )
     {
-        IQueryable<Recipe> query
-                    = DbSet.Include( r => r.Tags )
-                           .Include( r => r.Likes )
-                           .Include( r => r.Favourites )
-                           .Where( selectingExpression );
+        var likes = await DbContext.Set<Like>()
+                                   .GroupBy( l => l.RecipeId )
+                                   .Select( g => new
+                                   {
+                                       RecipeId = g.Key,
+                                       Count = g.Count()
+                                   } )
+                                   .ToListAsync();
+
+        var favourites = await DbContext.Set<Favourite>()
+                                        .GroupBy( f => f.RecipeId )
+                                        .Select( g => new
+                                        {
+                                            RecipeId = g.Key,
+                                            Count = g.Count()
+                                        } )
+                                        .ToListAsync();
+
+        List<Recipe> list = await DbSet.Include( r => r.Tags )
+                                        .Where( selectingExpression )
+                                        .ToListAsync();
+
+        list.ForEach( r =>
+        {
+            r.LikeCount = likes.FirstOrDefault( l => l.RecipeId == r.Id ).Count;
+            r.FavouriteCount = favourites.FirstOrDefault( f => f.RecipeId == r.Id ).Count;
+        } );
 
         if ( isAsc )
         {
-            query = query.OrderBy( orderExpression );
+            list = list.OrderBy( orderFunc ).ToList();
         }
         else
         {
-            query = query.OrderByDescending( orderExpression );
+            list = list.OrderByDescending( orderFunc ).ToList();
         }
 
-        return await query.Skip( skip )
-                          .Take( take )
-                          .ToListAsync();
+        List<Recipe> recipes = list.Skip( skip )
+                                   .Take( take )
+                                   .ToList();
+
+        return recipes;
     }
 
     public Recipe Update( int id, Recipe recipe )

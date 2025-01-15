@@ -44,8 +44,8 @@ public class GetRecipeListByUserQueryHandler : IQueryHandler<List<RecipeDto>, Ge
             CreatedDate = r.CreatedDate,
             UserId = user.Id,
             Tags = r.Tags.Select( t => t.Name ).ToList(),
-            LikeCount = r.Likes.Count,
-            FavouriteCount = r.Favourites.Count,
+            LikeCount = r.LikeCount,
+            FavouriteCount = r.FavouriteCount,
         } ).ToList();
 
         return Result<List<RecipeDto>>.FromSuccess( result );
