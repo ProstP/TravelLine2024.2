@@ -25,8 +25,10 @@ const RecipeInfoDetail = ({ data }: RecipeInfoDetailProps) => {
         </div>
         <div className={styles.topPanel}>
           <div className={styles.tags}>
-            {data.tags.map((value) => (
-              <div className={styles.tag}>{value}</div>
+            {data.tags.map((value, index) => (
+              <div key={index} className={styles.tag}>
+                {value}
+              </div>
             ))}
           </div>
         </div>

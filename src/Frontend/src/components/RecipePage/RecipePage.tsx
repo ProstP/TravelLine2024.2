@@ -14,10 +14,12 @@ import {
   GetRecipe,
   UpdateRecipe,
 } from "../../services/RecipeServices";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 type RecipePageState = "view" | "edit";
 
 const RecipePage = () => {
+  const [error, setError] = useState("");
   const idStr = useParams().id;
   const navigate = useNavigate();
 
@@ -86,8 +88,11 @@ const RecipePage = () => {
 
     if (response.isSuccess) {
       setData(data);
-      setState("view");
+    } else {
+      setError("Ошибка при обновлении данных");
     }
+
+    setState("view");
   };
 
   const deleteRecipe = async (id: number) => {
@@ -106,6 +111,7 @@ const RecipePage = () => {
         <>
           {state === "view" ? (
             <div className={styles.container}>
+              {error === "" ? null : <ErrorMessage>{error}</ErrorMessage>}
               <div className={styles.topPanel}>
                 <p className={styles.title}>{data.info.name}</p>
                 <div className={styles.btns}>
@@ -144,6 +150,7 @@ const RecipePage = () => {
                 updateRecipe(data);
               }}
               data={{ ...data }}
+              toExit={() => setState("view")}
             ></RecipeEditor>
           )}
         </>

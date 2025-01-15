@@ -31,6 +31,7 @@ const RecipeSteps = ({ steps, setSteps }: RecipeStepsProps) => {
     <div className={styles.container}>
       {steps.map((value: StepType, index: number) => (
         <RecipeStep
+          key={value.id}
           info={value}
           stepNum={index + 1}
           setInfo={(step: StepType) => editStep(index, step)}

@@ -31,6 +31,7 @@ const Ingredients = ({ ingredients, setIngredients }: IngredientsProps) => {
       <p className={styles.title}>Ингридиенты</p>
       {ingredients.map((value: IngredientType, index: number) => (
         <Ingredient
+          key={value.id}
           info={value}
           setInfo={(info) => editIngredient(index, info)}
           deleteInfo={() => deleteIngredients(index)}

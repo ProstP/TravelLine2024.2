@@ -16,9 +16,16 @@ type RecipeEditorProps = {
   btnStr: string;
   onClick: (data: RecipeData) => void;
   data?: RecipeData;
+  toExit?: () => void;
 };
 
-const RecipeEditor = ({ title, btnStr, onClick, data }: RecipeEditorProps) => {
+const RecipeEditor = ({
+  title,
+  btnStr,
+  onClick,
+  data,
+  toExit,
+}: RecipeEditorProps) => {
   const [recipe, setRecipe] = useState<RecipeType>(
     data === undefined
       ? {
@@ -30,6 +37,7 @@ const RecipeEditor = ({ title, btnStr, onClick, data }: RecipeEditorProps) => {
           tags: [],
           image: "",
           likeCount: 0,
+          favouriteCount: 0,
         }
       : data!.info
   );
@@ -59,7 +67,12 @@ const RecipeEditor = ({ title, btnStr, onClick, data }: RecipeEditorProps) => {
     <div className={styles.container}>
       <div className={styles.topPanel}>
         <p className={styles.title}>{title}</p>
-        <div className={styles.btn}>
+        <div
+          className={`${styles.btn} ${toExit === undefined ? `` : styles.doubleBtn}`}
+        >
+          {toExit === undefined ? null : (
+            <Button onClick={toExit}>Отмена</Button>
+          )}
           <Button
             isFilled={true}
             onClick={() => {

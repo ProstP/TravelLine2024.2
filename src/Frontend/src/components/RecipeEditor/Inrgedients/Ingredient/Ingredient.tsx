@@ -2,7 +2,7 @@ import TextArea from "../../../TextField/TextArea/TextArea";
 import TextInput from "../../../TextField/TextInput/TextInput";
 import styles from "./Ingredient.module.scss";
 import crossIcon from "../../../../assets/cross.svg";
-import { IngredientType } from "../../../../data/entities/recipe";
+import { IngredientType } from "../../../../data/entities/Recipe";
 
 type IngredientProps = {
   info: IngredientType;

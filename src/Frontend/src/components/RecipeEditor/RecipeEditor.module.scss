@@ -17,7 +17,13 @@
 }
 
 .btn {
-  width: 25%;
+  display: flex;
+  gap: 5%;
+  width: 20%;
+}
+
+.doubleBtn {
+  width: 35%;
 }
 
 .topPanel {
