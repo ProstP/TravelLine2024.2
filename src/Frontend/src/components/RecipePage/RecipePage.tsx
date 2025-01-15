@@ -27,42 +27,42 @@ const RecipePage = () => {
 
   const [state, setState] = useState<RecipePageState>("view");
 
+  const getRecipe = async () => {
+    if (idStr === undefined) {
+      navigate("/");
+    }
+
+    const response = await GetRecipe(Number(idStr));
+
+    if (!response.isSuccess) {
+      navigate("/create-recipe");
+    }
+
+    setData({
+      info: {
+        id: response.value.id,
+        name: response.value.name,
+        description: response.value.description,
+        cookingTime: response.value.cookingTime,
+        personNum: response.value.personNum,
+        tags: response.value.tags,
+        image: response.value.image,
+        likeCount: response.value.likeCount,
+        favouriteCount: response.value.favouriteCount,
+      },
+      ingredients: response.value.ingredients.map((i) => ({
+        id: i.id,
+        header: i.header,
+        text: i.subIngredients,
+      })),
+      steps: response.value.recipeSteps.map((s) => ({
+        id: s.id,
+        text: s.description,
+      })),
+    });
+  };
+
   useEffect(() => {
-    const getRecipe = async () => {
-      if (idStr === undefined) {
-        navigate("/");
-      }
-
-      const response = await GetRecipe(Number(idStr));
-
-      if (!response.isSuccess) {
-        navigate("/create-recipe");
-      }
-
-      setData({
-        info: {
-          id: response.value.id,
-          name: response.value.name,
-          description: response.value.description,
-          cookingTime: response.value.cookingTime,
-          personNum: response.value.personNum,
-          tags: response.value.tags,
-          image: response.value.image,
-          likeCount: response.value.likeCount,
-          favouriteCount: response.value.favouriteCount,
-        },
-        ingredients: response.value.ingredients.map((i) => ({
-          id: i.id,
-          header: i.header,
-          text: i.subIngredients,
-        })),
-        steps: response.value.recipeSteps.map((s) => ({
-          id: s.id,
-          text: s.description,
-        })),
-      });
-    };
-
     getRecipe();
   }, []);
 
@@ -73,10 +73,13 @@ const RecipePage = () => {
       description: data.info.description,
       cookingTime: data.info.cookingTime,
       personNum: data.info.personNum,
-      image: data.info.image.slice(
-        data.info.image.indexOf(",") + 1,
-        data.info.image.length
-      ),
+      image:
+        data.info.image === ""
+          ? ""
+          : data.info.image.slice(
+              data.info.image.indexOf(",") + 1,
+              data.info.image.length
+            ),
       tags: data.info.tags,
       ingredients: data.ingredients.map((i) => ({
         id: i.id,
@@ -87,7 +90,7 @@ const RecipePage = () => {
     });
 
     if (response.isSuccess) {
-      setData(data);
+      getRecipe();
     } else {
       setError("Ошибка при обновлении данных");
     }

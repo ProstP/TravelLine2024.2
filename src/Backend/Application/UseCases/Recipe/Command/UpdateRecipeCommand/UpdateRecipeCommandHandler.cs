@@ -56,7 +56,7 @@ public class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeCommand>
             }
 
             string path;
-            if ( !string.IsNullOrWhiteSpace( command.Image ) )
+            if ( !string.IsNullOrWhiteSpace( command.Image ) && command.Image != recipe.Image )
             {
                 _imageDeleter.Delete( recipe.Image );
                 path = _imageSaver.Save( command.Image );

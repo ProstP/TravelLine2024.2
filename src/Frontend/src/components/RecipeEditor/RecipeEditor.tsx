@@ -76,7 +76,24 @@ const RecipeEditor = ({
           <Button
             isFilled={true}
             onClick={() => {
-              onClick({ info: recipe, steps: steps, ingredients: ingredients });
+              const image =
+                recipe.image.indexOf("http://") > -1 ? "" : recipe.image;
+
+              onClick({
+                info: {
+                  id: recipe.id,
+                  name: recipe.name,
+                  description: recipe.description,
+                  cookingTime: recipe.cookingTime,
+                  personNum: recipe.personNum,
+                  tags: recipe.tags,
+                  likeCount: recipe.likeCount,
+                  favouriteCount: recipe.favouriteCount,
+                  image: image,
+                },
+                steps: steps,
+                ingredients: ingredients,
+              });
             }}
           >
             {btnStr}
