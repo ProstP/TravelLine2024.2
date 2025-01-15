@@ -57,8 +57,10 @@ public class RecipeRepository : Repository<Recipe>, IRecipeRepository
 
         list.ForEach( r =>
         {
-            r.LikeCount = likes.FirstOrDefault( l => l.RecipeId == r.Id ).Count;
-            r.FavouriteCount = favourites.FirstOrDefault( f => f.RecipeId == r.Id ).Count;
+            var likeGroup = likes.FirstOrDefault( l => l.RecipeId == r.Id );
+            r.LikeCount = likeGroup == null ? 0 : likeGroup.Count;
+            var favouriteGroup = favourites.FirstOrDefault( f => f.RecipeId == r.Id );
+            r.FavouriteCount = favouriteGroup == null ? 0 : favouriteGroup.Count;
         } );
 
         return list;
@@ -93,8 +95,10 @@ public class RecipeRepository : Repository<Recipe>, IRecipeRepository
 
         list.ForEach( r =>
         {
-            r.LikeCount = likes.FirstOrDefault( l => l.RecipeId == r.Id ).Count;
-            r.FavouriteCount = favourites.FirstOrDefault( f => f.RecipeId == r.Id ).Count;
+            var likeGroup = likes.FirstOrDefault( l => l.RecipeId == r.Id );
+            r.LikeCount = likeGroup == null ? 0 : likeGroup.Count;
+            var favouriteGroup = favourites.FirstOrDefault( f => f.RecipeId == r.Id );
+            r.FavouriteCount = favouriteGroup == null ? 0 : favouriteGroup.Count;
         } );
 
         if ( isAsc )
