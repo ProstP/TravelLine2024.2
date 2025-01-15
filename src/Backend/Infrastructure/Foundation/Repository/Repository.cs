@@ -6,11 +6,12 @@ namespace Infrastructure.Foundation.Repository;
 public class Repository<T> : IRepository<T>
     where T : class
 {
-    protected readonly DbSet<T> DbSet;
+    protected MaryFoodDbContext DbContext;
+    protected DbSet<T> DbSet => DbContext.Set<T>();
 
     public Repository( MaryFoodDbContext dbContext )
     {
-        DbSet = dbContext.Set<T>();
+        DbContext = dbContext;
     }
 
     public void Add( T item )
