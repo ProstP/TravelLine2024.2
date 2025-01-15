@@ -156,6 +156,12 @@ public class RecipeRepository : Repository<Recipe>, IRecipeRepository
         return recipes;
     }
 
+    public async Task<int> GetRecipeCountByUser( int userId )
+    {
+        return await DbSet.Where( r => r.UserId == userId )
+                          .CountAsync();
+    }
+
     public Recipe Update( int id, Recipe recipe )
     {
         Recipe old = DbSet.FirstOrDefault( r => r.Id == id );

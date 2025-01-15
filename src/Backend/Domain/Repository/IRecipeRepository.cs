@@ -17,4 +17,6 @@ public interface IRecipeRepository : IRepository<Recipe>
     Task<List<Recipe>> GetByUserFavourite( int skip, int take, int userId );
 
     Recipe Update( int id, Recipe recipe );
+
+    Task<int> GetRecipeCountByUser( int userId );
 }

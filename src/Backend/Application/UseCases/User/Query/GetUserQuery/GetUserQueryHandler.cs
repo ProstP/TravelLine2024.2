@@ -8,10 +8,20 @@ namespace Application.UseCases.User.Query.GetUserQuery;
 public class GetUserQueryHandler : IQueryHandler<GetUserQueryDto, GetUserQuery>
 {
     private readonly IUserRepository _userRepository;
+    private readonly IRecipeRepository _recipeRepository;
+    private readonly ILikeRepository _likeRepository;
+    private readonly IFavouriteRepository _favouriteRepository;
 
-    public GetUserQueryHandler( IUserRepository userRepository )
+    public GetUserQueryHandler(
+        IUserRepository userRepository,
+        IRecipeRepository recipeRepository,
+        ILikeRepository likeRepository,
+        IFavouriteRepository favouriteRepository )
     {
         _userRepository = userRepository;
+        _recipeRepository = recipeRepository;
+        _likeRepository = likeRepository;
+        _favouriteRepository = favouriteRepository;
     }
 
     public async Task<Result<GetUserQueryDto>> HandleAsync( GetUserQuery query )
@@ -28,6 +38,9 @@ public class GetUserQueryHandler : IQueryHandler<GetUserQueryDto, GetUserQuery>
             Name = user.Name,
             Login = user.Login,
             About = user.About,
+            RecipeCount = await _recipeRepository.GetRecipeCountByUser( user.Id ),
+            LikeCount = await _likeRepository.GetByUserId( user.Id ),
+            FavouriteCount = await _favouriteRepository.GetByUserId( user.Id ),
         };
 
         return Result<GetUserQueryDto>.FromSuccess( result );

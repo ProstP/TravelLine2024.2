@@ -9,6 +9,7 @@ import { Profile, Update } from "../../../services/UserServices";
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
 import { useMaryFoodStore } from "../../../hooks/useMaryFoodStore";
 import { useNavigate } from "react-router-dom";
+import StaticDatas from "./StaticDatas/StaticDatas";
 
 type UserData = {
   name: string;
@@ -39,6 +40,10 @@ const UserInfo = () => {
     password: false,
   });
 
+  const [recipeCount, setRecipeCount] = useState(0);
+  const [likeCount, setLikeCount] = useState(0);
+  const [favouriteCount, setFavouriteCount] = useState(0);
+
   const getUserInfo = async () => {
     const result = await Profile();
 
@@ -53,6 +58,10 @@ const UserInfo = () => {
       password: "",
       about: result.value.about,
     });
+
+    setRecipeCount(result.value.recipeCount);
+    setLikeCount(result.value.likeCount);
+    setFavouriteCount(result.value.favouriteCount);
   };
 
   useEffect(() => {
@@ -141,6 +150,11 @@ const UserInfo = () => {
           <Button onClick={() => toggleCanEdit(false)}>Отмена</Button>
         </div>
       ) : null}
+      <StaticDatas
+        recipeCount={recipeCount}
+        likeCount={likeCount}
+        favouriteCount={favouriteCount}
+      ></StaticDatas>
       <img
         className={styles.edit}
         src={editIcon}
