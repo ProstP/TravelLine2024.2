@@ -23,7 +23,12 @@ const Header = ({ Logout }: HeaderProps) => {
           <a className={styles.link} href="/recipes">
             Рецепты
           </a>
-          <a className={styles.link}>Избранное</a>
+          <a className={styles.link} href="/favourite">
+            Избранное
+          </a>
+          <a className={styles.link} href="/create-recipe">
+            Создание рецепта
+          </a>
         </div>
       </div>
       <div className={styles.usercontainer}>
