@@ -39,23 +39,23 @@ const UserInfo = () => {
     password: false,
   });
 
+  const getUserInfo = async () => {
+    const result = await Profile();
+
+    if (!result.isSuccess) {
+      navigate("/");
+      return;
+    }
+
+    setUser({
+      name: result.value.name,
+      login: result.value.login,
+      password: "",
+      about: result.value.about,
+    });
+  };
+
   useEffect(() => {
-    const getUserInfo = async () => {
-      const result = await Profile();
-
-      if (!result.isSuccess) {
-        navigate("/");
-        return;
-      }
-
-      setUser({
-        name: result.value.name,
-        login: result.value.login,
-        password: "",
-        about: result.value.about,
-      });
-    };
-
     getUserInfo();
   }, []);
 
@@ -77,12 +77,19 @@ const UserInfo = () => {
       return;
     }
 
-    const response = await Update(user);
+    const response = await Update({
+      login: user.login,
+      name: user.name,
+      password: user.password,
+      about: user.about ?? "",
+    });
     if (!response.isSuccess) {
       console.log(response.value);
       toggleError(true);
+      return;
     }
 
+    await getUserInfo();
     setName(user.name);
     toggleError(false);
     toggleCanEdit(false);

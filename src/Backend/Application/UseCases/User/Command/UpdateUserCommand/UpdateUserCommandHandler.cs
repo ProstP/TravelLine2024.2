@@ -29,7 +29,7 @@ public class UpdateUserCommandHandler : ICommandHandler<UpdateUserDto, UpdateUse
 
         if ( user == null )
         {
-            return Result.Result<UpdateUserDto>.FromError( "Unknown user" );
+            return Result<UpdateUserDto>.FromError( "Unknown user" );
         }
 
         string login = string.IsNullOrWhiteSpace( command.Login ) ? user.Login : command.Login;
