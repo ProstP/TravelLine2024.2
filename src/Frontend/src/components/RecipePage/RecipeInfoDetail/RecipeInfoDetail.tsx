@@ -25,11 +25,17 @@ const RecipeInfoDetail = ({ data }: RecipeInfoDetailProps) => {
         </div>
         <div className={styles.topPanel}>
           <div className={styles.tags}>
-            {data.tags.map((value, index) => (
-              <div key={index} className={styles.tag}>
-                {value}
-              </div>
-            ))}
+            {data.tags.length < 10
+              ? data.tags.map((value, index) => (
+                  <div key={index} className={styles.tag}>
+                    {value}
+                  </div>
+                ))
+              : data.tags.slice(0, 9).map((value, index) => (
+                  <div key={index} className={styles.tag}>
+                    {value}
+                  </div>
+                ))}
           </div>
         </div>
         <p className={styles.title}>{data.description}</p>

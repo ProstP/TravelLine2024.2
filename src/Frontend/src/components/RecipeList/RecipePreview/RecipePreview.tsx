@@ -28,11 +28,17 @@ const RecipePreview = ({ data }: RecipePreviewProps) => {
         <img className={styles.image} src={data.image}></img>
         <div className={styles.info}>
           <div className={styles.taglist}>
-            {data.tags.map((t, index) => (
-              <div className={styles.tagcontainer} key={index}>
-                <p className={styles.tag}>{t}</p>
-              </div>
-            ))}
+            {data.tags.length < 10
+              ? data.tags.map((t, index) => (
+                  <div className={styles.tagcontainer} key={index}>
+                    <p className={styles.tag}>{t}</p>
+                  </div>
+                ))
+              : data.tags.slice(0, 9).map((t, index) => (
+                  <div className={styles.tagcontainer} key={index}>
+                    <p className={styles.tag}>{t}</p>
+                  </div>
+                ))}
           </div>
           <p className={styles.title}>{data.name}</p>
           <div className={styles.description}>

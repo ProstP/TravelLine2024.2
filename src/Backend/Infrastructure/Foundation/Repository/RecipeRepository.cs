@@ -36,6 +36,7 @@ public class RecipeRepository : Repository<Recipe>, IRecipeRepository
                                                       .ToListAsync();
 
         List<Recipe> list = await DbSet.Where( r => recipesInFavourite.Contains( r.Id ) )
+                                       .OrderByDescending( r => r.CreatedDate )
                                        .ToListAsync();
 
         var likes = await DbContext.Set<Like>()
