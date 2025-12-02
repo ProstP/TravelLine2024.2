@@ -17,9 +17,5 @@ public class TagConfiguration : IEntityTypeConfiguration<Tag>
 
         builder.HasIndex( t => t.Name )
                .IsUnique();
-
-        builder.HasOne<DefaultTag>()
-               .WithOne()
-               .HasForeignKey<DefaultTag>( df => df.TagId );
     }
 }

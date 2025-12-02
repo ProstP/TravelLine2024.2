@@ -36,7 +36,6 @@ public static class Bindings
         serviceCollection.AddScoped<IUserRepository, UserRepository>();
         serviceCollection.AddScoped<IRecipeRepository, RecipeRepository>();
         serviceCollection.AddScoped<ITagRepository, TagRepository>();
-        serviceCollection.AddScoped<IDefaultTagRepository, DefaultTagRepository>();
         serviceCollection.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
         serviceCollection.AddScoped<IPasswordHasher, PasswordHasher>();
         serviceCollection.AddScoped<IPasswordVerifier, PasswordVerifier>();
@@ -45,6 +44,8 @@ public static class Bindings
         serviceCollection.AddScoped<IImageSaver, ImageSaver>();
         serviceCollection.AddScoped<IImageLoader, ImageLoader>();
         serviceCollection.AddScoped<IImageDeleter, ImageDeleter>();
+        serviceCollection.AddScoped<ILikeRepository, LikeRepository>();
+        serviceCollection.AddScoped<IFavouriteRepository, FavouriteRepository>();
 
         return serviceCollection;
     }

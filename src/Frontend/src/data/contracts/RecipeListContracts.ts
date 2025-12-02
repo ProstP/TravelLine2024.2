@@ -16,6 +16,8 @@ export type GetRecipeListResponse = {
   createdDate: string;
   userId: number;
   tags: string[];
+  likeCount: number;
+  favouriteCount: number;
 };
 
 export type GetRecipeListByUserRequest = {

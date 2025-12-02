@@ -10,9 +10,13 @@ const IngredientsDetail = ({ data }: IngredientsDetailProps) => {
   return (
     <div className={styles.container}>
       <p className={styles.title}>Ингридиенты</p>
-      {data.map((value) => (
-        <IngredientDetail info={value}></IngredientDetail>
-      ))}
+      <ul className={styles.list}>
+        {data.map((value) => (
+          <li key={value.id}>
+            <IngredientDetail info={value}></IngredientDetail>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

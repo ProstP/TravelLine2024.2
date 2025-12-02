@@ -1,6 +1,13 @@
-﻿using Application.UseCases.Recipe.Command.CreateRecipeCommand;
+﻿using Application.UseCases.Favourite.Command.CreateFavourite;
+using Application.UseCases.Favourite.Query.GetFavouriteCount;
+using Application.UseCases.Favourite.Query.IdUserSetFavourite;
+using Application.UseCases.Like.Command.CreateLike;
+using Application.UseCases.Like.Query.GetLikeCount;
+using Application.UseCases.Like.Query.IsUserSetLike;
+using Application.UseCases.Recipe.Command.CreateRecipeCommand;
 using Application.UseCases.Recipe.Command.DeleteRecipeCommand;
 using Application.UseCases.Recipe.Command.UpdateRecipeCommand;
+using Application.UseCases.Recipe.Query.GetRecipeInFavouriteQuery;
 using Application.UseCases.Recipe.Query.GetRecipeListByUserQuery;
 using Application.UseCases.Recipe.Query.GetRecipeListQuery;
 using Application.UseCases.Recipe.Query.GetRecipeQuery;
@@ -31,6 +38,13 @@ namespace Application
             serviceCollection.AddScoped<AuthenticateByTokenCommandHandler>();
             serviceCollection.AddScoped<GetRecipeListQueryHandler>();
             serviceCollection.AddScoped<GetRecipeListByUserQueryHandler>();
+            serviceCollection.AddScoped<CreateLikeCommandHanlder>();
+            serviceCollection.AddScoped<IsUserSetLikeQueryHandler>();
+            serviceCollection.AddScoped<GetLikeCountQueryHandler>();
+            serviceCollection.AddScoped<CreateFavouriteCommandHandler>();
+            serviceCollection.AddScoped<IsUserSetFavouriteQueryHandler>();
+            serviceCollection.AddScoped<GetFavouriteCountQueryHandler>();
+            serviceCollection.AddScoped<GetRecipeInFavouriteQueryHandler>();
 
             return serviceCollection;
         }

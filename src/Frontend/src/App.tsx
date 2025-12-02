@@ -10,6 +10,8 @@ import RegisterMenu from "./components/AuthAndRegisterMenu/RegisterMenu/Register
 import RecipeCreator from "./components/RecipeCreator/RecipeCreator";
 import RecipeListPage from "./components/RecipeListPage/RecipeListPage";
 import { useMaryFoodStore } from "./hooks/useMaryFoodStore";
+import FavouriteList from "./components/FavouriteList/FavouriteList";
+import Main from "./components/Main/Main";
 
 function App() {
   const setName = useMaryFoodStore((store) => store.setUsername);
@@ -23,9 +25,14 @@ function App() {
         }}
       ></Header>
       <Routes>
+        <Route path="/" element={<Main></Main>}></Route>
         <Route
           path="/recipes"
           element={<RecipeListPage></RecipeListPage>}
+        ></Route>
+        <Route
+          path="/favourite"
+          element={<FavouriteList></FavouriteList>}
         ></Route>
         <Route
           path="/user-profile"

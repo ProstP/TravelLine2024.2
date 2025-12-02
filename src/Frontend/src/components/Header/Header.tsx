@@ -2,12 +2,14 @@ import styles from "./Header.module.scss";
 import userIcon from "../../assets/user.svg";
 import exitIcon from "../../assets/exit.svg";
 import { useMaryFoodStore } from "../../hooks/useMaryFoodStore";
+import { useNavigate } from "react-router-dom";
 
 type HeaderProps = {
   Logout: () => void;
 };
 
 const Header = ({ Logout }: HeaderProps) => {
+  const navigate = useNavigate();
   const username = useMaryFoodStore((store) => store.username);
 
   return (
@@ -21,7 +23,12 @@ const Header = ({ Logout }: HeaderProps) => {
           <a className={styles.link} href="/recipes">
             Рецепты
           </a>
-          <a className={styles.link}>Избранное</a>
+          <a className={styles.link} href="/favourite">
+            Избранное
+          </a>
+          <a className={styles.link} href="/create-recipe">
+            Создание рецепта
+          </a>
         </div>
       </div>
       <div className={styles.usercontainer}>
@@ -36,6 +43,7 @@ const Header = ({ Logout }: HeaderProps) => {
               className={styles.exitbtn}
               onClick={() => {
                 Logout();
+                navigate("/");
               }}
             >
               <img src={exitIcon}></img>

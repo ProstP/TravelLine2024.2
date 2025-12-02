@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
 .container {
   left: 0;
   top: 100px;
@@ -17,7 +19,13 @@
 }
 
 .btn {
-  width: 25%;
+  display: flex;
+  gap: 5%;
+  width: 20%;
+}
+
+.doubleBtn {
+  width: 35%;
 }
 
 .topPanel {

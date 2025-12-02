@@ -22,25 +22,6 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Entity.DefaultTag", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("TagId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TagId")
-                        .IsUnique();
-
-                    b.ToTable("DefaultTag", (string)null);
-                });
-
             modelBuilder.Entity("Domain.Entity.Favourite", b =>
                 {
                     b.Property<int>("UserId")
@@ -117,10 +98,16 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
+                    b.Property<int>("FavouriteCount")
+                        .HasColumnType("int");
+
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("LikeCount")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -236,19 +223,10 @@ namespace Infrastructure.Migrations
                     b.ToTable("RecipeToTag", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entity.DefaultTag", b =>
-                {
-                    b.HasOne("Domain.Entity.Tag", null)
-                        .WithOne()
-                        .HasForeignKey("Domain.Entity.DefaultTag", "TagId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Domain.Entity.Favourite", b =>
                 {
                     b.HasOne("Domain.Entity.Recipe", null)
-                        .WithMany("Favourites")
+                        .WithMany()
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -272,7 +250,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entity.Like", b =>
                 {
                     b.HasOne("Domain.Entity.Recipe", null)
-                        .WithMany("Likes")
+                        .WithMany()
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -319,11 +297,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entity.Recipe", b =>
                 {
-                    b.Navigation("Favourites");
-
                     b.Navigation("Ingredients");
-
-                    b.Navigation("Likes");
 
                     b.Navigation("Steps");
                 });

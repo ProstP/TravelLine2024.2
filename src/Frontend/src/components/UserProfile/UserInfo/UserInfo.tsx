@@ -9,6 +9,7 @@ import { Profile, Update } from "../../../services/UserServices";
 import ErrorMessage from "../../ErrorMessage/ErrorMessage";
 import { useMaryFoodStore } from "../../../hooks/useMaryFoodStore";
 import { useNavigate } from "react-router-dom";
+import StaticDatas from "./StaticDatas/StaticDatas";
 
 type UserData = {
   name: string;
@@ -39,23 +40,31 @@ const UserInfo = () => {
     password: false,
   });
 
+  const [recipeCount, setRecipeCount] = useState(0);
+  const [likeCount, setLikeCount] = useState(0);
+  const [favouriteCount, setFavouriteCount] = useState(0);
+
+  const getUserInfo = async () => {
+    const result = await Profile();
+
+    if (!result.isSuccess) {
+      navigate("/");
+      return;
+    }
+
+    setUser({
+      name: result.value.name,
+      login: result.value.login,
+      password: "",
+      about: result.value.about,
+    });
+
+    setRecipeCount(result.value.recipeCount);
+    setLikeCount(result.value.likeCount);
+    setFavouriteCount(result.value.favouriteCount);
+  };
+
   useEffect(() => {
-    const getUserInfo = async () => {
-      const result = await Profile();
-
-      if (!result.isSuccess) {
-        navigate("/");
-        return;
-      }
-
-      setUser({
-        name: result.value.name,
-        login: result.value.login,
-        password: "",
-        about: result.value.about,
-      });
-    };
-
     getUserInfo();
   }, []);
 
@@ -77,12 +86,19 @@ const UserInfo = () => {
       return;
     }
 
-    const response = await Update(user);
+    const response = await Update({
+      login: user.login,
+      name: user.name,
+      password: user.password,
+      about: user.about ?? "",
+    });
     if (!response.isSuccess) {
       console.log(response.value);
       toggleError(true);
+      return;
     }
 
+    await getUserInfo();
     setName(user.name);
     toggleError(false);
     toggleCanEdit(false);
@@ -134,6 +150,11 @@ const UserInfo = () => {
           <Button onClick={() => toggleCanEdit(false)}>Отмена</Button>
         </div>
       ) : null}
+      <StaticDatas
+        recipeCount={recipeCount}
+        likeCount={likeCount}
+        favouriteCount={favouriteCount}
+      ></StaticDatas>
       <img
         className={styles.edit}
         src={editIcon}

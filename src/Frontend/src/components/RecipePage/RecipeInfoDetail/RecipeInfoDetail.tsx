@@ -2,6 +2,8 @@ import styles from "./RecipeInfoDetail.module.scss";
 import { RecipeType } from "../../../data/entities/Recipe";
 import clockIcon from "../../../assets/clock.svg";
 import personsIcon from "../../../assets/persons.svg";
+import LikeBtn from "../../LikeBtn/LikeBtn";
+import FavouriteBtn from "../../FavouriteBtn/FavouriteBtn";
 
 type RecipeInfoDetailProps = {
   data: RecipeType;
@@ -12,11 +14,28 @@ const RecipeInfoDetail = ({ data }: RecipeInfoDetailProps) => {
     <div className={styles.container}>
       <img className={styles.image} src={data.image}></img>
       <div className={styles.fields}>
+        <div className={styles.like}>
+          <LikeBtn count={data.likeCount} recipeId={data.id}></LikeBtn>
+        </div>
+        <div className={styles.favourite}>
+          <FavouriteBtn
+            count={data.favouriteCount}
+            recipeId={data.id}
+          ></FavouriteBtn>
+        </div>
         <div className={styles.topPanel}>
           <div className={styles.tags}>
-            {data.tags.map((value) => (
-              <div className={styles.tag}>{value}</div>
-            ))}
+            {data.tags.length < 10
+              ? data.tags.map((value, index) => (
+                  <div key={index} className={styles.tag}>
+                    {value}
+                  </div>
+                ))
+              : data.tags.slice(0, 9).map((value, index) => (
+                  <div key={index} className={styles.tag}>
+                    {value}
+                  </div>
+                ))}
           </div>
         </div>
         <p className={styles.title}>{data.description}</p>

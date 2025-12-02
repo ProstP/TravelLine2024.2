@@ -167,6 +167,9 @@ public class UserController : ControllerBase
             Name = result.Value.Name,
             Login = result.Value.Login,
             About = result.Value.About,
+            RecipeCount = result.Value.RecipeCount,
+            LikeCount = result.Value.LikeCount,
+            FavouriteCount = result.Value.FavouriteCount,
         };
 
         return Ok( userProfileResponse );

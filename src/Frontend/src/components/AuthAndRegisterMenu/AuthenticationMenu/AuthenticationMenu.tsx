@@ -73,7 +73,7 @@ const AuthenticationMenu = () => {
         </div>
         <div>
           <span className={styles.link} onClick={() => navigate("/register")}>
-            У меня ещё нет аккааунта
+            У меня ещё нет аккаунта
           </span>
         </div>
       </div>

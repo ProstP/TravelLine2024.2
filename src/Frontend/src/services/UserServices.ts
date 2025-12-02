@@ -51,7 +51,7 @@ const Profile = () => {
 
 const Update = async (data: UpdateUserRequest) => {
   const response = await ApiRequest<UpdateUserRequest, UpdateUserResponse>(
-    "user/update",
+    "user/update-profile",
     data,
     "PUT",
     true

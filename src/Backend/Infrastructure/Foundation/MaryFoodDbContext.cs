@@ -25,7 +25,6 @@ public class MaryFoodDbContext : DbContext
         modelBuilder.ApplyConfiguration( new UserConfiguration() );
         modelBuilder.ApplyConfiguration( new RecipeConfiguration() );
         modelBuilder.ApplyConfiguration( new TagConfiguration() );
-        modelBuilder.ApplyConfiguration( new DefaultTagConfiguration() );
         modelBuilder.ApplyConfiguration( new IngredientConfiguration() );
         modelBuilder.ApplyConfiguration( new RecipeStepConfiduration() );
         modelBuilder.ApplyConfiguration( new FavouriteConfiguration() );

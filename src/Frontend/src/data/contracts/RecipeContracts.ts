@@ -40,6 +40,8 @@ export type GetRecipeResponse = {
   ingredients: GetIngredientResponse[];
   recipeSteps: GetRecipeStepResponse[];
   tags: string[];
+  likeCount: number;
+  favouriteCount: number;
 };
 
 export type UpdateIngredientRequest = {

@@ -118,7 +118,9 @@ public class RecipeController : ControllerBase
                     Id = rs.Id,
                     Description = rs.Description,
                 } ).ToList(),
-            Tags = result.Value.Tags
+            Tags = result.Value.Tags,
+            LikeCount = result.Value.LikeCount,
+            FavouriteCount = result.Value.FavouriteCount,
         };
 
         return Ok( getRecipeResponse );

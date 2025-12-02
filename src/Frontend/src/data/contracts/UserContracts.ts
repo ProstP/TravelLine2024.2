@@ -26,6 +26,9 @@ export type UserProfileResponse = {
   name: string;
   login: string;
   about: string;
+  recipeCount: number;
+  likeCount: number;
+  favouriteCount: number;
 };
 
 export type UpdateUserResponse = {

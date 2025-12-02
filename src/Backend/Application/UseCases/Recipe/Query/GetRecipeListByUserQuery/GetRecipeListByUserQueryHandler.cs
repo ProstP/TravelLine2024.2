@@ -12,7 +12,10 @@ public class GetRecipeListByUserQueryHandler : IQueryHandler<List<RecipeDto>, Ge
     private readonly IUserRepository _userRepository;
     private readonly IImageLoader _imageLoader;
 
-    public GetRecipeListByUserQueryHandler( IRecipeRepository recipeRepository, IUserRepository userRepository, IImageLoader imageLoader )
+    public GetRecipeListByUserQueryHandler(
+        IRecipeRepository recipeRepository,
+        IUserRepository userRepository,
+        IImageLoader imageLoader )
     {
         _recipeRepository = recipeRepository;
         _userRepository = userRepository;
@@ -40,7 +43,9 @@ public class GetRecipeListByUserQueryHandler : IQueryHandler<List<RecipeDto>, Ge
             Image = _imageLoader.Load( r.Image ),
             CreatedDate = r.CreatedDate,
             UserId = user.Id,
-            Tags = r.Tags.Select( t => t.Name ).ToList()
+            Tags = r.Tags.Select( t => t.Name ).ToList(),
+            LikeCount = r.LikeCount,
+            FavouriteCount = r.FavouriteCount,
         } ).ToList();
 
         return Result<List<RecipeDto>>.FromSuccess( result );
